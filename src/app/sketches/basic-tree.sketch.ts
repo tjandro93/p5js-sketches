@@ -1,4 +1,4 @@
-import { Sketch } from '../modules/shared/types/sketch.type';
+import { Sketch } from '../core/types/sketch.type';
 import * as P5 from 'p5';
 
 export const basicTreeSketch: Sketch = (p: P5) => {

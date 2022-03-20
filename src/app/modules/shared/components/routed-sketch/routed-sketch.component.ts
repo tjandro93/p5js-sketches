@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BaseSketchDirective } from '../../directives/base-sketch.directive';
-import { ActivatedSketchRoute } from '../../types/activated-sketch-route.type';
+import { ActivatedSketchRoute } from '../../../../core/types/activated-sketch-route.type';
 
 @Component({
   selector: 'app-routed-sketch',

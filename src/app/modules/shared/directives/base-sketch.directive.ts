@@ -1,6 +1,6 @@
 import { Directive, OnInit } from '@angular/core';
 import * as p5 from 'p5';
-import { Sketch } from '../types/sketch.type';
+import { Sketch } from '../../../core/types/sketch.type';
 
 @Directive()
 export abstract class BaseSketchDirective implements OnInit {
