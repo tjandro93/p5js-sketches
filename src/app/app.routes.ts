@@ -1,11 +1,14 @@
-import { Routes } from '@angular/router';
+import { basicTreeSketch } from './sketches/basic-tree.sketch';
+import { RoutedSketchComponent } from './modules/shared/components/routed-sketch/routed-sketch.component';
+import { SketchRoutes } from './modules/shared/types/sketch-routes.type';
 
-export const APP_ROUTES: Routes = [
+export const APP_ROUTES: SketchRoutes = [
   {
-    path: 'basic-tree',
-    loadChildren: () =>
-      import('./modules/basic-tree/basic-tree.module').then(
-        (m) => m.BasicTreeModule
-      ),
+    path: 'routed-basic-tree',
+    component: RoutedSketchComponent,
+    data: {
+      title: 'Basic Tree',
+      sketch: basicTreeSketch,
+    },
   },
 ];
