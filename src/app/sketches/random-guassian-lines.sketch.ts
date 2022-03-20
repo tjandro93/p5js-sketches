@@ -40,8 +40,8 @@ export const randomGuassianLines: Sketch = {
       const runButton = p.createButton('Run / Pause');
       runButton.position(75, 5);
       runButton.mousePressed(() => {
-          running = !running;
-        });
+        running = !running;
+      });
 
       segmentDiv = p.createDiv('Segments: ' + 100);
       segmentDiv.style('font-size', '12px');

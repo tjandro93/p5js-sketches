@@ -9,7 +9,6 @@ import { ActivatedSketchRoute } from '../../../../core/types/activated-sketch-ro
   styleUrls: ['./routed-sketch.component.scss'],
 })
 export class RoutedSketchComponent extends BaseSketchDirective {
-
   constructor(@Inject(ActivatedRoute) route: ActivatedSketchRoute) {
     super(route.snapshot.data);
   }
