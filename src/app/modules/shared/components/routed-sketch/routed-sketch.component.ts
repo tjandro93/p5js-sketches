@@ -11,6 +11,6 @@ import { ActivatedSketchRoute } from '../../../../core/types/activated-sketch-ro
 export class RoutedSketchComponent extends BaseSketchDirective {
 
   constructor(@Inject(ActivatedRoute) route: ActivatedSketchRoute) {
-    super(route.snapshot.data.sketch);
+    super(route.snapshot.data);
   }
 }

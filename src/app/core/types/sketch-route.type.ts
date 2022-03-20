@@ -1,8 +1,8 @@
 import { Route } from '@angular/router';
-import { SketchRouteData } from './sketch-route-data.type';
 import { SketchRoutes } from './sketch-routes.type';
+import { Sketch } from './sketch.type';
 
 export interface SketchRoute extends Route {
-  data: SketchRouteData;
+  data: Sketch;
   children?: SketchRoutes;
 }

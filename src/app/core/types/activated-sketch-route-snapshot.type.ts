@@ -1,6 +1,6 @@
 import { ActivatedRouteSnapshot } from '@angular/router';
-import { SketchRouteData } from './sketch-route-data.type';
+import { Sketch } from './sketch.type';
 
 export class ActivatedSketchRouteSnapshot extends ActivatedRouteSnapshot {
-  data: SketchRouteData;
+  data: Sketch;
 }
