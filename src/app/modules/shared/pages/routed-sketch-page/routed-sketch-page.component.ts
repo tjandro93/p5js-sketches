@@ -4,11 +4,11 @@ import { BaseSketchDirective } from '../../directives/base-sketch.directive';
 import { ActivatedSketchRoute } from '../../../../core/types/activated-sketch-route.type';
 
 @Component({
-  selector: 'app-routed-sketch',
-  templateUrl: './routed-sketch.component.html',
-  styleUrls: ['./routed-sketch.component.scss'],
+  selector: 'app-routed-sketch-page',
+  templateUrl: './routed-sketch-page.component.html',
+  styleUrls: ['./routed-sketch-page.component.scss'],
 })
-export class RoutedSketchComponent extends BaseSketchDirective {
+export class RoutedSketchPageComponent extends BaseSketchDirective {
   public static readonly CANVAS_PARENT_CONTAINER_ID = 'p5js-parent';
 
   constructor(@Inject(ActivatedRoute) route: ActivatedSketchRoute) {

@@ -4,5 +4,6 @@ import { Sketch } from './sketch.type';
 
 export interface SketchRoute extends Route {
   data?: Sketch;
+  collectionTitle?: string;
   children?: SketchRoutes;
 }
