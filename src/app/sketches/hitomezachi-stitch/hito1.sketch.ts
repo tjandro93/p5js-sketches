@@ -4,7 +4,7 @@ import { Sketch } from '../../core/types/sketch.type';
 export const hito1: Sketch = {
   title: 'Hitomezashi Stitch Attempt 1',
   description:
-    "Ported from Processing. This was a failed implementation but I saved it because it was interesting.",
+    'Ported from Processing. This was a failed implementation but I saved it because it was interesting.',
   func: (p: p5) => {
     const gridPoints: p5.Vector[][] = [];
 
