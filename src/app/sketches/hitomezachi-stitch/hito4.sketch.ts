@@ -1,4 +1,5 @@
 import * as p5 from 'p5';
+import { createCanvasOnParentContainer } from 'src/app/sketch-lib/functions/create-canvas-on-parent-container';
 import { Sketch } from '../../core/types/sketch.type';
 
 export const hito4: Sketch = {
@@ -27,7 +28,8 @@ export const hito4: Sketch = {
     const colNoiseValMax = 0;
 
     p.setup = () => {
-      p.createCanvas(600, 600);
+      createCanvasOnParentContainer(p, 600, 600);
+
       p.background(255);
       p.fill(0);
       // p.frameRate(5);

@@ -1,5 +1,6 @@
 import { Sketch } from '../core/types/sketch.type';
 import * as p5 from 'p5';
+import { createCanvasOnParentContainer } from '../sketch-lib/functions/create-canvas-on-parent-container';
 
 export const basicTreeSketch: Sketch = {
   title: 'Basic Tree',
@@ -11,7 +12,7 @@ export const basicTreeSketch: Sketch = {
     const ANGLE_UPPER = 60;
 
     p.setup = () => {
-      p.createCanvas(p.windowWidth - 10, p.windowHeight - 10);
+      createCanvasOnParentContainer(p);
 
       tree((p.windowWidth - 10) / 2, p.windowHeight - 10, p.windowHeight / 4);
     };

@@ -4,6 +4,6 @@ import { ActivatedSketchRouteSnapshot } from './activated-sketch-route-snapshot.
 import { Sketch } from './sketch.type';
 
 export class ActivatedSketchRoute extends ActivatedRoute {
-  data: Observable<Sketch>;
-  snapshot: ActivatedSketchRouteSnapshot;
+  public data: Observable<Sketch>;
+  public snapshot: ActivatedSketchRouteSnapshot;
 }

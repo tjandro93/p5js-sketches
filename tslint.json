@@ -3,6 +3,7 @@
   "rulesDirectory": ["codelyzer"],
   "rules": {
     "prefer-for-of": false,
+    "member-access": true,
     "directive-selector": [true, "attribute", "app", "camelCase"],
     "component-selector": [true, "element", "app", "kebab-case"]
   }

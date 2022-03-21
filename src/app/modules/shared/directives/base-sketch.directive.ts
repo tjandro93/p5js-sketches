@@ -8,7 +8,7 @@ export abstract class BaseSketchDirective implements OnInit {
 
   constructor(private sketch: Sketch) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.p = new p5(this.sketch.func);
   }
 }

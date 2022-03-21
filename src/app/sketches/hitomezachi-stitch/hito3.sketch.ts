@@ -1,4 +1,5 @@
 import * as p5 from 'p5';
+import { createCanvasOnParentContainer } from 'src/app/sketch-lib/functions/create-canvas-on-parent-container';
 import { Sketch } from '../../core/types/sketch.type';
 
 export const hito3: Sketch = {
@@ -9,7 +10,7 @@ export const hito3: Sketch = {
     const gridPoints: p5.Vector[][] = [];
 
     p.setup = () => {
-      p.createCanvas(400, 400);
+      createCanvasOnParentContainer(p, 400, 400);
       p.background(255);
       p.fill(0);
       p.frameRate(5);

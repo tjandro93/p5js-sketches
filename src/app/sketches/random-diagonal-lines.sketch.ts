@@ -1,27 +1,32 @@
 import { Sketch } from '../core/types/sketch.type';
 import * as p5 from 'p5';
+import { getParentContainer } from '../sketch-lib/functions/get-parent-container';
+import { attachCanvasToParentContainer } from '../sketch-lib/functions/attach-canvas-to-parent-container';
 
 export const randomDiagonalLines: Sketch = {
   title: 'Random Diagonal Lines',
   func: (p: p5) => {
-    const MAX_SIDE = Math.min(p.windowWidth, p.windowHeight) - 10;
-
-    const X_TILES = 20;
-    const Y_TILES = 20;
-
-    const TILE_WIDTH = MAX_SIDE / X_TILES;
-    const TILE_HEIGHT = MAX_SIDE / Y_TILES;
-
     p.setup = () => {
-      p.createCanvas(MAX_SIDE, MAX_SIDE);
+      const parent = getParentContainer();
 
-      for (let i = 0; i < X_TILES; i++) {
-        for (let j = 0; j < Y_TILES; j++) {
+      const minSide = Math.min(parent.clientHeight, parent.clientWidth) - 10;
+
+      const xTiles = 20;
+      const yTiles = 20;
+
+      const tileWidth = minSide / xTiles;
+      const tileHeight = minSide / yTiles;
+
+      const canvas = p.createCanvas(minSide, minSide);
+      attachCanvasToParentContainer(canvas);
+
+      for (let i = 0; i < xTiles; i++) {
+        for (let j = 0; j < yTiles; j++) {
           drawRandomDiagonalLine(
-            i * TILE_WIDTH,
-            j * TILE_HEIGHT,
-            (i + 1) * TILE_WIDTH,
-            (j + 1) * TILE_HEIGHT
+            i * tileWidth,
+            j * tileHeight,
+            (i + 1) * tileWidth,
+            (j + 1) * tileHeight
           );
         }
       }

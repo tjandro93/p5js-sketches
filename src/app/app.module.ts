@@ -10,9 +10,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    SharedModule,
-    RouterModule.forRoot(APP_ROUTES),
     BrowserAnimationsModule,
+    RouterModule.forRoot(APP_ROUTES),
+    SharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

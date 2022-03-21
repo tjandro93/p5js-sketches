@@ -1,18 +1,11 @@
 import { Sketch } from '../core/types/sketch.type';
 import * as p5 from 'p5';
+import { createCanvasOnParentContainer } from '../sketch-lib/functions/create-canvas-on-parent-container';
 
+// TODO sliders are broken. How are p5 inputs going to work in angular? should they become angular controls?
 export const randomGuassianLines: Sketch = {
   title: 'Random Guassian Lines',
   func: (p: p5) => {
-    const MAX_WIDTH = p.windowWidth - 5;
-    const MIN_WIDTH = 0;
-
-    const MAX_HEIGHT = p.windowHeight - 5;
-    const MIN_HEIGHT = 0;
-
-    const INITIAL_X = MAX_WIDTH / 2;
-    const INITIAL_Y = MAX_HEIGHT / 2;
-
     let running = true;
 
     let segmentSlider: p5.Element;
@@ -28,8 +21,9 @@ export const randomGuassianLines: Sketch = {
     let gausSdDiv: p5.Element;
 
     p.setup = () => {
+      createCanvasOnParentContainer(p);
+
       p.frameRate(15);
-      p.createCanvas(MAX_WIDTH, MAX_HEIGHT);
 
       const stepButton = p.createButton('Draw once');
       stepButton.position(175, 5);
@@ -87,8 +81,8 @@ export const randomGuassianLines: Sketch = {
       p.background('white');
 
       for (let i = 0; i < lineSlider.value(); i++) {
-        let currentX = INITIAL_X;
-        let currentY = INITIAL_Y;
+        let currentX = p.width / 2;
+        let currentY = p.height / 2;
 
         for (let j = 0; j < segmentSlider.value(); j++) {
           const nextX = p.constrain(
@@ -97,8 +91,8 @@ export const randomGuassianLines: Sketch = {
                 gausMeanSlider.value() as number,
                 gausSdSlider.value() as number
               ),
-            MIN_WIDTH,
-            MAX_WIDTH
+            0,
+            p.width
           );
           const nextY = p.constrain(
             currentY +
@@ -106,8 +100,8 @@ export const randomGuassianLines: Sketch = {
                 gausMeanSlider.value() as number,
                 gausSdSlider.value() as number
               ),
-            MIN_HEIGHT,
-            MAX_HEIGHT
+            0,
+            p.height
           );
 
           p.line(currentX, currentY, nextX, nextY);
