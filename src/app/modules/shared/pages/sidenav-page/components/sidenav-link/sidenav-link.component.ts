@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { SketchNavLink } from '../../pages/sidenav-page/models/sketch-nav-link.model';
+import { SketchNavLink } from '../../models/sketch-nav-link.model';
 
 @Component({
   selector: 'app-sidenav-link',

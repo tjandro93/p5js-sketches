@@ -1,4 +1,4 @@
-import { SketchNavLink } from "./sketch-nav-link.model";
+import { SketchNavLink } from './sketch-nav-link.model';
 
 export interface SketchNavLinkGroup {
   collectionTitle: string;

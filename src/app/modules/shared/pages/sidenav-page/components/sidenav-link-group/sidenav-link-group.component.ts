@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { SketchNavLinkGroup } from '../../pages/sidenav-page/models/sketch-nav-link-group.model';
+import { SketchNavLinkGroup } from '../../models/sketch-nav-link-group.model';
 
 @Component({
   selector: 'app-sidenav-link-group',

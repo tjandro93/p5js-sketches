@@ -1,7 +1,17 @@
 <mat-drawer-container>
   <mat-drawer mode="side" opened>
-    <div>Sidenav content here</div>
-    <pre>{{ links | json }}</pre>
+    <mat-nav-list>
+      <div mat-subheader>Sketches</div>
+      <app-sidenav-link-list
+        *ngIf="links?.sketchLinks?.length"
+        [links]="links.sketchLinks"
+      ></app-sidenav-link-list>
+
+      <app-sidenav-link-group
+        *ngFor="let group of links.linkGroups"
+        [linkGroup]="group"
+      ></app-sidenav-link-group>
+    </mat-nav-list>
   </mat-drawer>
   <mat-drawer-content>
     <router-outlet></router-outlet>

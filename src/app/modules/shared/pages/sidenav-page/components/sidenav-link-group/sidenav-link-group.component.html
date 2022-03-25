@@ -1,0 +1,7 @@
+<mat-divider></mat-divider>
+<div mat-subheader>{{ linkGroup.collectionTitle }}</div>
+<app-sidenav-link-list [links]="linkGroup.sketchLinks"></app-sidenav-link-list>
+<app-sidenav-link-group
+  *ngFor="let group of linkGroup.linkGroups"
+  [linkGroup]="linkGroup"
+></app-sidenav-link-group>

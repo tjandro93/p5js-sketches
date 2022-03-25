@@ -8,7 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "prettier": "prettier --write ."
+    "prettier": "prettier --write .",
+    "prettier-and-lint": "npm run prettier && npm run lint"
   },
   "private": true,
   "dependencies": {

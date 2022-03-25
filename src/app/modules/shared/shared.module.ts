@@ -4,9 +4,11 @@ import { RoutedSketchPageComponent } from './pages/routed-sketch-page/routed-ske
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { SidenavPageComponent } from './pages/sidenav-page/sidenav-page.component';
 import { RouterModule } from '@angular/router';
-import { SidenavLinkGroupComponent } from './components/sidenav-link-group/sidenav-link-group.component';
-import { SidenavLinkComponent } from './components/sidenav-link/sidenav-link.component';
-import { SidenavLinkListComponent } from './components/sidenav-link-list/sidenav-link-list.component';
+import { SidenavLinkGroupComponent } from './pages/sidenav-page/components/sidenav-link-group/sidenav-link-group.component';
+import { SidenavLinkComponent } from './pages/sidenav-page/components/sidenav-link/sidenav-link.component';
+import { SidenavLinkListComponent } from './pages/sidenav-page/components/sidenav-link-list/sidenav-link-list.component';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,22 @@ import { SidenavLinkListComponent } from './components/sidenav-link-list/sidenav
     SidenavLinkComponent,
     SidenavLinkListComponent,
   ],
-  imports: [CommonModule, RouterModule, MatSidenavModule],
-  exports: [RoutedSketchPageComponent, MatSidenavModule],
+  imports: [
+    // Angular
+    CommonModule,
+    RouterModule,
+    // Angular Material
+    MatSidenavModule,
+    MatListModule,
+    MatDividerModule,
+  ],
+  exports: [
+    // Angular Material
+    MatSidenavModule,
+    MatListModule,
+    MatDividerModule,
+    // App
+    RoutedSketchPageComponent,
+  ],
 })
 export class SharedModule {}

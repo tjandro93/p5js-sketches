@@ -11,6 +11,7 @@ import { SketchNavLinksRoot } from './models/sketch-nav-links-root.model';
   styleUrls: ['./sidenav-page.component.scss'],
 })
 export class SidenavPageComponent implements OnInit {
+  //  TODO  look into using material tree for this instead of nav list
   public links: SketchNavLinksRoot;
 
   public ngOnInit(): void {
