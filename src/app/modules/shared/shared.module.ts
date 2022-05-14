@@ -9,6 +9,8 @@ import { SidenavLinkComponent } from './pages/sidenav-page/components/sidenav-li
 import { SidenavLinkListComponent } from './pages/sidenav-page/components/sidenav-link-list/sidenav-link-list.component';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -26,12 +28,16 @@ import { MatDividerModule } from '@angular/material/divider';
     MatSidenavModule,
     MatListModule,
     MatDividerModule,
+    MatButtonModule,
+    MatIconModule,
   ],
   exports: [
     // Angular Material
     MatSidenavModule,
     MatListModule,
     MatDividerModule,
+    MatButtonModule,
+    MatIconModule,
     // App
     RoutedSketchPageComponent,
   ],

@@ -4,6 +4,7 @@ import { createCanvasOnParentContainer } from '../sketch-lib/functions/create-ca
 
 export const basicTreeSketch: Sketch = {
   title: 'Basic Tree',
+  isSvg: true,
   func: (p: p5) => {
     const SHRINK_MEAN = 0.65;
     const SHRINK_SD = 0.25;

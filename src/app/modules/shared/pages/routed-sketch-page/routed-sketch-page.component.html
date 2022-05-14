@@ -1,1 +1,11 @@
 <div id="p5js-parent"></div>
+
+<button
+  *ngIf="(sketch$ | async).isSvg"
+  mat-mini-fab
+  color="primary"
+  class="svg-download"
+  (click)="downloadSvg()"
+>
+  <mat-icon>file_download</mat-icon>
+</button>

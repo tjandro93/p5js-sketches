@@ -10,7 +10,7 @@ export abstract class BaseSketchDirective implements OnInit, OnDestroy {
 
   private destroyed$ = new Subject<never>();
   constructor(
-    private sketch$: Observable<Sketch>,
+    public sketch$: Observable<Sketch>,
     private cdRef: ChangeDetectorRef
   ) {}
 
