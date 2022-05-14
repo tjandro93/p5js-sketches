@@ -12,7 +12,7 @@ export const basicTreeSketch: Sketch = {
     const ANGLE_UPPER = 60;
 
     p.setup = () => {
-      createCanvasOnParentContainer(p);
+      createCanvasOnParentContainer(p, { useSvg: true });
 
       tree((p.windowWidth - 10) / 2, p.windowHeight - 10, p.windowHeight / 4);
     };

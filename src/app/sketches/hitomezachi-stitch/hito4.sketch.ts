@@ -28,7 +28,7 @@ export const hito4: Sketch = {
     const colNoiseValMax = 0;
 
     p.setup = () => {
-      createCanvasOnParentContainer(p, 600, 600);
+      createCanvasOnParentContainer(p, { width: 600, height: 600 });
 
       p.background(255);
       p.fill(0);

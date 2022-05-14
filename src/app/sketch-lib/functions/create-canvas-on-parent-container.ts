@@ -9,17 +9,23 @@ import { getParentContainer } from './get-parent-container';
  */
 export function createCanvasOnParentContainer(
   p: p5,
-  width?: number,
-  height?: number,
-  containerId?: string
-): p5.Renderer {
-  if (containerId == null) {
-    containerId = CANVAS_PARENT_CONTAINER_ID;
+  options?: {
+    width?: number;
+    height?: number;
+    containerId?: string;
+    useSvg?: boolean;
   }
+): p5.Renderer {
+  const containerId =
+    options?.containerId == null
+      ? CANVAS_PARENT_CONTAINER_ID
+      : options.containerId;
+
   const canvasParent = getParentContainer(containerId);
   const canvas = p.createCanvas(
-    width ?? canvasParent.clientWidth,
-    height ?? canvasParent.clientHeight
+    options?.width ?? canvasParent.clientWidth,
+    options?.height ?? canvasParent.clientHeight,
+    options?.useSvg ? (p as any).SVG : undefined
   );
   canvas.parent(canvasParent.id);
 

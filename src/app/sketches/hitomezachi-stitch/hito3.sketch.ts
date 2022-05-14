@@ -10,7 +10,7 @@ export const hito3: Sketch = {
     const gridPoints: p5.Vector[][] = [];
 
     p.setup = () => {
-      createCanvasOnParentContainer(p, 400, 400);
+      createCanvasOnParentContainer(p, { width: 400, height: 400 });
       p.background(255);
       p.fill(0);
       p.frameRate(5);
