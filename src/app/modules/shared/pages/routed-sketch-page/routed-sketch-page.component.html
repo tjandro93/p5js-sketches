@@ -1,11 +1,23 @@
 <div id="p5js-parent" class="mat-elevation-z24"></div>
 
-<button
-  *ngIf="(sketch$ | async).isSvg"
-  mat-mini-fab
-  color="primary"
-  class="svg-download"
-  (click)="downloadSvg()"
->
-  <mat-icon>file_download</mat-icon>
-</button>
+<div class="action-container">
+  <button
+    *ngIf="(sketch$ | async).canRedraw"
+    mat-mini-fab
+    color="primary"
+    class="redraw"
+    (click)="redraw()"
+  >
+    <mat-icon>refresh</mat-icon>
+  </button>
+
+  <button
+    *ngIf="(sketch$ | async).isSvg"
+    mat-mini-fab
+    color="primary"
+    class="svg-download"
+    (click)="downloadSvg()"
+  >
+    <mat-icon>file_download</mat-icon>
+  </button>
+</div>

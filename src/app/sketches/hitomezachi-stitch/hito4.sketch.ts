@@ -3,7 +3,7 @@ import { createCanvasOnParentContainer } from 'src/app/sketch-lib/functions/crea
 import { Sketch } from '../../core/types/sketch.type';
 
 export const hito4: Sketch = {
-  title: 'Hitomezashi Stitch Attempt ',
+  title: 'Hitomezashi Stitch Attempt 4',
   description:
     "Ported from Processing. Trying perlin noise for random function. Pretty sure this isn't working like the Processing onemptied...",
   width: 600,
