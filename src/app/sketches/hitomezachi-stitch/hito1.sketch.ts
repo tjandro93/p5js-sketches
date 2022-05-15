@@ -6,11 +6,17 @@ export const hito1: Sketch = {
   title: 'Hitomezashi Stitch Attempt 1',
   description:
     'Ported from Processing. This was a failed implementation but I saved it because it was interesting.',
+  width: 400,
+  height: 400,
+
   func: (p: p5) => {
     const gridPoints: p5.Vector[][] = [];
 
     p.setup = () => {
-      createCanvasOnParentContainer(p, { width: 400, height: 400 });
+      createCanvasOnParentContainer(p, {
+        width: hito1.width,
+        height: hito1.height,
+      });
       p.frameRate(5);
 
       setupGridPoints(10, 10);

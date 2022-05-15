@@ -15,7 +15,7 @@ export const basicTreeSketch: Sketch = {
     p.setup = () => {
       createCanvasOnParentContainer(p, { useSvg: true });
 
-      tree((p.windowWidth - 10) / 2, p.windowHeight - 10, p.windowHeight / 4);
+      tree(p.width / 2, p.height, p.height / 4);
     };
 
     function tree(startX: number, startY: number, trunkLength: number): void {

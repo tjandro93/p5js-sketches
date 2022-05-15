@@ -6,6 +6,9 @@ export const hito4: Sketch = {
   title: 'Hitomezashi Stitch Attempt ',
   description:
     "Ported from Processing. Trying perlin noise for random function. Pretty sure this isn't working like the Processing onemptied...",
+  width: 600,
+  height: 600,
+
   func: (p: p5) => {
     let gridPoints: p5.Vector[][];
 
@@ -28,7 +31,10 @@ export const hito4: Sketch = {
     const colNoiseValMax = 0;
 
     p.setup = () => {
-      createCanvasOnParentContainer(p, { width: 600, height: 600 });
+      createCanvasOnParentContainer(p, {
+        width: hito4.width,
+        height: hito4.height,
+      });
 
       p.background(255);
       p.fill(0);

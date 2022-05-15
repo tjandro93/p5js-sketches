@@ -1,4 +1,9 @@
-import { ChangeDetectorRef, Component, Inject } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  HostBinding,
+  Inject,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BaseSketchDirective } from '../../directives/base-sketch.directive';
 import { ActivatedSketchRoute } from '../../../../core/types/activated-sketch-route.type';
@@ -13,8 +18,25 @@ import { take } from 'rxjs/operators';
 export class RoutedSketchPageComponent extends BaseSketchDirective {
   public static readonly CANVAS_PARENT_CONTAINER_ID = 'p5js-parent';
 
+  public readonly DEFAULT_CANVAS_WIDTH = '80%';
+  public readonly DEFAULT_CANVAS_HEIGHT = '80%';
+
+  @HostBinding('style.grid-template-columns')
+  get gridTemplateColumns() {
+    return `1fr ${
+      this.route.snapshot.data.width ? 'auto' : this.DEFAULT_CANVAS_WIDTH
+    } 1fr`;
+  }
+
+  @HostBinding('style.grid-template-rows')
+  get gridTemplateRows() {
+    return `1fr ${
+      this.route.snapshot.data.height ? 'auto' : this.DEFAULT_CANVAS_HEIGHT
+    } 1fr`;
+  }
+
   constructor(
-    @Inject(ActivatedRoute) route: ActivatedSketchRoute,
+    @Inject(ActivatedRoute) public route: ActivatedSketchRoute,
     cdRef: ChangeDetectorRef
   ) {
     super(route.data, cdRef);

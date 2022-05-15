@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Directive, OnDestroy, OnInit } from '@angular/core';
 import * as p5 from 'p5';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { delay, takeUntil } from 'rxjs/operators';
 import { Sketch } from '../../../core/types/sketch.type';
 
 @Directive()
@@ -15,16 +15,18 @@ export abstract class BaseSketchDirective implements OnInit, OnDestroy {
   ) {}
 
   public ngOnInit(): void {
-    this.sketch$.pipe(takeUntil(this.destroyed$)).subscribe((sketch) => {
-      // remove any old sketch
-      this.p?.remove();
+    this.sketch$
+      .pipe(delay(0), takeUntil(this.destroyed$))
+      .subscribe((sketch) => {
+        // remove any old sketch
+        this.p?.remove();
 
-      // create new sketch
-      this.p = new p5(sketch.func);
+        // create new sketch
+        this.p = new p5(sketch.func);
 
-      // make sure angular re-renders after adding the canvas
-      this.cdRef.detectChanges();
-    });
+        // make sure angular re-renders after adding the canvas
+        this.cdRef.detectChanges();
+      });
   }
 
   public ngOnDestroy(): void {
