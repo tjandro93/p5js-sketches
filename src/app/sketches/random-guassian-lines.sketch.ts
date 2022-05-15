@@ -1,8 +1,8 @@
 import { Sketch } from '../core/types/sketch.type';
 import * as p5 from 'p5';
 import { createCanvasOnParentContainer } from '../sketch-lib/functions/create-canvas-on-parent-container';
+import { addElementToActionDrawer } from '../sketch-lib/functions/add-element-to-action-drawer';
 
-// TODO sliders are broken. How are p5 inputs going to work in angular? should they become angular controls?
 export const randomGuassianLines: Sketch = {
   title: 'Random Guassian Lines',
   func: (p: p5) => {
@@ -26,44 +26,40 @@ export const randomGuassianLines: Sketch = {
       p.frameRate(15);
 
       const stepButton = p.createButton('Draw once');
-      stepButton.position(175, 5);
+      addElementToActionDrawer(stepButton);
       stepButton.mousePressed(() => {
         drawOnce();
       });
 
       const runButton = p.createButton('Run / Pause');
-      runButton.position(75, 5);
+      addElementToActionDrawer(runButton);
       runButton.mousePressed(() => {
         running = !running;
       });
 
       segmentDiv = p.createDiv('Segments: ' + 100);
-      segmentDiv.style('font-size', '12px');
-      segmentDiv.position(10, 30);
+      addElementToActionDrawer(segmentDiv);
+
       segmentSlider = p.createSlider(1, 500, 100, 1);
-      segmentSlider.position(10, 45);
-      segmentSlider.style('width', '200px');
+      addElementToActionDrawer(segmentSlider);
 
       lineDiv = p.createDiv('Lines: ' + 50);
-      lineDiv.style('font-size', '12px');
-      lineDiv.position(10, 65);
+      addElementToActionDrawer(lineDiv);
+
       lineSlider = p.createSlider(1, 500, 50, 1);
-      lineSlider.position(10, 80);
-      lineSlider.style('width', '200px');
+      addElementToActionDrawer(lineSlider);
 
       gausMeanDiv = p.createDiv('Gaus Mean: ' + 0);
-      gausMeanDiv.style('font-size', '12px');
-      gausMeanDiv.position(10, 100);
+      addElementToActionDrawer(gausMeanDiv);
+
       gausMeanSlider = p.createSlider(-100, 100, 0, 0.1);
-      gausMeanSlider.position(10, 115);
-      gausMeanSlider.style('width', '200px');
+      addElementToActionDrawer(gausMeanSlider);
 
       gausSdDiv = p.createDiv('Gaus SD: ' + 20);
-      gausSdDiv.style('font-size', '12px');
-      gausSdDiv.position(10, 135);
+      addElementToActionDrawer(gausSdDiv);
+
       gausSdSlider = p.createSlider(-100, 100, 20, 1);
-      gausSdSlider.position(10, 150);
-      gausSdSlider.style('width', '200px');
+      addElementToActionDrawer(gausSdSlider);
     };
 
     p.draw = () => {

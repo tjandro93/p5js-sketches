@@ -1,5 +1,6 @@
 import * as p5 from 'p5';
 import { Sketch } from '../core/types/sketch.type';
+import { addElementToActionDrawer } from '../sketch-lib/functions/add-element-to-action-drawer';
 import { createCanvasOnParentContainer } from '../sketch-lib/functions/create-canvas-on-parent-container';
 
 export const randomLines: Sketch = {
@@ -24,44 +25,40 @@ export const randomLines: Sketch = {
       p.frameRate(15);
 
       const stepButton = p.createButton('Draw once');
-      stepButton.position(175, 5);
+      addElementToActionDrawer(stepButton);
       stepButton.mousePressed(() => {
         drawOnce();
       });
 
       const runButton = p.createButton('Run / Pause');
-      runButton.position(75, 5);
+      addElementToActionDrawer(runButton);
       runButton.mousePressed(() => {
         running = !running;
       });
 
       segmentDiv = p.createDiv('Segments: ' + 100);
-      segmentDiv.style('font-size', '12px');
-      segmentDiv.position(10, 30);
+      addElementToActionDrawer(segmentDiv);
+
       segmentSlider = p.createSlider(1, 500, 100, 1);
-      segmentSlider.position(10, 45);
-      segmentSlider.style('width', '200px');
+      addElementToActionDrawer(segmentSlider);
 
       lineDiv = p.createDiv('Lines: ' + 50);
-      lineDiv.style('font-size', '12px');
-      lineDiv.position(10, 65);
+      addElementToActionDrawer(lineDiv);
+
       lineSlider = p.createSlider(1, 500, 50, 1);
-      lineSlider.position(10, 80);
-      lineSlider.style('width', '200px');
+      addElementToActionDrawer(lineSlider);
 
       randomMinDiv = p.createDiv('Random Min: ' + 0);
-      randomMinDiv.style('font-size', '12px');
-      randomMinDiv.position(10, 100);
+      addElementToActionDrawer(randomMinDiv);
+
       randomMinSlider = p.createSlider(-100, 100, -20, 0.1);
-      randomMinSlider.position(10, 115);
-      randomMinSlider.style('width', '200px');
+      addElementToActionDrawer(randomMinSlider);
 
       randomMaxDiv = p.createDiv('Random Max: ' + 20);
-      randomMaxDiv.style('font-size', '12px');
-      randomMaxDiv.position(10, 135);
+      addElementToActionDrawer(randomMaxDiv);
+
       randomMaxSlider = p.createSlider(-100, 100, 20, 1);
-      randomMaxSlider.position(10, 150);
-      randomMaxSlider.style('width', '200px');
+      addElementToActionDrawer(randomMaxSlider);
     };
 
     p.draw = () => {
