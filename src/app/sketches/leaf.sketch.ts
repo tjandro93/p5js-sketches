@@ -86,7 +86,6 @@ export const leaf: Sketch = {
           t
         );
 
-        
         const topBranchControl = {
           x: p5.lerp(branchStartAnchor.x, topBranchEndAnchor.x, t),
           y: p5.lerp(branchStartAnchor.y, topBranchEndAnchor.y, t),
@@ -95,7 +94,7 @@ export const leaf: Sketch = {
           x: p5.lerp(branchStartAnchor.x, bottomBranchEndAnchor.x, t),
           y: p5.lerp(branchStartAnchor.y, bottomBranchEndAnchor.y, t),
         };
-        
+
         // p5.stroke('purple')
         // circle(p5, topBranchControl, 10)
         // p5.stroke('blue')

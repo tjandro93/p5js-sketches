@@ -14,7 +14,7 @@ export * from './functions/vector/line';
 export * from './functions/vector/bezier';
 export * from './functions/vector/bezier-point';
 export * from './functions/vector/point';
-export * from './functions/vector/circle'
+export * from './functions/vector/circle';
 
 // Types
 export * from './types/vector';
