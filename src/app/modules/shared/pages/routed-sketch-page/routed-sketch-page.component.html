@@ -1,23 +1,46 @@
-<div id="p5js-parent" class="mat-elevation-z24"></div>
+<mat-drawer-container [hasBackdrop]="false">
+  <mat-drawer id="action-drawer" #actionDrawer mode="over" position="end">
+    <button
+      *ngIf="(sketch$ | async).canRedraw"
+      mat-mini-fab
+      color="primary"
+      (click)="redraw()"
+    >
+      <mat-icon>refresh</mat-icon>
+    </button>
 
-<div class="action-container">
-  <button
-    *ngIf="(sketch$ | async).canRedraw"
-    mat-mini-fab
-    color="primary"
-    class="redraw"
-    (click)="redraw()"
-  >
-    <mat-icon>refresh</mat-icon>
-  </button>
+    <button
+      *ngIf="(sketch$ | async).isSvg"
+      mat-mini-fab
+      color="primary"
+      (click)="downloadSvg()"
+    >
+      <mat-icon>file_download</mat-icon>
+    </button>
+  </mat-drawer>
 
-  <button
-    *ngIf="(sketch$ | async).isSvg"
-    mat-mini-fab
-    color="primary"
-    class="svg-download"
-    (click)="downloadSvg()"
+  <mat-drawer-content
+    #drawerContent
+    [ngStyle]="{
+      'grid-template-columns': route.snapshot.data.width
+        ? '1fr auto 1fr'
+        : '1fr ' + DEFAULT_CANVAS_WIDTH + ' 1fr',
+      'grid-template-rows': route.snapshot.data.height
+        ? '1fr auto 1fr'
+        : '1fr ' + DEFAULT_CANVAS_HEIGHT + ' 1fr'
+    }"
   >
-    <mat-icon>file_download</mat-icon>
-  </button>
-</div>
+    <div id="p5js-parent" class="mat-elevation-z24"></div>
+
+    <button
+      mat-icon-button
+      class="action-drawer-button"
+      (click)="actionDrawer.toggle()"
+      [style.right.px]="actionDrawerButtonRightPosition(actionDrawer.opened)"
+    >
+      <mat-icon>
+        {{ actionDrawer.opened ? "chevron_right" : "chevron_left" }}
+      </mat-icon>
+    </button>
+  </mat-drawer-content>
+</mat-drawer-container>

@@ -1,8 +1,9 @@
 import {
   ChangeDetectorRef,
   Component,
-  HostBinding,
+  ElementRef,
   Inject,
+  ViewChild,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BaseSketchDirective } from '../../directives/base-sketch.directive';
@@ -21,19 +22,8 @@ export class RoutedSketchPageComponent extends BaseSketchDirective {
   public readonly DEFAULT_CANVAS_WIDTH = '80%';
   public readonly DEFAULT_CANVAS_HEIGHT = '80%';
 
-  @HostBinding('style.grid-template-columns')
-  get gridTemplateColumns() {
-    return `1fr ${
-      this.route.snapshot.data.width ? 'auto' : this.DEFAULT_CANVAS_WIDTH
-    } 1fr`;
-  }
-
-  @HostBinding('style.grid-template-rows')
-  get gridTemplateRows() {
-    return `1fr ${
-      this.route.snapshot.data.height ? 'auto' : this.DEFAULT_CANVAS_HEIGHT
-    } 1fr`;
-  }
+  @ViewChild('actionDrawer', { read: ElementRef })
+  public actionDrawerElement?: ElementRef;
 
   constructor(
     @Inject(ActivatedRoute) public route: ActivatedSketchRoute,
@@ -44,5 +34,11 @@ export class RoutedSketchPageComponent extends BaseSketchDirective {
 
   public downloadSvg(): void {
     this.sketch$.pipe(take(1)).subscribe((sketch) => saveSvg(sketch.title));
+  }
+
+  public actionDrawerButtonRightPosition(drawerOpened: boolean): number {
+    return drawerOpened
+      ? this.actionDrawerElement?.nativeElement?.clientWidth ?? 0
+      : 0;
   }
 }
