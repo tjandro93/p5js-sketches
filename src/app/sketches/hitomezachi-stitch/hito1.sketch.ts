@@ -1,5 +1,5 @@
 import * as p5 from 'p5';
-import { createCanvasOnParentContainer } from 'src/app/sketch-lib/functions/create-canvas-on-parent-container';
+import { createCanvasOnParentContainer } from '../../sketch-lib';
 import { Sketch } from '../../core/types/sketch.type';
 
 export const hito1: Sketch = {

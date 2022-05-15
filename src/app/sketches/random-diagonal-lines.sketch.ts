@@ -1,6 +1,6 @@
 import { Sketch } from '../core/types/sketch.type';
 import * as p5 from 'p5';
-import { createCanvasOnParentContainer } from '../sketch-lib/functions/create-canvas-on-parent-container';
+import { createCanvasOnParentContainer } from '../sketch-lib';
 
 export const randomDiagonalLines: Sketch = {
   title: 'Random Diagonal Lines',

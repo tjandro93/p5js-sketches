@@ -1,5 +1,5 @@
 import * as p5 from 'p5';
-import { ACTION_DRAWER_ID } from '../constants/action-drawer-id';
+import { ACTION_DRAWER_ID } from '../../constants/action-drawer-id';
 
 export function addElementToActionDrawer(
   element: p5.Element,

@@ -1,5 +1,5 @@
 import * as p5 from 'p5';
-import { CANVAS_PARENT_CONTAINER_ID } from '../constants/canvas-parent-container-id';
+import { CANVAS_PARENT_CONTAINER_ID } from '../../constants/canvas-parent-container-id';
 import { getParentContainer } from './get-parent-container';
 
 /**

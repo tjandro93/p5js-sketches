@@ -1,7 +1,9 @@
 import { Sketch } from '../core/types/sketch.type';
 import * as p5 from 'p5';
-import { createCanvasOnParentContainer } from '../sketch-lib/functions/create-canvas-on-parent-container';
-import { addElementToActionDrawer } from '../sketch-lib/functions/add-element-to-action-drawer';
+import {
+  createCanvasOnParentContainer,
+  addElementToActionDrawer,
+} from '../sketch-lib';
 
 export const randomGuassianLines: Sketch = {
   title: 'Random Guassian Lines',

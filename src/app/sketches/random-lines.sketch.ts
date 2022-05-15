@@ -1,7 +1,9 @@
 import * as p5 from 'p5';
 import { Sketch } from '../core/types/sketch.type';
-import { addElementToActionDrawer } from '../sketch-lib/functions/add-element-to-action-drawer';
-import { createCanvasOnParentContainer } from '../sketch-lib/functions/create-canvas-on-parent-container';
+import {
+  addElementToActionDrawer,
+  createCanvasOnParentContainer,
+} from '../sketch-lib';
 
 export const randomLines: Sketch = {
   title: 'Random Lines',
