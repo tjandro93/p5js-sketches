@@ -10,6 +10,7 @@ import { BaseSketchDirective } from '../../directives/base-sketch.directive';
 import { ActivatedSketchRoute } from '../../../../core/types/activated-sketch-route.type';
 import { saveSvg } from 'src/app/core/functions/save-svg';
 import { take } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-routed-sketch-page',
@@ -21,6 +22,12 @@ export class RoutedSketchPageComponent extends BaseSketchDirective {
 
   public readonly DEFAULT_CANVAS_WIDTH = '80%';
   public readonly DEFAULT_CANVAS_HEIGHT = '80%';
+
+  private readonly actionDrawerButtonRightPosition =
+    new BehaviorSubject<number>(0);
+
+  public actionDrawerButtonRightPosition$ =
+    this.actionDrawerButtonRightPosition.asObservable();
 
   @ViewChild('actionDrawer', { read: ElementRef })
   public actionDrawerElement?: ElementRef;
@@ -36,9 +43,9 @@ export class RoutedSketchPageComponent extends BaseSketchDirective {
     this.sketch$.pipe(take(1)).subscribe((sketch) => saveSvg(sketch.title));
   }
 
-  public actionDrawerButtonRightPosition(drawerOpened: boolean): number {
-    return drawerOpened
-      ? this.actionDrawerElement?.nativeElement?.clientWidth ?? 0
-      : 0;
+  public drawerOpenedChange(opened: boolean): void {
+    this.actionDrawerButtonRightPosition.next(
+      opened ? this.actionDrawerElement?.nativeElement?.clientWidth ?? 0 : 0
+    );
   }
 }

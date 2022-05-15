@@ -1,5 +1,13 @@
 <mat-drawer-container [hasBackdrop]="false">
-  <mat-drawer id="action-drawer" #actionDrawer mode="over" position="end">
+  <mat-drawer
+    id="action-drawer"
+    #actionDrawer
+    mode="over"
+    position="end"
+    [opened]="true"
+    (openedStart)="drawerOpenedChange(true)"
+    (closedStart)="drawerOpenedChange(false)"
+  >
     <button
       *ngIf="(sketch$ | async).canRedraw"
       mat-mini-fab
@@ -36,7 +44,7 @@
       mat-icon-button
       class="action-drawer-button"
       (click)="actionDrawer.toggle()"
-      [style.right.px]="actionDrawerButtonRightPosition(actionDrawer.opened)"
+      [style.right.px]="actionDrawerButtonRightPosition$ | async"
     >
       <mat-icon>
         {{ actionDrawer.opened ? "chevron_right" : "chevron_left" }}
