@@ -1,6 +1,7 @@
 import { SketchRoutes } from '../core/types/sketch-routes.type';
 import { RoutedSketchPageComponent } from '../modules/shared/pages/routed-sketch-page/routed-sketch-page.component';
 import { basicTreeSketch } from '../sketches/basic-tree.sketch';
+import { bezierFiddle } from '../sketches/bezier-fiddle.sketch';
 import { hito1 } from '../sketches/hitomezachi-stitch/hito1.sketch';
 import { hito2 } from '../sketches/hitomezachi-stitch/hito2.sketch';
 import { hito3 } from '../sketches/hitomezachi-stitch/hito3.sketch';
@@ -35,6 +36,11 @@ export const SKETCH_ROUTES: SketchRoutes = [
     path: 'leaf',
     component: RoutedSketchPageComponent,
     data: leaf,
+  },
+  {
+    path: 'bezier-fiddle',
+    component: RoutedSketchPageComponent,
+    data: bezierFiddle,
   },
   {
     path: 'hitomezachi',
