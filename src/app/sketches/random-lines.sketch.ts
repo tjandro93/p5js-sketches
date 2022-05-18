@@ -7,6 +7,7 @@ import {
 
 export const randomLines: Sketch = {
   title: 'Random Lines',
+  hasCustomControls: true,
   func: (p: p5) => {
     let running = true;
 

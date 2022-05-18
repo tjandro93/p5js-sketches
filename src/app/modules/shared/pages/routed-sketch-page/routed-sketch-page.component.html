@@ -40,6 +40,7 @@
     <div id="p5js-parent" class="mat-elevation-z24"></div>
 
     <button
+      *ngIf="showActionDrawerButton$ | async"
       mat-icon-button
       class="action-drawer-button"
       (click)="actionDrawer.toggle()"

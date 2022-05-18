@@ -3,7 +3,6 @@ import * as P5 from 'p5';
 import { Sketch } from '../core/types/sketch.type';
 import {
   bezier,
-  circle,
   createCanvasOnParentContainer,
   line,
   Vector,

@@ -8,7 +8,7 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { BaseSketchDirective } from '../../directives/base-sketch.directive';
 import { saveSvg, ActivatedSketchRoute } from '../../../../core';
-import { take } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -27,6 +27,12 @@ export class RoutedSketchPageComponent extends BaseSketchDirective {
 
   public actionDrawerButtonRightPosition$ =
     this.actionDrawerButtonRightPosition.asObservable();
+
+  public showActionDrawerButton$ = this.sketch$.pipe(
+    map(
+      (sketch) => sketch.canRedraw || sketch.isSvg || sketch.hasCustomControls
+    )
+  );
 
   @ViewChild('actionDrawer', { read: ElementRef })
   public actionDrawerElement?: ElementRef;
