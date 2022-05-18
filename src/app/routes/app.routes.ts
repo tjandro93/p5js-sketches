@@ -1,4 +1,4 @@
-import { SketchRoutes } from '../core/types/sketch-routes.type';
+import { SketchRoutes } from '../core';
 import { SidenavPageComponent } from '../modules/shared/pages/sidenav-page/sidenav-page.component';
 import { SKETCH_ROUTES } from './sketch.routes';
 

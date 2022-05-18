@@ -7,8 +7,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BaseSketchDirective } from '../../directives/base-sketch.directive';
-import { ActivatedSketchRoute } from '../../../../core/types/activated-sketch-route.type';
-import { saveSvg } from 'src/app/core/functions/save-svg';
+import { saveSvg, ActivatedSketchRoute } from '../../../../core';
 import { take } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 

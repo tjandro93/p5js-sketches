@@ -18,3 +18,4 @@ export * from './functions/vector/circle';
 
 // Types
 export * from './types/vector';
+export * from './types/bezier-curve';

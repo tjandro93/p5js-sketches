@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SketchRoute } from 'src/app/core/types/sketch-route.type';
+import { SketchRoute } from '../../../../core';
 import { SKETCH_ROUTES } from 'src/app/routes/sketch.routes';
 import { SketchNavLinkGroup } from './models/sketch-nav-link-group.model';
 import { SketchNavLink } from './models/sketch-nav-link.model';

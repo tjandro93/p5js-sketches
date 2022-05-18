@@ -1,11 +1,11 @@
-import { Sketch } from '../core/types/sketch.type';
+import { Sketch } from '../../core/types/sketch.type';
 import * as P5 from 'p5';
 import {
   addElementToActionDrawer,
   createCanvasOnParentContainer,
   Vector,
-} from '../sketch-lib';
-import { BezierCurve } from '../sketch-lib/types/bezier-curve';
+  BezierCurve,
+} from '../../sketch-lib';
 
 export const bezierFiddle: Sketch = {
   title: 'Bezier fiddle',

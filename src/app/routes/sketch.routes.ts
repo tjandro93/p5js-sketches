@@ -1,7 +1,9 @@
-import { SketchRoutes } from '../core/types/sketch-routes.type';
+import { SketchRoutes } from '../core';
 import { RoutedSketchPageComponent } from '../modules/shared/pages/routed-sketch-page/routed-sketch-page.component';
 import { basicTreeSketch } from '../sketches/basic-tree.sketch';
-import { bezierFiddle } from '../sketches/bezier-fiddle.sketch';
+import { bezierFiddle } from '../sketches/bezier/bezier-fiddle.sketch';
+import { bezierFlow1 } from '../sketches/bezier/bezier-flow-1.sketch';
+import { bezierFlow2Static } from '../sketches/bezier/bezier-flow-2-static.sketch';
 import { hito1 } from '../sketches/hitomezachi-stitch/hito1.sketch';
 import { hito2 } from '../sketches/hitomezachi-stitch/hito2.sketch';
 import { hito3 } from '../sketches/hitomezachi-stitch/hito3.sketch';
@@ -38,9 +40,25 @@ export const SKETCH_ROUTES: SketchRoutes = [
     data: leaf,
   },
   {
-    path: 'bezier-fiddle',
-    component: RoutedSketchPageComponent,
-    data: bezierFiddle,
+    path: 'bezier',
+    collectionTitle: 'Bezier',
+    children: [
+      {
+        path: 'fiddle',
+        component: RoutedSketchPageComponent,
+        data: bezierFiddle,
+      },
+      {
+        path: 'flow-1',
+        component: RoutedSketchPageComponent,
+        data: bezierFlow1,
+      },
+      {
+        path: 'flow-2',
+        component: RoutedSketchPageComponent,
+        data: bezierFlow2Static,
+      },
+    ],
   },
   {
     path: 'hitomezachi',
