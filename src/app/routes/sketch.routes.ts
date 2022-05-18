@@ -3,6 +3,7 @@ import { RoutedSketchPageComponent } from '../modules/shared/pages/routed-sketch
 import { basicTreeSketch } from '../sketches/basic-tree.sketch';
 import { bezierFiddle } from '../sketches/bezier/bezier-fiddle.sketch';
 import { bezierFlow1 } from '../sketches/bezier/bezier-flow-1.sketch';
+import { bezierFlow2Interactive } from '../sketches/bezier/bezier-flow-2-interactive.sketch';
 import { bezierFlow2Static } from '../sketches/bezier/bezier-flow-2-static.sketch';
 import { hito1 } from '../sketches/hitomezachi-stitch/hito1.sketch';
 import { hito2 } from '../sketches/hitomezachi-stitch/hito2.sketch';
@@ -54,9 +55,14 @@ export const SKETCH_ROUTES: SketchRoutes = [
         data: bezierFlow1,
       },
       {
-        path: 'flow-2',
+        path: 'flow-2-static',
         component: RoutedSketchPageComponent,
         data: bezierFlow2Static,
+      },
+      {
+        path: 'flow-2-interactive',
+        component: RoutedSketchPageComponent,
+        data: bezierFlow2Interactive,
       },
     ],
   },

@@ -29,10 +29,8 @@ export abstract class BaseSketchDirective implements OnInit, OnDestroy {
 
         // create new sketch
         this.p = new p5(sketch.func);
-        // this shouldn't technically be needed, but the refresh button wasn't doing anything when using noise();
-        // maybe p5 sets the seed when it's imported????
-        // also look into why you have to click refresh twice for the new one to draw with the different seed????
-        this.p.noiseSeed(this.p.random(0, 100000));
+        // let the sketches decide if they want to set a random noise seed
+        this.p.noiseSeed(868);
 
         // make sure angular re-renders after adding the canvas
         this.cdRef.detectChanges();
