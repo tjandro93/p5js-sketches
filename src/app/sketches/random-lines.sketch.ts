@@ -1,31 +1,32 @@
 import * as p5 from 'p5';
-import { Sketch } from '../core';
+import { ButtonControl, Sketch, SliderControl } from '../core';
 import {
-  addElementToActionDrawer,
   createCanvasOnParentContainer,
   DARK_MODE_BACKGROUND,
   DARK_MODE_FOREGROUND,
 } from '../sketch-lib';
 
+const segmentsSlider = new SliderControl('Segments', 1, 500, 100, 1);
+const linesSlider = new SliderControl('Lines', 1, 500, 50, 1);
+const randomMinSlider = new SliderControl('Random Min', -100, 100, -20, 0.1);
+const randomMaxSlider = new SliderControl('Random Max', -100, 100, 20, 1);
+const runPauseButton = new ButtonControl('Pause');
+const drawOnceButton = new ButtonControl('Draw Once');
+
 export const randomLines: Sketch = {
   title: 'Random Lines',
   controls: {
-    customControls: [], // TODO
+    customControls: [
+      runPauseButton,
+      drawOnceButton,
+      segmentsSlider,
+      linesSlider,
+      randomMinSlider,
+      randomMaxSlider,
+    ],
   },
   func: (p: p5) => {
     let running = true;
-
-    let segmentSlider: p5.Element;
-    let segmentDiv: p5.Element;
-
-    let lineSlider: p5.Element;
-    let lineDiv: p5.Element;
-
-    let randomMinSlider: p5.Element;
-    let randomMinDiv: p5.Element;
-
-    let randomMaxSlider: p5.Element;
-    let randomMaxDiv: p5.Element;
 
     p.setup = () => {
       createCanvasOnParentContainer(p);
@@ -33,49 +34,17 @@ export const randomLines: Sketch = {
       p.background(DARK_MODE_BACKGROUND);
       p.stroke(DARK_MODE_FOREGROUND);
 
-      const stepButton = p.createButton('Draw once');
-      addElementToActionDrawer(stepButton);
-      stepButton.mousePressed(() => {
+      drawOnceButton.onPress = () => {
         drawOnce();
-      });
+      };
 
-      const runButton = p.createButton('Run / Pause');
-      addElementToActionDrawer(runButton);
-      runButton.mousePressed(() => {
+      runPauseButton.onPress = () => {
         running = !running;
-      });
-
-      segmentDiv = p.createDiv('Segments: ' + 100);
-      addElementToActionDrawer(segmentDiv);
-
-      segmentSlider = p.createSlider(1, 500, 100, 1);
-      addElementToActionDrawer(segmentSlider);
-
-      lineDiv = p.createDiv('Lines: ' + 50);
-      addElementToActionDrawer(lineDiv);
-
-      lineSlider = p.createSlider(1, 500, 50, 1);
-      addElementToActionDrawer(lineSlider);
-
-      randomMinDiv = p.createDiv('Random Min: ' + 0);
-      addElementToActionDrawer(randomMinDiv);
-
-      randomMinSlider = p.createSlider(-100, 100, -20, 0.1);
-      addElementToActionDrawer(randomMinSlider);
-
-      randomMaxDiv = p.createDiv('Random Max: ' + 20);
-      addElementToActionDrawer(randomMaxDiv);
-
-      randomMaxSlider = p.createSlider(-100, 100, 20, 1);
-      addElementToActionDrawer(randomMaxSlider);
+        runPauseButton.label$.next(running ? 'Pause' : 'Run');
+      };
     };
 
     p.draw = () => {
-      segmentDiv.elt.innerHTML = 'Segments: ' + segmentSlider.value();
-      lineDiv.elt.innerHTML = 'Lines: ' + lineSlider.value();
-      randomMinDiv.elt.innerHTML = 'Random Min: ' + randomMinSlider.value();
-      randomMaxDiv.elt.innerHTML = 'Random Max: ' + randomMaxSlider.value();
-
       if (running) {
         drawOnce();
       }
@@ -84,26 +53,18 @@ export const randomLines: Sketch = {
     function drawOnce(): void {
       p.background(DARK_MODE_BACKGROUND);
 
-      for (let i = 0; i < lineSlider.value(); i++) {
+      for (let i = 0; i < linesSlider.value; i++) {
         let currentX = p.width / 2;
         let currentY = p.height / 2;
 
-        for (let j = 0; j < segmentSlider.value(); j++) {
+        for (let j = 0; j < segmentsSlider.value; j++) {
           const nextX = p.constrain(
-            currentX +
-              p.random(
-                randomMinSlider.value() as number,
-                randomMaxSlider.value() as number
-              ),
+            currentX + p.random(randomMinSlider.value, randomMaxSlider.value),
             0,
             p.width
           );
           const nextY = p.constrain(
-            currentY +
-              p.random(
-                randomMinSlider.value() as number,
-                randomMaxSlider.value() as number
-              ),
+            currentY + p.random(randomMinSlider.value, randomMaxSlider.value),
             0,
             p.height
           );

@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Directive, OnDestroy, OnInit } from '@angular/core';
 import * as p5 from 'p5';
 import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
-import { delay, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { removeCanvasFromParentContainer } from 'src/app/sketch-lib';
 import { Sketch } from '../../../core';
 
@@ -18,7 +18,7 @@ export abstract class BaseSketchDirective implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     combineLatest([this.sketch$, this.redrawSubject])
-      .pipe(delay(0), takeUntil(this.destroyed$))
+      .pipe(takeUntil(this.destroyed$))
       .subscribe(([sketch]) => {
         // remove any old sketch
         this.p?.remove();

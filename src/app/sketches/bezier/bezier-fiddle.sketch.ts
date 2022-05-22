@@ -1,7 +1,6 @@
-import { Sketch } from '../../core';
+import { ButtonControl, Sketch } from '../../core';
 import * as P5 from 'p5';
 import {
-  addElementToActionDrawer,
   createCanvasOnParentContainer,
   Vector,
   BezierCurve,
@@ -9,10 +8,12 @@ import {
   DARK_MODE_FOREGROUND,
 } from '../../sketch-lib';
 
+const newCurveButton = new ButtonControl('Add new curve');
+
 export const bezierFiddle: Sketch = {
   title: 'Bezier fiddle',
   controls: {
-    customControls: [], // TODO
+    customControls: [newCurveButton],
   },
   func: (p5: P5) => {
     const curves: BezierCurve[] = [];
@@ -27,9 +28,7 @@ export const bezierFiddle: Sketch = {
       p5.strokeWeight(2);
       p5.noFill();
 
-      const newCurveButton = p5.createButton('Add new curve');
-      addElementToActionDrawer(newCurveButton);
-      newCurveButton.mousePressed(() => {
+      newCurveButton.onPress = () => {
         curves.push(
           new BezierCurve(
             p5,
@@ -43,7 +42,7 @@ export const bezierFiddle: Sketch = {
             }
           )
         );
-      });
+      };
 
       curves.push(
         new BezierCurve(

@@ -4,16 +4,7 @@ import { SketchControlType } from './sketch-control-type';
 import { SliderControl } from './slider-control';
 
 export abstract class SketchControl {
-  public abstract type: SketchControlType;
-  private _id: string;
-
-  constructor(id: string) {
-    this._id = id;
-  }
-
-  get id(): string {
-    return this._id;
-  }
+  public abstract readonly type: SketchControlType;
 
   public static isSliderControl(
     control: SketchControl

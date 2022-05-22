@@ -1,0 +1,46 @@
+<button
+  *ngIf="controls?.refreshButton"
+  mat-mini-fab
+  color="primary"
+  (click)="redraw.emit()"
+>
+  <mat-icon>refresh</mat-icon>
+</button>
+
+<button
+  *ngIf="controls?.downloadButton"
+  mat-mini-fab
+  color="primary"
+  (click)="download.emit()"
+>
+  <mat-icon>file_download</mat-icon>
+</button>
+
+<ng-container *ngIf="controls?.customControls">
+  <ng-container *ngFor="let control of controls.customControls">
+    <ng-container [ngSwitch]="control.type">
+      <div *ngSwitchCase="SketchControlType.Slider" class="slider-control">
+        <label>{{ control.label$ | async }}: {{ slider.value }}</label>
+        <mat-slider
+          #slider
+          [id]="control.id"
+          [min]="control.min$ | async"
+          [max]="control.max$ | async"
+          [value]="control.value$ | async"
+          [step]="control.step$ | async"
+          (input)="control.value$.next($event.value)"
+        >
+        </mat-slider>
+      </div>
+      <button
+        *ngSwitchCase="SketchControlType.Button"
+        mat-flat-button
+        [color]="control.color$ | async"
+        [disabled]="control.disabled$ | async"
+        (click)="control.onPress()"
+      >
+        {{ control.label$ | async }}
+      </button>
+    </ng-container>
+  </ng-container>
+</ng-container>

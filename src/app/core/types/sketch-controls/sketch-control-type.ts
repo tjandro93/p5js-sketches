@@ -1,4 +1,4 @@
-export const enum SketchControlType {
+export enum SketchControlType {
   Slider,
   Button,
   NumberInput,

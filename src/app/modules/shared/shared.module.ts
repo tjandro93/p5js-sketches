@@ -11,6 +11,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSliderModule } from '@angular/material/slider';
+import { SketchControlsComponent } from './components/sketch-controls/sketch-controls.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
     SidenavLinkGroupComponent,
     SidenavLinkComponent,
     SidenavLinkListComponent,
+    SketchControlsComponent,
   ],
   imports: [
     // Angular
@@ -30,6 +33,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatDividerModule,
     MatButtonModule,
     MatIconModule,
+    MatSliderModule,
   ],
   exports: [
     // Angular Material
@@ -38,6 +42,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatDividerModule,
     MatButtonModule,
     MatIconModule,
+    MatSliderModule,
     // App
     RoutedSketchPageComponent,
   ],

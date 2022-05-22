@@ -7,23 +7,13 @@
     (openedStart)="drawerOpenedChange(true)"
     (closedStart)="drawerOpenedChange(false)"
   >
-    <button
-      *ngIf="(sketch$ | async)?.controls?.refreshButton"
-      mat-mini-fab
-      color="primary"
-      (click)="redraw()"
+    <app-sketch-controls
+      *ngIf="(sketch$ | async)?.controls as controls"
+      [controls]="controls"
+      (redraw)="redraw()"
+      (download)="download()"
     >
-      <mat-icon>refresh</mat-icon>
-    </button>
-
-    <button
-      *ngIf="(sketch$ | async)?.controls?.downloadButton"
-      mat-mini-fab
-      color="primary"
-      (click)="downloadSvg()"
-    >
-      <mat-icon>file_download</mat-icon>
-    </button>
+    </app-sketch-controls>
   </mat-drawer>
 
   <mat-drawer-content

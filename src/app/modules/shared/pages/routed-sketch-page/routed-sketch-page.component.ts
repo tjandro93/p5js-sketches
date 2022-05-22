@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BaseSketchDirective } from '../../directives/base-sketch.directive';
-import { saveSvg, ActivatedSketchRoute } from '../../../../core';
+import { saveSvg, ActivatedSketchRoute, saveCanvasPng } from '../../../../core';
 import { map, take } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 
@@ -47,8 +47,14 @@ export class RoutedSketchPageComponent extends BaseSketchDirective {
     super(route.data, cdRef);
   }
 
-  public downloadSvg(): void {
-    this.sketch$.pipe(take(1)).subscribe((sketch) => saveSvg(sketch.title));
+  public download(): void {
+    this.sketch$.pipe(take(1)).subscribe((sketch) => {
+      if (sketch.isSvg) {
+        saveSvg(sketch.title);
+      } else {
+        saveCanvasPng(sketch.title);
+      }
+    });
   }
 
   public drawerOpenedChange(opened: boolean): void {

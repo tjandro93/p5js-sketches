@@ -1,31 +1,32 @@
-import { Sketch } from '../core';
+import { ButtonControl, Sketch, SliderControl } from '../core';
 import * as p5 from 'p5';
 import {
   createCanvasOnParentContainer,
-  addElementToActionDrawer,
   DARK_MODE_BACKGROUND,
   DARK_MODE_FOREGROUND,
 } from '../sketch-lib';
 
+const runPauseButton = new ButtonControl('Pause');
+const drawOnceButton = new ButtonControl('Draw Once');
+const segmentSlider = new SliderControl('Segments', 1, 500, 100, 1);
+const lineSlider = new SliderControl('Lines', 1, 500, 50, 1);
+const gausMeanSlider = new SliderControl('Gaus Mean', -100, 100, 0, 0.1);
+const gausSdSlider = new SliderControl('Gaus SD', -100, 100, 20, 1);
+
 export const randomGuassianLines: Sketch = {
   title: 'Random Guassian Lines',
   controls: {
-    customControls: [], // TODO
+    customControls: [
+      runPauseButton,
+      drawOnceButton,
+      segmentSlider,
+      lineSlider,
+      gausMeanSlider,
+      gausSdSlider,
+    ],
   },
   func: (p: p5) => {
     let running = true;
-
-    let segmentSlider: p5.Element;
-    let segmentDiv: p5.Element;
-
-    let lineSlider: p5.Element;
-    let lineDiv: p5.Element;
-
-    let gausMeanSlider: p5.Element;
-    let gausMeanDiv: p5.Element;
-
-    let gausSdSlider: p5.Element;
-    let gausSdDiv: p5.Element;
 
     p.setup = () => {
       createCanvasOnParentContainer(p);
@@ -34,49 +35,17 @@ export const randomGuassianLines: Sketch = {
       p.background(DARK_MODE_BACKGROUND);
       p.stroke(DARK_MODE_FOREGROUND);
 
-      const stepButton = p.createButton('Draw once');
-      addElementToActionDrawer(stepButton);
-      stepButton.mousePressed(() => {
+      drawOnceButton.onPress = () => {
         drawOnce();
-      });
+      };
 
-      const runButton = p.createButton('Run / Pause');
-      addElementToActionDrawer(runButton);
-      runButton.mousePressed(() => {
+      runPauseButton.onPress = () => {
         running = !running;
-      });
-
-      segmentDiv = p.createDiv('Segments: ' + 100);
-      addElementToActionDrawer(segmentDiv);
-
-      segmentSlider = p.createSlider(1, 500, 100, 1);
-      addElementToActionDrawer(segmentSlider);
-
-      lineDiv = p.createDiv('Lines: ' + 50);
-      addElementToActionDrawer(lineDiv);
-
-      lineSlider = p.createSlider(1, 500, 50, 1);
-      addElementToActionDrawer(lineSlider);
-
-      gausMeanDiv = p.createDiv('Gaus Mean: ' + 0);
-      addElementToActionDrawer(gausMeanDiv);
-
-      gausMeanSlider = p.createSlider(-100, 100, 0, 0.1);
-      addElementToActionDrawer(gausMeanSlider);
-
-      gausSdDiv = p.createDiv('Gaus SD: ' + 20);
-      addElementToActionDrawer(gausSdDiv);
-
-      gausSdSlider = p.createSlider(-100, 100, 20, 1);
-      addElementToActionDrawer(gausSdSlider);
+        runPauseButton.label$.next(running ? 'Pause' : 'Run');
+      };
     };
 
     p.draw = () => {
-      segmentDiv.elt.innerHTML = 'Segments: ' + segmentSlider.value();
-      lineDiv.elt.innerHTML = 'Lines: ' + lineSlider.value();
-      gausMeanDiv.elt.innerHTML = 'Gaus Mean: ' + gausMeanSlider.value();
-      gausSdDiv.elt.innerHTML = 'Gaus SD: ' + gausSdSlider.value();
-
       if (running) {
         drawOnce();
       }
@@ -85,26 +54,20 @@ export const randomGuassianLines: Sketch = {
     function drawOnce(): void {
       p.background(DARK_MODE_BACKGROUND);
 
-      for (let i = 0; i < lineSlider.value(); i++) {
+      for (let i = 0; i < lineSlider.value; i++) {
         let currentX = p.width / 2;
         let currentY = p.height / 2;
 
-        for (let j = 0; j < segmentSlider.value(); j++) {
+        for (let j = 0; j < segmentSlider.value; j++) {
           const nextX = p.constrain(
             currentX +
-              p.randomGaussian(
-                gausMeanSlider.value() as number,
-                gausSdSlider.value() as number
-              ),
+              p.randomGaussian(gausMeanSlider.value, gausSdSlider.value),
             0,
             p.width
           );
           const nextY = p.constrain(
             currentY +
-              p.randomGaussian(
-                gausMeanSlider.value() as number,
-                gausSdSlider.value() as number
-              ),
+              p.randomGaussian(gausMeanSlider.value, gausSdSlider.value),
             0,
             p.height
           );

@@ -1,5 +1,6 @@
 // function
 export * from './functions/save-svg';
+export * from './functions/save-canvas-png';
 
 // types
 export * from './types/activated-sketch-route-snapshot';
