@@ -10,8 +10,10 @@ export const randomDiagonalLines: Sketch = {
   title: 'Random Diagonal Lines',
   width: 800,
   height: 800,
-  isSvg: true,
-  canRedraw: true,
+  controls: {
+    refreshButton: true,
+    downloadButton: true,
+  },
 
   func: (p: p5) => {
     p.setup = () => {

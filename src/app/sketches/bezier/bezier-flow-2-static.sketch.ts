@@ -10,8 +10,10 @@ import {
 
 export const bezierFlow2Static: Sketch = {
   title: 'Bezier flow 2 (static)',
-  isSvg: true,
-  canRedraw: true,
+  controls: {
+    refreshButton: true,
+    downloadButton: true,
+  },
   func: (p5: P5) => {
     const FLOW_LINE_COUNT = 10;
     const FLOW_COUNT = 10;

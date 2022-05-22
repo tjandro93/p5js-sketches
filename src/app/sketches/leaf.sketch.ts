@@ -13,10 +13,12 @@ import {
 
 export const leaf: Sketch = {
   title: 'Leaf',
-  isSvg: true,
-  canRedraw: true,
   width: 600,
   height: 400,
+  controls: {
+    refreshButton: true,
+    downloadButton: true,
+  },
   func: (p5: P5) => {
     let stemStart: Vector;
     let stemEnd: Vector;

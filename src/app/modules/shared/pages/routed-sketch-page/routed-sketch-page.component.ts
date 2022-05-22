@@ -30,7 +30,10 @@ export class RoutedSketchPageComponent extends BaseSketchDirective {
 
   public showActionDrawerButton$ = this.sketch$.pipe(
     map(
-      (sketch) => sketch.canRedraw || sketch.isSvg || sketch.hasCustomControls
+      (sketch) =>
+        sketch.controls?.refreshButton ||
+        sketch.controls?.downloadButton ||
+        sketch.controls?.customControls
     )
   );
 

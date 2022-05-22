@@ -9,7 +9,9 @@ import {
 
 export const randomGuassianLines: Sketch = {
   title: 'Random Guassian Lines',
-  hasCustomControls: true,
+  controls: {
+    customControls: [], // TODO
+  },
   func: (p: p5) => {
     let running = true;
 

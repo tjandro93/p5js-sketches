@@ -12,8 +12,10 @@ export const bezierFlow1: Sketch = {
   title: 'Bezier flow 1',
   width: 800,
   height: 600,
-  isSvg: true,
-  canRedraw: true,
+  controls: {
+    refreshButton: true,
+    downloadButton: true,
+  },
   func: (p5: P5) => {
     const FLOW_LINE_COUNT = 10;
     const FLOW_COUNT = 10;

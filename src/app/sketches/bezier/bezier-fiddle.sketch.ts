@@ -11,7 +11,9 @@ import {
 
 export const bezierFiddle: Sketch = {
   title: 'Bezier fiddle',
-  hasCustomControls: true,
+  controls: {
+    customControls: [], // TODO
+  },
   func: (p5: P5) => {
     const curves: BezierCurve[] = [];
     let draggedPoint: Vector | undefined;

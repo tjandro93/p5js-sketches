@@ -8,8 +8,10 @@ import {
 
 export const basicTreeSketch: Sketch = {
   title: 'Basic Tree',
-  isSvg: true,
-  canRedraw: true,
+  controls: {
+    refreshButton: true,
+    downloadButton: true,
+  },
 
   func: (p: p5) => {
     const SHRINK_MEAN = 0.65;
