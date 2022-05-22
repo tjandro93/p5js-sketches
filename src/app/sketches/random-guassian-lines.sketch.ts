@@ -3,6 +3,8 @@ import * as p5 from 'p5';
 import {
   createCanvasOnParentContainer,
   addElementToActionDrawer,
+  DARK_MODE_BACKGROUND,
+  DARK_MODE_FOREGROUND,
 } from '../sketch-lib';
 
 export const randomGuassianLines: Sketch = {
@@ -27,6 +29,8 @@ export const randomGuassianLines: Sketch = {
       createCanvasOnParentContainer(p);
 
       p.frameRate(15);
+      p.background(DARK_MODE_BACKGROUND);
+      p.stroke(DARK_MODE_FOREGROUND);
 
       const stepButton = p.createButton('Draw once');
       addElementToActionDrawer(stepButton);
@@ -77,7 +81,7 @@ export const randomGuassianLines: Sketch = {
     };
 
     function drawOnce(): void {
-      p.background('white');
+      p.background(DARK_MODE_BACKGROUND);
 
       for (let i = 0; i < lineSlider.value(); i++) {
         let currentX = p.width / 2;

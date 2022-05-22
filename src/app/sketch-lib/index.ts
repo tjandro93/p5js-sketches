@@ -1,6 +1,8 @@
 // Constants
 export * from './constants/action-drawer-id';
 export * from './constants/canvas-parent-container-id';
+export * from './constants/colors/dark-mode-background';
+export * from './constants/colors/dark-mode-foreground';
 
 // Functions
 // Dom manipulation functions

@@ -1,5 +1,9 @@
 import * as p5 from 'p5';
-import { createCanvasOnParentContainer } from '../../sketch-lib';
+import {
+  createCanvasOnParentContainer,
+  DARK_MODE_BACKGROUND,
+  DARK_MODE_FOREGROUND,
+} from '../../sketch-lib';
 import { Sketch } from '../../core/types/sketch.type';
 
 export const hito1: Sketch = {
@@ -18,14 +22,17 @@ export const hito1: Sketch = {
         height: hito1.height,
       });
       p.frameRate(5);
+      p.background(DARK_MODE_BACKGROUND);
+      p.fill(DARK_MODE_FOREGROUND);
+      p.stroke(DARK_MODE_FOREGROUND);
+      p.strokeWeight(5);
 
       setupGridPoints(10, 10);
     };
 
     p.draw = () => {
-      p.background(255);
-      p.fill(0);
-      showGridPoints();
+      p.background(DARK_MODE_BACKGROUND);
+      // showGridPoints();
       patternHorizontal();
       patternVertical();
     };
@@ -60,8 +67,6 @@ export const hito1: Sketch = {
           const startPoint = gridPoints[i][j];
           const endPoint = gridPoints[i + 1][j];
 
-          p.stroke(0);
-          p.strokeWeight(5);
           if (p.random(1) > 0.5) {
             p.line(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
           }
@@ -75,8 +80,6 @@ export const hito1: Sketch = {
           const startPoint = gridPoints[i][j];
           const endPoint = gridPoints[i][j + 1];
 
-          p.stroke(0);
-          p.strokeWeight(5);
           if (p.random(1) > 0.5) {
             p.line(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
           }

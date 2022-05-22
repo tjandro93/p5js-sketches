@@ -1,5 +1,9 @@
 import * as p5 from 'p5';
-import { createCanvasOnParentContainer } from '../../sketch-lib';
+import {
+  createCanvasOnParentContainer,
+  DARK_MODE_BACKGROUND,
+  DARK_MODE_FOREGROUND,
+} from '../../sketch-lib';
 import { Sketch } from '../../core/types/sketch.type';
 
 export const hito4: Sketch = {
@@ -36,19 +40,18 @@ export const hito4: Sketch = {
         height: hito4.height,
       });
 
-      p.background(255);
-      p.fill(0);
-      // p.frameRate(5);
-      p.stroke(0);
+      p.background(DARK_MODE_BACKGROUND);
+      p.fill(DARK_MODE_FOREGROUND);
+      p.stroke(DARK_MODE_FOREGROUND);
+      p.strokeWeight(2);
       p.strokeCap(p.ROUND);
-      p.strokeWeight(5);
 
+      // p.frameRate(5);
       setupGridPoints(30, 30);
     };
 
     p.draw = () => {
-      p.background(255);
-      p.strokeWeight(2);
+      p.background(DARK_MODE_BACKGROUND);
 
       rowNoiseValScale = 0.5;
       colNoiseValScale = 0.5;
@@ -190,8 +193,10 @@ export const hito4: Sketch = {
       noiseValMax: number
     ): void {
       const alpha = pInst.map(noiseVal, noiseValMin, noiseValMax, 50, 255);
-      pInst.stroke(0, alpha);
+      pInst.push();
+      pInst.stroke(DARK_MODE_FOREGROUND, alpha);
       pInst.line(start.x, start.y, end.x, end.y);
+      pInst.pop();
     }
   },
 };

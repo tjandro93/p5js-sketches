@@ -3,6 +3,8 @@ import { Sketch } from '../core/types/sketch.type';
 import {
   addElementToActionDrawer,
   createCanvasOnParentContainer,
+  DARK_MODE_BACKGROUND,
+  DARK_MODE_FOREGROUND,
 } from '../sketch-lib';
 
 export const randomLines: Sketch = {
@@ -26,6 +28,8 @@ export const randomLines: Sketch = {
     p.setup = () => {
       createCanvasOnParentContainer(p);
       p.frameRate(15);
+      p.background(DARK_MODE_BACKGROUND);
+      p.stroke(DARK_MODE_FOREGROUND);
 
       const stepButton = p.createButton('Draw once');
       addElementToActionDrawer(stepButton);
@@ -76,7 +80,7 @@ export const randomLines: Sketch = {
     };
 
     function drawOnce(): void {
-      p.background('white');
+      p.background(DARK_MODE_BACKGROUND);
 
       for (let i = 0; i < lineSlider.value(); i++) {
         let currentX = p.width / 2;

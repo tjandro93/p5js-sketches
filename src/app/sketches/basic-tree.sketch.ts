@@ -1,6 +1,10 @@
 import { Sketch } from '../core/types/sketch.type';
 import * as p5 from 'p5';
-import { createCanvasOnParentContainer } from '../sketch-lib';
+import {
+  createCanvasOnParentContainer,
+  DARK_MODE_BACKGROUND,
+  DARK_MODE_FOREGROUND,
+} from '../sketch-lib';
 
 export const basicTreeSketch: Sketch = {
   title: 'Basic Tree',
@@ -16,6 +20,8 @@ export const basicTreeSketch: Sketch = {
 
     p.setup = () => {
       createCanvasOnParentContainer(p, { useSvg: true });
+      p.background(DARK_MODE_BACKGROUND);
+      p.stroke(DARK_MODE_FOREGROUND);
 
       tree(p.width / 2, p.height, p.height / 4);
     };

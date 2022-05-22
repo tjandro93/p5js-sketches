@@ -3,6 +3,8 @@ import { Sketch } from 'src/app/core';
 import {
   bezier,
   createCanvasOnParentContainer,
+  DARK_MODE_BACKGROUND,
+  DARK_MODE_FOREGROUND,
   Vector,
 } from 'src/app/sketch-lib';
 
@@ -17,14 +19,15 @@ export const bezierFlow2Interactive: Sketch = {
     p5.setup = () => {
       createCanvasOnParentContainer(p5);
 
-      p5.background(255);
+      p5.background(DARK_MODE_BACKGROUND);
+      p5.stroke(DARK_MODE_FOREGROUND);
       p5.strokeWeight(1);
       p5.noFill();
       p5.angleMode(p5.DEGREES);
     };
 
     p5.draw = () => {
-      p5.background(255);
+      p5.background(DARK_MODE_BACKGROUND);
       const flowSpacing = p5.width / FLOW_COUNT;
       for (let i = 0; i <= FLOW_COUNT; i++) {
         drawFlow({ x: flowSpacing * i, y: 0 }, i);
@@ -34,12 +37,32 @@ export const bezierFlow2Interactive: Sketch = {
         const anchor2Spacing = p5.width / FLOW_LINE_COUNT;
         for (let i = 0; i <= FLOW_LINE_COUNT; i++) {
           const control1 = {
-            x: p5.width * p5.noise(anchorIndex * POSITION_NOISE_STEP, p5.frameCount * TIME_NOISE_STEP),
-            y: p5.height * p5.noise(i * POSITION_NOISE_STEP, p5.frameCount * TIME_NOISE_STEP),
+            x:
+              p5.width *
+              p5.noise(
+                anchorIndex * POSITION_NOISE_STEP,
+                p5.frameCount * TIME_NOISE_STEP
+              ),
+            y:
+              p5.height *
+              p5.noise(
+                i * POSITION_NOISE_STEP,
+                p5.frameCount * TIME_NOISE_STEP
+              ),
           };
           const control2 = {
-            x: p5.width * p5.noise(i * POSITION_NOISE_STEP, p5.frameCount * TIME_NOISE_STEP),
-            y: p5.height * p5.noise(anchorIndex * POSITION_NOISE_STEP, p5.frameCount * TIME_NOISE_STEP),
+            x:
+              p5.width *
+              p5.noise(
+                i * POSITION_NOISE_STEP,
+                p5.frameCount * TIME_NOISE_STEP
+              ),
+            y:
+              p5.height *
+              p5.noise(
+                anchorIndex * POSITION_NOISE_STEP,
+                p5.frameCount * TIME_NOISE_STEP
+              ),
           };
 
           const anchor2 = {

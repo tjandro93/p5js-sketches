@@ -3,6 +3,8 @@ import { Sketch } from 'src/app/core';
 import {
   bezier,
   createCanvasOnParentContainer,
+  DARK_MODE_BACKGROUND,
+  DARK_MODE_FOREGROUND,
   Vector,
 } from 'src/app/sketch-lib';
 
@@ -20,7 +22,8 @@ export const bezierFlow2Static: Sketch = {
         useSvg: true,
       });
 
-      p5.background(255);
+      p5.background(DARK_MODE_BACKGROUND);
+      p5.stroke(DARK_MODE_FOREGROUND);
       p5.noFill();
       p5.angleMode(p5.DEGREES);
       p5.noiseSeed(p5.random(0, 10000));

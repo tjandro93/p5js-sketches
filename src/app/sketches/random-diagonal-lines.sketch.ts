@@ -1,6 +1,10 @@
 import { Sketch } from '../core/types/sketch.type';
 import * as p5 from 'p5';
-import { createCanvasOnParentContainer } from '../sketch-lib';
+import {
+  createCanvasOnParentContainer,
+  DARK_MODE_BACKGROUND,
+  DARK_MODE_FOREGROUND,
+} from '../sketch-lib';
 
 export const randomDiagonalLines: Sketch = {
   title: 'Random Diagonal Lines',
@@ -16,6 +20,9 @@ export const randomDiagonalLines: Sketch = {
         width: randomDiagonalLines.width,
         height: randomDiagonalLines.height,
       });
+
+      p.background(DARK_MODE_BACKGROUND);
+      p.stroke(DARK_MODE_FOREGROUND);
 
       const xTiles = 20;
       const yTiles = 20;

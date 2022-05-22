@@ -5,6 +5,8 @@ import {
   createCanvasOnParentContainer,
   Vector,
   BezierCurve,
+  DARK_MODE_BACKGROUND,
+  DARK_MODE_FOREGROUND,
 } from '../../sketch-lib';
 
 export const bezierFiddle: Sketch = {
@@ -17,8 +19,9 @@ export const bezierFiddle: Sketch = {
     p5.setup = () => {
       createCanvasOnParentContainer(p5);
 
-      p5.background(255);
-      p5.stroke(0);
+      p5.background(DARK_MODE_BACKGROUND);
+      p5.fill(DARK_MODE_BACKGROUND);
+      p5.stroke(DARK_MODE_FOREGROUND);
       p5.strokeWeight(2);
       p5.noFill();
 
@@ -56,7 +59,7 @@ export const bezierFiddle: Sketch = {
     };
 
     p5.draw = () => {
-      p5.background(255);
+      p5.background(DARK_MODE_BACKGROUND);
       curves.forEach((curve) => {
         if (p5.mouseIsPressed && draggedPoint != null) {
           draggedPoint.x = p5.mouseX;

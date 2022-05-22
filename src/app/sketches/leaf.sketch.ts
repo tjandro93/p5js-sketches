@@ -7,6 +7,8 @@ import {
   line,
   Vector,
   bezierPoint,
+  DARK_MODE_BACKGROUND,
+  DARK_MODE_FOREGROUND,
 } from '../sketch-lib';
 
 export const leaf: Sketch = {
@@ -30,8 +32,8 @@ export const leaf: Sketch = {
         height: leaf.height,
       });
 
-      p5.background(255);
-      p5.stroke(0);
+      p5.background(DARK_MODE_BACKGROUND);
+      p5.stroke(DARK_MODE_FOREGROUND);
       p5.strokeWeight(1);
       p5.noFill();
 
