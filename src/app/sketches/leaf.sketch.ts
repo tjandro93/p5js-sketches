@@ -1,6 +1,6 @@
 import * as P5 from 'p5';
 
-import { Sketch } from '../core/types/sketch.type';
+import { Sketch } from '../core';
 import {
   bezier,
   createCanvasOnParentContainer,

@@ -4,7 +4,7 @@ import {
   DARK_MODE_BACKGROUND,
   DARK_MODE_FOREGROUND,
 } from '../../sketch-lib';
-import { Sketch } from '../../core/types/sketch.type';
+import { Sketch } from '../../core';
 
 export const hito2: Sketch = {
   title: 'Hitomezashi Stitch Attempt 2',

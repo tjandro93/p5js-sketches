@@ -1,4 +1,4 @@
-import { Sketch } from '../core/types/sketch.type';
+import { Sketch } from '../core';
 import * as p5 from 'p5';
 import {
   createCanvasOnParentContainer,

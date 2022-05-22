@@ -3,7 +3,7 @@ import * as p5 from 'p5';
 import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { delay, takeUntil } from 'rxjs/operators';
 import { removeCanvasFromParentContainer } from 'src/app/sketch-lib';
-import { Sketch } from '../../../core/types/sketch.type';
+import { Sketch } from '../../../core';
 
 @Directive()
 export abstract class BaseSketchDirective implements OnInit, OnDestroy {
