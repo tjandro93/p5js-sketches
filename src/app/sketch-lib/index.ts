@@ -6,7 +6,6 @@ export * from './constants/colors/dark-mode-foreground';
 
 // Functions
 // Dom manipulation functions
-export * from './functions/dom-manipulation/add-element-to-action-drawer';
 export * from './functions/dom-manipulation/attach-canvas-to-parent-container';
 export * from './functions/dom-manipulation/create-canvas-on-parent-container';
 export * from './functions/dom-manipulation/get-parent-container';
