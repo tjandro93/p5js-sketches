@@ -11,7 +11,7 @@ import {
 const newCurveButton = new ButtonControl('Add new curve');
 
 export const bezierFiddle: Sketch = {
-  title: 'Bezier fiddle',
+  title: 'Bezier Fiddle',
   controls: {
     customControls: [newCurveButton],
   },

@@ -9,7 +9,7 @@ import {
 } from 'src/app/sketch-lib';
 
 export const bezierFlow2Static: Sketch = {
-  title: 'Bezier flow 2 (static)',
+  title: 'Bezier Flow 2 (static)',
   controls: {
     refreshButton: true,
     downloadButton: true,

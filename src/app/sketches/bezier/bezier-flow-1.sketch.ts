@@ -9,7 +9,7 @@ import {
 } from 'src/app/sketch-lib';
 
 export const bezierFlow1: Sketch = {
-  title: 'Bezier flow 1',
+  title: 'Bezier Flow 1',
   width: 800,
   height: 600,
   controls: {

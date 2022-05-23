@@ -10,13 +10,25 @@ import {
 
 const runPauseButton = new ButtonControl('Pause');
 const drawOnceButton = new ButtonControl('Draw Once');
-const flowLineCountSlider = new SliderControl("Flow line count", 1, 50, 15, 1);
-const flowCountSlider = new SliderControl("Flow count", 1, 50, 15, 1);
-const positionNoiseStepSlider = new SliderControl("Position noise step", 0, 5, 0.01, 0.001);
-const timeNoiseStepSlider = new SliderControl("Time noise step", 0, 0.05, 0.001, 0.0001);
+const flowLineCountSlider = new SliderControl('Flow line count', 1, 50, 15, 1);
+const flowCountSlider = new SliderControl('Flow count', 1, 50, 15, 1);
+const positionNoiseStepSlider = new SliderControl(
+  'Position noise step',
+  0,
+  5,
+  0.01,
+  0.001
+);
+const timeNoiseStepSlider = new SliderControl(
+  'Time noise step',
+  0,
+  0.05,
+  0.001,
+  0.0001
+);
 
 export const bezierFlow2Interactive: Sketch = {
-  title: 'Bezier flow 2 (interactive)',
+  title: 'Bezier Flow 2 (interactive)',
   controls: {
     customControls: [
       runPauseButton,
@@ -24,8 +36,8 @@ export const bezierFlow2Interactive: Sketch = {
       flowLineCountSlider,
       flowCountSlider,
       positionNoiseStepSlider,
-      timeNoiseStepSlider
-    ]
+      timeNoiseStepSlider,
+    ],
   },
   func: (p5: P5) => {
     let running = true;
@@ -102,7 +114,6 @@ export const bezierFlow2Interactive: Sketch = {
 
           bezier(p5, startAnchor, control1, control2, anchor2);
         }
-
       }
       frameCount++;
     }
