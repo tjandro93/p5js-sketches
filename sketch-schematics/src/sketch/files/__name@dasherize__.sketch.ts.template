@@ -1,0 +1,27 @@
+import * as P5 from 'p5';
+import { Sketch } from 'src/app/core';
+import {
+  createCanvasOnParentContainer,
+  DARK_MODE_BACKGROUND,
+  DARK_MODE_FOREGROUND,
+} from 'src/app/sketch-lib';
+
+export const <%= camelize(name) %>: Sketch = {
+  title: '<%= name %>',
+  controls: {
+    refreshButton: true,
+    downloadButton: true,
+  },
+  func: (p5: P5) => {
+    p5.setup = () => {
+      createCanvasOnParentContainer(p5, {
+        width: <%= name %>.width,
+        height: <%= name %>.height,
+      });
+      p5.background(DARK_MODE_BACKGROUND);
+      p5.stroke(DARK_MODE_FOREGROUND);
+
+      p5.circle(p5.width / 2, p5.height / 2, 100);
+    };
+  },
+};

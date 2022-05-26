@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "ForkSketch",
+  "title": "Fork Sketch",
+  "type": "object",
+  "properties": {
+    "forkSourcePath": {
+      "type": "string",
+      "format": "path",
+      "description": "The path of the sketch to fork"
+    },
+    "forkTargetPath": {
+      "type": "string",
+      "format": "path",
+      "description": "The path to place the forked sketch"
+    },
+    "project": {
+      "type": "string",
+      "description": "The name of the project.",
+      "$default": {
+        "$source": "projectName"
+      }
+    }
+   },
+  "required": [
+    "forkSourcePath"
+  ]
+}

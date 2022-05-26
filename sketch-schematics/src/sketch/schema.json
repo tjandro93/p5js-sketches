@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "GenerateSketch",
+  "title": "Generate Sketch",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "The name of the sketch.",
+      "type": "string"
+    },
+    "path": {
+      "type": "string",
+      "format": "path",
+      "description": "The path to create the sketch.",
+      "visible": false
+    },
+    "project": {
+      "type": "string",
+      "description": "The name of the project.",
+      "$default": {
+        "$source": "projectName"
+      }
+    }
+   },
+  "required": [
+    "name"
+  ]
+}

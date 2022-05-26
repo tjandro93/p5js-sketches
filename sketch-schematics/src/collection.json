@@ -1,0 +1,13 @@
+{
+  "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "fork-sketch": {
+      "description": "A blank schematic.",
+      "factory": "./fork-sketch/index#forkSketch"
+    },
+    "sketch": {
+      "description": "A blank schematic.",
+      "factory": "./sketch/index#sketch"
+    }
+  }
+}
