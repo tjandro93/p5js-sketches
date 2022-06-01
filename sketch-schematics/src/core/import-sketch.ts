@@ -5,6 +5,7 @@ import {
   Tree,
 } from '@angular-devkit/schematics';
 import { InsertChange } from '@schematics/angular/utility/change';
+import * as ts from "typescript";
 
 export function importSketch(
   sketchObjectName: string,
@@ -29,6 +30,8 @@ export function importSketch(
       );
     }
 
+
+    // add `import { <sketchObjectName> } from <sketchPath>;` to routes file
     const updateRecorder = tree.beginUpdate(sketchRoutesPath);
     const insertChange = new InsertChange(
       sketchRoutesPath,
@@ -40,6 +43,10 @@ export function importSketch(
     );
     updateRecorder.insertLeft(insertChange.pos, insertChange.toAdd);
     tree.commitUpdate(updateRecorder);
+
+    const sketchRoutesSource = ts.createSourceFile(sketchRoutesPath, tree.read(sketchRoutesPath)!.toString(), ts.ScriptTarget.Latest);
+
+    console.log(sketchRoutesSource.fileName);
 
     return tree;
   };
