@@ -2,11 +2,11 @@
   "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
   "schematics": {
     "fork-sketch": {
-      "description": "A blank schematic.",
+      "description": "Fork an existing sketch",
       "factory": "./fork-sketch/index#forkSketch"
     },
     "sketch": {
-      "description": "A blank schematic.",
+      "description": "Create a new blank sketch.",
       "factory": "./sketch/index#sketch"
     }
   }

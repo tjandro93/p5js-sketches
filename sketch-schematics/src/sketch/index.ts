@@ -2,7 +2,7 @@ import { strings } from '@angular-devkit/core';
 import {
   apply,
   applyTemplates,
-  branchAndMerge,
+  chain,
   mergeWith,
   move,
   Rule,
@@ -11,6 +11,7 @@ import {
   Tree,
   url,
 } from '@angular-devkit/schematics';
+import { importSketch } from '../core/import-sketch';
 import { Schema } from './schema';
 
 export function sketch(options: Schema): Rule {
@@ -19,11 +20,22 @@ export function sketch(options: Schema): Rule {
       throw new SchematicsException('Option (name) is required');
     }
 
+    const sketchFilename = `${strings.dasherize(options.name)}.sketch.ts`;
+    const sketchPath = `src/app/sketches/${sketchFilename}`;
+    const sketchObjectName = strings.camelize(options.name);
+
+    _context.logger.info(
+      `Creating new sketch (${sketchObjectName} @ ${sketchFilename})`
+    );
+
     const templateSource = apply(url('./files'), [
       applyTemplates({ ...strings, ...options }),
-      move('src/app/sketches')
+      move('src/app/sketches'),
     ]);
 
-    return branchAndMerge(mergeWith(templateSource));
+    return chain([
+      mergeWith(templateSource),
+      importSketch(sketchObjectName, sketchPath),
+    ]);
   };
 }

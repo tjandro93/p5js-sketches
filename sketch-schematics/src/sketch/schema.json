@@ -8,5 +8,5 @@
       "description": "The name of the sketch.",
       "type": "string"
     }
-   }
+  }
 }
