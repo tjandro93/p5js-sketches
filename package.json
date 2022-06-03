@@ -10,7 +10,9 @@
     "e2e": "ng e2e",
     "prettier": "prettier --write .",
     "prettier-and-lint": "npm run prettier && npm run lint",
-    "build-schematics": "cd sketch-schematics && npm install && npm run build"
+    "build-schematics": "cd sketch-schematics && npm install && npm run build",
+    "build-schematics-watch": "cd sketch-schematics && npm install && npm run build-watch",
+    "generate-sketch": "schematics ./sketch-schematics/src/collection.json:sketch --debug=false"
   },
   "private": true,
   "dependencies": {
