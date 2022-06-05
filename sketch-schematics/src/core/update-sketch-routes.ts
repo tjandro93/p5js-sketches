@@ -17,6 +17,11 @@ import {
   isImportDeclaration,
   isArrayLiteralExpression,
   isObjectLiteralExpression,
+  ArrayLiteralExpression,
+  Expression,
+  ObjectLiteralExpression,
+  isStringLiteral,
+  isPropertyAssignment,
 } from 'typescript';
 import {
   ROUTED_SKETCH_COMPONENT_CLASS_NAME,
@@ -149,20 +154,27 @@ function addSketchRouteDefinition(
     .replace(SKETCH_FILE_SUFFIX, '')
     .split('/');
 
-  // remove the last path part. the name of the sketch isn't part of the hierarchal
-  // sketch path
-  sketchPathParts.pop();
+  if (sketchPathParts.length === 0) {
+    throw new Error(`Failed to split '${sketchPathParts}' into path parts`);
+  }
 
   // if this sketch isn't nested at all add it to the root routes
-  if (sketchPathParts.length === 0) {
+  if (sketchPathParts.length === 1) {
     addSketchToRootRoute(
       tree,
       logger,
       sketchRoutesVariableStatement,
-      sketchObjectName
+      sketchObjectName,
+      sketchPathParts
     );
   } else {
-    logger.warn('TODO add sketch to nested route');
+    addSketchToNestedRoute(
+      tree,
+      logger,
+      sketchRoutesVariableStatement,
+      sketchObjectName,
+      sketchPathParts
+    );
   }
 }
 
@@ -211,36 +223,18 @@ function addSketchToRootRoute(
   tree: Tree,
   logger: logging.LoggerApi,
   sketchRoutesVariableStatement: VariableStatement,
-  sketchObjectName: string
+  sketchObjectName: string,
+  sketchPathParts: string[]
 ): void {
-  logger.info(`Adding ${sketchObjectName} route to root.`);
+  logger.info(`Adding ${sketchObjectName} route to as root route.`);
 
-  const sketchRoutesDeclaration =
-    sketchRoutesVariableStatement.declarationList.declarations[0];
-
-  if (
-    sketchRoutesDeclaration == null ||
-    sketchRoutesDeclaration.initializer == null ||
-    !isArrayLiteralExpression(sketchRoutesDeclaration.initializer)
-  ) {
-    throw new Error(
-      `${SKETCH_ROUTES_OBJECT_NAME} is not defined with an array initializer`
-    );
-  }
-
-  // find all root routes
-  // a route is root if it has no `children` property
-  const rootRoutes = sketchRoutesDeclaration.initializer.elements.filter(
-    (element) =>
-      isObjectLiteralExpression(element)
-        ? !element.properties.some(
-            (property) =>
-              property.name != null &&
-              isIdentifier(property.name) &&
-              property.name.escapedText === 'children'
-          )
-        : false
+  const routesInitializer = getRoutesInitializer(
+    logger,
+    sketchRoutesVariableStatement
   );
+
+  // find all non-nested routes
+  const rootRoutes = routesInitializer.elements.filter(isLeafRoute);
 
   if (rootRoutes.length === 0) {
     throw new Error(
@@ -255,7 +249,7 @@ function addSketchToRootRoute(
     insertLocation,
     `
   {
-    path: '${strings.dasherize(sketchObjectName)}',
+    path: '${strings.dasherize(sketchPathParts[0])}',
     component: ${ROUTED_SKETCH_COMPONENT_CLASS_NAME},
     data: ${sketchObjectName}
   },`
@@ -264,4 +258,108 @@ function addSketchToRootRoute(
   const updateRecorder = tree.beginUpdate(SKETCH_ROUTES_PATH);
   updateRecorder.insertRight(insertChange.pos, insertChange.toAdd);
   tree.commitUpdate(updateRecorder);
+}
+
+/** Get the ArrayLiteralExpression defining all the routes */
+function getRoutesInitializer(
+  logger: logging.LoggerApi,
+  sketchRoutesVariableStatement: VariableStatement
+): ArrayLiteralExpression {
+  logger.info(`Getting ${SKETCH_ROUTES_OBJECT_NAME} array initializer.`);
+
+  const sketchRoutesDeclaration =
+    sketchRoutesVariableStatement.declarationList.declarations[0];
+
+  if (
+    sketchRoutesDeclaration == null ||
+    sketchRoutesDeclaration.initializer == null ||
+    !isArrayLiteralExpression(sketchRoutesDeclaration.initializer)
+  ) {
+    throw new Error(
+      `${SKETCH_ROUTES_OBJECT_NAME} is not defined with an array initializer`
+    );
+  }
+
+  return sketchRoutesDeclaration.initializer;
+}
+
+/**
+ * Determine if a route is a parent route
+ */
+function isParentRoute(
+  routeElement: Expression
+): routeElement is ObjectLiteralExpression {
+  return (
+    isObjectLiteralExpression(routeElement) &&
+    routeElement.properties.some(
+      (property) =>
+        property.name != null &&
+        isIdentifier(property.name) &&
+        property.name.escapedText === 'children'
+    )
+  );
+}
+
+/**
+ * Determine if a route is a leaf route
+ */
+function isLeafRoute(
+  routeElement: Expression
+): routeElement is ObjectLiteralExpression {
+  return (
+    isObjectLiteralExpression(routeElement) &&
+    !routeElement.properties.some(
+      (property) =>
+        property.name != null &&
+        isIdentifier(property.name) &&
+        property.name.escapedText === 'children'
+    )
+  );
+}
+
+function addSketchToNestedRoute(
+  tree: Tree,
+  logger: logging.LoggerApi,
+  sketchRoutesVariableStatement: VariableStatement,
+  sketchObjectName: string,
+  sketchPathParts: string[]
+): void {
+  logger.info(`Adding ${sketchObjectName} as child of nested route`);
+
+  const routesInitializer = getRoutesInitializer(
+    logger,
+    sketchRoutesVariableStatement
+  );
+
+  // find all parent routes
+  const parentRoutes = routesInitializer.elements.filter(isParentRoute);
+
+  for (let i = 0; i < sketchPathParts.length; i++) {
+    const currentPathPart = sketchPathParts[i];
+    // find a parent route whose path matches the currentPathPart
+    const parentRoute = findMatchingParentRoute(parentRoutes, currentPathPart);
+
+    if (parentRoute) {
+      // TODO look at it's children for future routes
+    } else {
+      // TODO create a route here. Needs to be as nested as possible
+    }
+  }
+}
+
+function findMatchingParentRoute(
+  parentRoutes: ObjectLiteralExpression[],
+  targetPath: string
+): ObjectLiteralExpression | undefined {
+  return parentRoutes.find((route) =>
+    route.properties.some(
+      (property) =>
+        property.name != null &&
+        isIdentifier(property.name) &&
+        property.name.escapedText === 'path' &&
+        isPropertyAssignment(property) &&
+        isStringLiteral(property.initializer) &&
+        property.initializer.text === targetPath
+    )
+  );
 }
