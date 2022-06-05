@@ -6,8 +6,8 @@ import {
   DARK_MODE_FOREGROUND,
 } from 'src/app/sketch-lib';
 
-export const <%= camelize(name) %>: Sketch = {
-  title: '<%= name %>',
+export const <%= sketchObjectName %>: Sketch = {
+  title: '<%= sketchObjectName %>',
   controls: {
     refreshButton: true,
     downloadButton: true,
@@ -15,8 +15,8 @@ export const <%= camelize(name) %>: Sketch = {
   func: (p5: P5) => {
     p5.setup = () => {
       createCanvasOnParentContainer(p5, {
-        width: <%= name %>.width,
-        height: <%= name %>.height,
+        width: <%= sketchObjectName %>.width,
+        height: <%= sketchObjectName %>.height,
       });
       p5.background(DARK_MODE_BACKGROUND);
       p5.stroke(DARK_MODE_FOREGROUND);

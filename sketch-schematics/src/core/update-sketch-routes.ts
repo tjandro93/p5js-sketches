@@ -1,4 +1,4 @@
-import { logging } from '@angular-devkit/core';
+import { logging, strings } from '@angular-devkit/core';
 import {
   Rule,
   SchematicContext,
@@ -15,12 +15,18 @@ import {
   isIdentifier,
   isVariableDeclaration,
   isImportDeclaration,
+  isArrayLiteralExpression,
+  isObjectLiteralExpression,
 } from 'typescript';
+import {
+  ROUTED_SKETCH_COMPONENT_CLASS_NAME,
+  SKETCH_DIRECTORY_PATH,
+  SKETCH_FILE_SUFFIX,
+  SKETCH_ROUTES_OBJECT_NAME,
+  SKETCH_ROUTES_PATH,
+} from './constants';
 
-const SKETCH_ROUTES_PATH = 'src/app/routes/sketch.routes.ts';
-const SKETCH_ROUTES_OBJECT_NAME = 'SKETCH_ROUTES';
-
-export function importSketch(
+export function updateSketchRoutes(
   sketchObjectName: string,
   sketchPath: string
 ): Rule {
@@ -45,7 +51,7 @@ export function importSketch(
 
     importSketchObject(tree, logger, sketchObjectName, sketchPath);
 
-    addSketchRouteDefinition(tree, logger, sketchObjectName);
+    addSketchRouteDefinition(tree, logger, sketchObjectName, sketchPath);
 
     return tree;
   };
@@ -121,7 +127,8 @@ function getSketchRoutesSource(
 function addSketchRouteDefinition(
   tree: Tree,
   logger: logging.LoggerApi,
-  sketchObjectName: string
+  sketchObjectName: string,
+  sketchPath: string
 ): void {
   logger.info(
     `Adding route definition for ${sketchObjectName} in ${SKETCH_ROUTES_PATH}`
@@ -135,8 +142,27 @@ function addSketchRouteDefinition(
     sketchRoutesSource
   );
 
-  if (sketchRoutesVariableStatement) {
-    logger.info(`Found ${SKETCH_ROUTES_OBJECT_NAME} in ${SKETCH_ROUTES_PATH}`);
+  // parse sketch path into array for hierarchal sketches.
+  // E.g. "src/app/sketches/foo/bar/baz.sketch.ts" becomes ['foo', 'bar', 'baz']
+  const sketchPathParts = sketchPath
+    .slice(SKETCH_DIRECTORY_PATH.length + 1)
+    .replace(SKETCH_FILE_SUFFIX, '')
+    .split('/');
+
+  // remove the last path part. the name of the sketch isn't part of the hierarchal
+  // sketch path
+  sketchPathParts.pop();
+
+  // if this sketch isn't nested at all add it to the root routes
+  if (sketchPathParts.length === 0) {
+    addSketchToRootRoute(
+      tree,
+      logger,
+      sketchRoutesVariableStatement,
+      sketchObjectName
+    );
+  } else {
+    logger.warn('TODO add sketch to nested route');
   }
 }
 
@@ -179,4 +205,63 @@ function findSketchRoutesConstant(
   }
 
   return sketchRoutesVariableStatement;
+}
+
+function addSketchToRootRoute(
+  tree: Tree,
+  logger: logging.LoggerApi,
+  sketchRoutesVariableStatement: VariableStatement,
+  sketchObjectName: string
+): void {
+  logger.info(`Adding ${sketchObjectName} route to root.`);
+
+  const sketchRoutesDeclaration =
+    sketchRoutesVariableStatement.declarationList.declarations[0];
+
+  if (
+    sketchRoutesDeclaration == null ||
+    sketchRoutesDeclaration.initializer == null ||
+    !isArrayLiteralExpression(sketchRoutesDeclaration.initializer)
+  ) {
+    throw new Error(
+      `${SKETCH_ROUTES_OBJECT_NAME} is not defined with an array initializer`
+    );
+  }
+
+  // find all root routes
+  // a route is root if it has no `children` property
+  const rootRoutes = sketchRoutesDeclaration.initializer.elements.filter(
+    (element) =>
+      isObjectLiteralExpression(element)
+        ? !element.properties.some(
+            (property) =>
+              property.name != null &&
+              isIdentifier(property.name) &&
+              property.name.escapedText === 'children'
+          )
+        : false
+  );
+
+  if (rootRoutes.length === 0) {
+    throw new Error(
+      `No existing root routes in ${SKETCH_ROUTES_OBJECT_NAME}. Cannot find location for new sketch`
+    );
+  }
+
+  const insertLocation = rootRoutes[rootRoutes.length - 1].end + 1;
+
+  const insertChange = new InsertChange(
+    SKETCH_ROUTES_PATH,
+    insertLocation,
+    `
+  {
+    path: '${strings.dasherize(sketchObjectName)}',
+    component: ${ROUTED_SKETCH_COMPONENT_CLASS_NAME},
+    data: ${sketchObjectName}
+  },`
+  );
+
+  const updateRecorder = tree.beginUpdate(SKETCH_ROUTES_PATH);
+  updateRecorder.insertRight(insertChange.pos, insertChange.toAdd);
+  tree.commitUpdate(updateRecorder);
 }

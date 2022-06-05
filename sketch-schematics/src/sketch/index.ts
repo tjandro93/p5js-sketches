@@ -11,31 +11,34 @@ import {
   Tree,
   url,
 } from '@angular-devkit/schematics';
-import { importSketch } from '../core/import-sketch';
+import { SKETCH_DIRECTORY_PATH, SKETCH_FILE_SUFFIX } from '../core/constants';
+import { updateSketchRoutes } from '../core/update-sketch-routes';
 import { Schema } from './schema';
 
 export function sketch(options: Schema): Rule {
-  return async (_tree: Tree, _context: SchematicContext) => {
+  return async (_tree: Tree, context: SchematicContext) => {
     if (!options.name) {
       throw new SchematicsException('Option (name) is required');
     }
 
-    const sketchFilename = `${strings.dasherize(options.name)}.sketch.ts`;
-    const sketchPath = `src/app/sketches/${sketchFilename}`;
-    const sketchObjectName = strings.camelize(options.name);
+    const sketchFilename = `${strings.dasherize(
+      options.name
+    )}${SKETCH_FILE_SUFFIX}`;
+    const sketchPath = `${SKETCH_DIRECTORY_PATH}/${sketchFilename}`;
+    const sketchObjectName = strings.camelize(options.name.replace('/', '_'));
 
-    _context.logger.info(
+    context.logger.info(
       `Creating new sketch (${sketchObjectName} @ ${sketchFilename})`
     );
 
     const templateSource = apply(url('./files'), [
-      applyTemplates({ ...strings, ...options }),
-      move('src/app/sketches'),
+      applyTemplates({ sketchObjectName, sketchFilename }),
+      move(SKETCH_DIRECTORY_PATH),
     ]);
 
     return chain([
       mergeWith(templateSource),
-      importSketch(sketchObjectName, sketchPath),
+      updateSketchRoutes(sketchObjectName, sketchPath),
     ]);
   };
 }
