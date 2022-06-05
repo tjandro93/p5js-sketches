@@ -12,7 +12,6 @@ import {
   url,
 } from '@angular-devkit/schematics';
 import { SKETCH_DIRECTORY_PATH, SKETCH_FILE_SUFFIX } from '../core/constants';
-import { updateSketchRoutes } from '../core/update-sketch-routes';
 import { Schema } from './schema';
 
 export function sketch(options: Schema): Rule {
@@ -24,7 +23,6 @@ export function sketch(options: Schema): Rule {
     const sketchFilename = `${strings.dasherize(
       options.name
     )}${SKETCH_FILE_SUFFIX}`;
-    const sketchPath = `${SKETCH_DIRECTORY_PATH}/${sketchFilename}`;
     const sketchObjectName = strings.camelize(options.name.replace('/', '_'));
 
     context.logger.info(
@@ -36,9 +34,6 @@ export function sketch(options: Schema): Rule {
       move(SKETCH_DIRECTORY_PATH),
     ]);
 
-    return chain([
-      mergeWith(templateSource),
-      updateSketchRoutes(sketchObjectName, sketchPath),
-    ]);
+    return chain([mergeWith(templateSource)]);
   };
 }

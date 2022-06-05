@@ -24,6 +24,15 @@
       "program": "${workspaceFolder}/node_modules/@angular-devkit/schematics-cli/bin/schematics.js",
       "args": ["./sketch-schematics/src/collection.json:sketch", "--name=foo"],
       "outputCapture": "std"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run sketch-routes schematic",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}/node_modules/@angular-devkit/schematics-cli/bin/schematics.js",
+      "args": ["./sketch-schematics/src/collection.json:sketch-routes"],
+      "outputCapture": "std"
     }
   ]
 }
