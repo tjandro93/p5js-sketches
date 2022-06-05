@@ -4,23 +4,16 @@
   "title": "Fork Sketch",
   "type": "object",
   "properties": {
-    "forkSourcePath": {
+    "sourceSketch": {
       "type": "string",
       "format": "path",
-      "description": "The path of the sketch to fork"
+      "description": "The sketch to fork"
     },
-    "forkTargetPath": {
+    "targetSketch": {
       "type": "string",
       "format": "path",
-      "description": "The path to place the forked sketch"
-    },
-    "project": {
-      "type": "string",
-      "description": "The name of the project.",
-      "$default": {
-        "$source": "projectName"
-      }
+      "description": "The sketch to create"
     }
   },
-  "required": ["forkSourcePath"]
+  "required": ["sourceSketch", "targetSketch"]
 }

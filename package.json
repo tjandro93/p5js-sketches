@@ -13,7 +13,8 @@
     "build-schematics": "cd sketch-schematics && npm install && npm run build",
     "build-schematics-watch": "cd sketch-schematics && npm install && npm run build-watch",
     "generate-sketch": "schematics ./sketch-schematics/src/collection.json:sketch --debug=false",
-    "generate-routes": "schematics ./sketch-schematics/src/collection.json:sketch-routes --debug=false"
+    "fork-sketch": "schematics ./sketch-schematics/src/collection.json:fork-sketch --debug=false",
+    "generate-routes": "schematics ./sketch-schematics/src/collection.json:sketch-routes --debug=false && npm run prettier"
   },
   "private": true,
   "dependencies": {
