@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "GenerateSketch",
+  "title": "Generate Sketch",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "The name of the sketch.",
+      "type": "string"
+    }
+  }
+}

@@ -9,6 +9,10 @@
       "description": "Create a new blank sketch.",
       "factory": "./sketch/index#sketch"
     },
+    "interactive-sketch": {
+      "description": "Create a new blank interactive sketch.",
+      "factory": "./interactive-sketch/index#interactiveSketch"
+    },
     "sketch-routes": {
       "description": "Generate routes for all sketches",
       "factory": "./sketch-routes/index#sketchRoutes"
