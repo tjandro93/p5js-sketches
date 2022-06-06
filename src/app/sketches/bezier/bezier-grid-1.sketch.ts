@@ -6,8 +6,8 @@ import {
   DARK_MODE_FOREGROUND,
 } from 'src/app/sketch-lib';
 
-export const bezierGrid: Sketch = {
-  title: 'Bezier Grid',
+export const bezierGrid1: Sketch = {
+  title: 'Bezier Grid 1',
   width: 600,
   height: 600,
   controls: {
@@ -21,8 +21,8 @@ export const bezierGrid: Sketch = {
 
     p5.setup = () => {
       createCanvasOnParentContainer(p5, {
-        width: bezierGrid.width,
-        height: bezierGrid.height,
+        width: bezierGrid1.width,
+        height: bezierGrid1.height,
       });
       p5.background(DARK_MODE_BACKGROUND);
       p5.stroke(DARK_MODE_FOREGROUND);
