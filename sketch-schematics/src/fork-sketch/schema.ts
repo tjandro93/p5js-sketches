@@ -1,6 +1,6 @@
 export interface Schema {
   /** The sketch to fork */
-  sourceSketch: string;
+  source: string;
   /** The sketch to created */
-  targetSketch: string;
+  target: string;
 }

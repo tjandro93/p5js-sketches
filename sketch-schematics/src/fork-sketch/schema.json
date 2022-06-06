@@ -4,16 +4,16 @@
   "title": "Fork Sketch",
   "type": "object",
   "properties": {
-    "sourceSketch": {
+    "source": {
       "type": "string",
       "format": "path",
       "description": "The sketch to fork"
     },
-    "targetSketch": {
+    "target": {
       "type": "string",
       "format": "path",
       "description": "The sketch to create"
     }
   },
-  "required": ["sourceSketch", "targetSketch"]
+  "required": ["source", "target"]
 }

@@ -9,24 +9,24 @@ import { Schema } from './schema';
 
 export function forkSketch(options: Schema): Rule {
   return (tree: Tree, context: SchematicContext) => {
-    if (!options.sourceSketch) {
+    if (!options.source) {
       throw new SchematicsException('Option (sourceSketch) is required');
     }
 
-    if (!options.targetSketch) {
+    if (!options.target) {
       throw new SchematicsException('Option (targetSketch) is required');
     }
 
-    if(!options.sourceSketch.endsWith(SKETCH_FILE_SUFFIX)) {
-      options.sourceSketch += SKETCH_FILE_SUFFIX;
+    if (!options.source.endsWith(SKETCH_FILE_SUFFIX)) {
+      options.source += SKETCH_FILE_SUFFIX;
     }
 
-    if(!options.targetSketch.endsWith(SKETCH_FILE_SUFFIX)) {
-      options.targetSketch += SKETCH_FILE_SUFFIX;
+    if (!options.target.endsWith(SKETCH_FILE_SUFFIX)) {
+      options.target += SKETCH_FILE_SUFFIX;
     }
 
-    const fullSourceSketchPath = `${SKETCH_DIRECTORY_PATH}/${options.sourceSketch}`;
-    const fullTargetSketchPath = `${SKETCH_DIRECTORY_PATH}/${options.targetSketch}`;
+    const fullSourceSketchPath = `${SKETCH_DIRECTORY_PATH}/${options.source}`;
+    const fullTargetSketchPath = `${SKETCH_DIRECTORY_PATH}/${options.target}`;
 
     if (!tree.exists(fullSourceSketchPath)) {
       throw new SchematicsException(
@@ -40,14 +40,12 @@ export function forkSketch(options: Schema): Rule {
       );
     }
 
-    context.logger.info(
-      `Forking ${options.sourceSketch} as ${options.targetSketch}`
-    );
+    context.logger.info(`Forking ${options.source} as ${options.target}`);
 
     const sourceSketchBuffer = tree.read(fullSourceSketchPath);
     if (sourceSketchBuffer == null) {
       throw new SchematicsException(
-        `Error reading ${options.sourceSketch} into buffer`
+        `Error reading ${options.source} into buffer`
       );
     }
 
