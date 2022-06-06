@@ -1,7 +1,6 @@
 import * as P5 from 'p5';
 import { Sketch } from 'src/app/core';
 import {
-  circle,
   createCanvasOnParentContainer,
   DARK_MODE_BACKGROUND,
   DARK_MODE_FOREGROUND,
@@ -39,11 +38,14 @@ export const bezierGrid2: Sketch = {
       const gridOffsetX = p5.width / GRID_SIZE_X;
       const gridOffsetY = p5.height / GRID_SIZE_Y;
 
-      const topLeftControl = { x: p5.width / 4, y: p5.height / 4}
-      const topRightControl = { x: p5.width / 4 * 3, y: p5.height / 4}
-      const bottomLeftControl = { x: p5.width / 4, y: p5.height / 4 * 3}
-      const bottomRightControl = { x: p5.width / 4 * 3, y: p5.height / 4 * 3}
-      
+      const topLeftControl = { x: p5.width / 4, y: p5.height / 4 };
+      const topRightControl = { x: (p5.width / 4) * 3, y: p5.height / 4 };
+      const bottomLeftControl = { x: p5.width / 4, y: (p5.height / 4) * 3 };
+      const bottomRightControl = {
+        x: (p5.width / 4) * 3,
+        y: (p5.height / 4) * 3,
+      };
+
       // circle(p5, topLeftControl, 10);
       // circle(p5, topRightControl, 10);
       // circle(p5, bottomLeftControl, 10);
@@ -62,11 +64,11 @@ export const bezierGrid2: Sketch = {
 
       xCoords.forEach((x, index) => {
         if (index < xCoords.length / 2) {
-          control1 = topLeftControl
-          control2 = topLeftControl
+          control1 = topLeftControl;
+          control2 = topLeftControl;
         } else {
           control1 = bottomLeftControl;
-          control2 = bottomLeftControl
+          control2 = bottomLeftControl;
         }
 
         p5.bezier(
@@ -83,11 +85,11 @@ export const bezierGrid2: Sketch = {
 
       yCoords.forEach((y, index) => {
         if (index < yCoords.length / 2) {
-          control1 = topRightControl
-          control2 = topRightControl
+          control1 = topRightControl;
+          control2 = topRightControl;
         } else {
           control1 = bottomRightControl;
-          control2 = bottomRightControl
+          control2 = bottomRightControl;
         }
 
         p5.bezier(

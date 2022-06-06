@@ -10,6 +10,8 @@ export * from './functions/dom-manipulation/attach-canvas-to-parent-container';
 export * from './functions/dom-manipulation/create-canvas-on-parent-container';
 export * from './functions/dom-manipulation/get-parent-container';
 export * from './functions/dom-manipulation/remove-canvas-from-parent-container';
+// Math functions
+export * from './functions/math/sum';
 // Vector functions
 export * from './functions/vector/line';
 export * from './functions/vector/bezier';

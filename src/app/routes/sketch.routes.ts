@@ -21,6 +21,7 @@ import { hito1 } from 'src/app/sketches/hitomezachi-stitch/hito1.sketch';
 import { hito2 } from 'src/app/sketches/hitomezachi-stitch/hito2.sketch';
 import { hito3 } from 'src/app/sketches/hitomezachi-stitch/hito3.sketch';
 import { hito4 } from 'src/app/sketches/hitomezachi-stitch/hito4.sketch';
+import { joyDivision1 } from 'src/app/sketches/joy-division/joy-division-1.sketch';
 
 // sketch routes (sorry it's not pretty :( )
 export const SKETCH_ROUTES: SketchRoutes = [
@@ -108,6 +109,17 @@ export const SKETCH_ROUTES: SketchRoutes = [
         path: 'hito4',
         component: RoutedSketchPageComponent,
         data: hito4,
+      },
+    ],
+  },
+  {
+    path: 'joy-division',
+    collectionTitle: 'Joy division',
+    children: [
+      {
+        path: 'joy-division-1',
+        component: RoutedSketchPageComponent,
+        data: joyDivision1,
       },
     ],
   },
