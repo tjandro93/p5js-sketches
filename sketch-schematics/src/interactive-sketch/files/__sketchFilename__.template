@@ -11,6 +11,8 @@ const drawOnceButton = new ButtonControl('Draw Once');
 
 export const <%= sketchObjectName %>: Sketch = {
   title: '<%= sketchObjectName %>',
+  width: undefined,
+  height: undefined,
   controls: {
     refreshButton: true,
     downloadButton: true,
@@ -30,6 +32,7 @@ export const <%= sketchObjectName %>: Sketch = {
       });
       p5.background(DARK_MODE_BACKGROUND);
       p5.stroke(DARK_MODE_FOREGROUND);
+      p5.noFill();
 
       drawOnceButton.onPress = () => {
         drawOnce();
