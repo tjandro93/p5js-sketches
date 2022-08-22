@@ -32,9 +32,11 @@ export const flowFieldSketch1: Sketch = {
         height: flowFieldSketch1.height,
       });
       p5.background(DARK_MODE_BACKGROUND);
-      p5.stroke(DARK_MODE_FOREGROUND, 4);
+      p5.stroke(DARK_MODE_FOREGROUND, 48);
       p5.noFill();
       p5.blendMode(p5.SCREEN);
+
+      p5.noiseSeed(p5.random(0, 10000));
 
       drawOnceButton.onPress = () => {
         drawOnce();
@@ -65,13 +67,13 @@ export const flowFieldSketch1: Sketch = {
 };
 
 class FlowField {
-  private forceXGridSize = 50;
-  private forceYGridSize = 50;
-  private forcePerlinXFactor = 0.01;
-  private forcePerlinYFactor = 0.01;
+  private forceXGridSize = 25;
+  private forceYGridSize = 25;
+  private forcePerlinXFactor = 0.005;
+  private forcePerlinYFactor = 0.005;
   private drawForces = false;
 
-  private particleCount = 500;
+  private particleCount = 50;
 
   private forces: FieldForce[] = [];
   private particles: Particle[] = [];
@@ -103,7 +105,9 @@ class FlowField {
             this.p5.noise(
               forceXPos * this.forcePerlinXFactor,
               forceYPos * this.forcePerlinYFactor
-            ) * this.p5.TWO_PI
+            ) *
+              this.p5.TWO_PI -
+              this.p5.HALF_PI
           )
         );
       }
@@ -148,6 +152,7 @@ class FieldForce {
 
   public draw(): void {
     this.p5.push();
+    this.p5.stroke(DARK_MODE_FOREGROUND);
     this.p5.translate(this.position.x, this.position.y);
     this.p5.rotate(this.force.heading());
     this.p5.line(0, 0, 10, 0);
@@ -171,7 +176,7 @@ class Particle {
   }
 
   public initKinematics(): void {
-    this.initPosRandom();
+    this.initPosGuassianTopEdge();
     this.velocity = this.p5.createVector(0, 0);
     this.acceleration = this.p5.createVector(0, 0);
 
@@ -189,6 +194,19 @@ class Particle {
     this.position = this.p5.createVector(
       this.p5.width,
       this.p5.random(0, this.p5.height)
+    );
+  }
+
+  public initPosRandomTopEdge(): void {
+    this.position = this.p5.createVector(this.p5.random(0, this.p5.width), 0);
+  }
+
+  public initPosGuassianTopEdge(): void {
+    const guassMean = this.p5.width / 2;
+    const guassSd = guassMean / 2;
+    this.position = this.p5.createVector(
+      this.p5.randomGaussian(guassMean, guassSd),
+      -1
     );
   }
 
@@ -233,29 +251,29 @@ class Particle {
 
   public checkBoundsRandom(): void {
     if (
-      this.position.x < 0 ||
-      this.position.x > this.p5.width ||
-      this.position.y < 0 ||
-      this.position.y > this.p5.height
+      this.position.x < -50 ||
+      this.position.x > this.p5.width + 50 ||
+      this.position.y < -50 ||
+      this.position.y > this.p5.height + 50
     ) {
       this.initKinematics();
     }
   }
 
   public checkBoundsLoop(): void {
-    if (this.position.x < 0) {
+    if (this.position.x < -50) {
       this.position.x = this.p5.width;
       this.previousPosition = this.position.copy();
     }
-    if (this.position.x > this.p5.width) {
+    if (this.position.x > this.p5.width + 50) {
       this.position.x = 0;
       this.previousPosition = this.position.copy();
     }
-    if (this.position.y < 0) {
+    if (this.position.y < -50) {
       this.position.y = this.p5.height;
       this.previousPosition = this.position.copy();
     }
-    if (this.position.y > this.p5.height) {
+    if (this.position.y > this.p5.height + 50) {
       this.position.y = 0;
       this.previousPosition = this.position.copy();
     }
