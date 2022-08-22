@@ -1,13 +1,12 @@
 import * as P5 from 'p5';
 import { ButtonControl, Sketch } from 'src/app/core';
 import {
-  circle,
   clampMagnitude,
   createCanvasOnParentContainer,
   DARK_MODE_BACKGROUND,
   DARK_MODE_FOREGROUND,
   distance,
-  point,
+  line,
 } from 'src/app/sketch-lib';
 
 const runPauseButton = new ButtonControl('Pause');
@@ -15,8 +14,8 @@ const drawOnceButton = new ButtonControl('Draw Once');
 
 export const flowFieldSketch1: Sketch = {
   title: 'Flow Field 1',
-  width: undefined,
-  height: undefined,
+  width: 1000,
+  height: 1000,
   controls: {
     refreshButton: true,
     downloadButton: true,
@@ -33,9 +32,9 @@ export const flowFieldSketch1: Sketch = {
         height: flowFieldSketch1.height,
       });
       p5.background(DARK_MODE_BACKGROUND);
-      p5.stroke(DARK_MODE_FOREGROUND, 35);  
+      p5.stroke(DARK_MODE_FOREGROUND, 1);
       p5.noFill();
-      p5.blendMode(p5.DIFFERENCE)
+      p5.blendMode(p5.SCREEN);
 
       drawOnceButton.onPress = () => {
         drawOnce();
@@ -56,12 +55,11 @@ export const flowFieldSketch1: Sketch = {
     };
 
     function drawOnce(): void {
-      // p5.background(DARK_MODE_BACKGROUND);
-
       flowField.step();
       flowField.draw();
 
       frameCount++;
+      console.log('Frame rate: ' + p5.frameRate());
     }
   },
 };
@@ -69,8 +67,8 @@ export const flowFieldSketch1: Sketch = {
 class FlowField {
   private forceXGridSize = 50;
   private forceYGridSize = 50;
-  private forcePerlinXFactor = 5;
-  private forcePerlinYFactor = 5;
+  private forcePerlinXFactor = 0.01;
+  private forcePerlinYFactor = 0.01;
   private drawForces = false;
 
   private particleCount = 500;
@@ -163,51 +161,103 @@ class Particle {
   public position: P5.Vector;
   public velocity: P5.Vector;
   public acceleration: P5.Vector;
+  public previousPosition: P5.Vector;
+  private maxSpeed = 3;
+  private minSpeed = 0.5;
+  private loopParticles = false;
 
   constructor(private p5: P5) {
+    this.initKinematics();
+  }
+
+  public initKinematics(): void {
+    this.initPosRandom();
+    this.velocity = this.p5.createVector(0, 0);
+    this.acceleration = this.p5.createVector(0, 0);
+
+    this.previousPosition = this.position.copy();
+  }
+
+  public initPosRandom(): void {
     this.position = this.p5.createVector(
       this.p5.random(0, this.p5.width),
       this.p5.random(0, this.p5.height)
     );
-    this.velocity = this.p5.createVector(0, 0);
-    this.acceleration = this.p5.createVector(0, 0);
+  }
+
+  public initPosRightEdge(): void {
+    this.position = this.p5.createVector(
+      this.p5.width,
+      this.p5.random(0, this.p5.height)
+    );
+  }
+
+  public initPosCenterRect(): void {
+    const xCenter = this.p5.width / 2;
+    const yCenter = this.p5.height / 2;
+    const xBoundDelta = 100;
+    const yBoundDelta = 100;
+
+    this.position = this.p5.createVector(
+      this.p5.random(xCenter - xBoundDelta, xCenter + xBoundDelta),
+      this.p5.random(yCenter - yBoundDelta, yCenter + yBoundDelta)
+    );
   }
 
   public draw(): void {
-    // this.p5.push();
-    // this.p5.color();
-    point(this.p5, this.position);
+    line(this.p5, this.previousPosition, this.position);
   }
 
   public step(): void {
+    this.previousPosition = this.position.copy();
+
     this.velocity.add(this.acceleration);
+    clampMagnitude(this.velocity, this.minSpeed, this.maxSpeed);
     this.position.add(this.velocity);
     this.acceleration.mult(0);
-    clampMagnitude(this.velocity, 1);
 
-    this.checkBounds();
+    if (this.loopParticles) {
+      this.checkBoundsLoop;
+    } else {
+      this.checkBoundsRandom();
+    }
   }
 
   public applyForce(force: P5.Vector, distance: number): void {
-    if (distance <= 0) {
+    if (distance <= 5) {
       distance = 1;
     }
 
     this.acceleration.add(force.copy().div(distance * distance));
   }
 
-  public checkBounds(): void {
+  public checkBoundsRandom(): void {
+    if (
+      this.position.x < 0 ||
+      this.position.x > this.p5.width ||
+      this.position.y < 0 ||
+      this.position.y > this.p5.height
+    ) {
+      this.initKinematics();
+    }
+  }
+
+  public checkBoundsLoop(): void {
     if (this.position.x < 0) {
       this.position.x = this.p5.width;
+      this.previousPosition = this.position.copy();
     }
     if (this.position.x > this.p5.width) {
       this.position.x = 0;
+      this.previousPosition = this.position.copy();
     }
     if (this.position.y < 0) {
       this.position.y = this.p5.height;
+      this.previousPosition = this.position.copy();
     }
     if (this.position.y > this.p5.height) {
       this.position.y = 0;
+      this.previousPosition = this.position.copy();
     }
   }
 }

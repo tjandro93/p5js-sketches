@@ -19,6 +19,8 @@ export * from './functions/vector/bezier';
 export * from './functions/vector/bezier-point';
 export * from './functions/vector/point';
 export * from './functions/vector/circle';
+export * from './functions/vector/limit-magnitude-ceiling';
+export * from './functions/vector/limit-magnitude-floor';
 export * from './functions/vector/clamp-magnitude';
 
 // Types
