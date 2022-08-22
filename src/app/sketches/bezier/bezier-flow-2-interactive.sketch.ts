@@ -47,7 +47,7 @@ export const bezierFlow2Interactive: Sketch = {
       createCanvasOnParentContainer(p5);
 
       p5.background(DARK_MODE_BACKGROUND);
-      p5.stroke(DARK_MODE_FOREGROUND);
+      p5.stroke(DARK_MODE_FOREGROUND, 100);
       p5.strokeWeight(1);
       p5.noFill();
       p5.angleMode(p5.DEGREES);
