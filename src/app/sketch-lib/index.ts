@@ -12,12 +12,14 @@ export * from './functions/dom-manipulation/get-parent-container';
 export * from './functions/dom-manipulation/remove-canvas-from-parent-container';
 // Math functions
 export * from './functions/math/sum';
+export * from './functions/math/distance';
 // Vector functions
 export * from './functions/vector/line';
 export * from './functions/vector/bezier';
 export * from './functions/vector/bezier-point';
 export * from './functions/vector/point';
 export * from './functions/vector/circle';
+export * from './functions/vector/clamp-magnitude';
 
 // Types
 export * from './types/vector';

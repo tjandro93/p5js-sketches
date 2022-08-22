@@ -19,6 +19,7 @@ import { bezierGrid1 } from 'src/app/sketches/bezier/bezier-grid-1.sketch';
 import { bezierGrid2 } from 'src/app/sketches/bezier/bezier-grid-2.sketch';
 import { bezierGrid3Interactive } from 'src/app/sketches/bezier/bezier-grid-3-interactive.sketch';
 import { bezierGrid3Static } from 'src/app/sketches/bezier/bezier-grid-3-static.sketch';
+import { flowFieldSketch1 } from 'src/app/sketches/flow-field/flow-field-1.sketch';
 import { hito1 } from 'src/app/sketches/hitomezachi-stitch/hito1.sketch';
 import { hito2 } from 'src/app/sketches/hitomezachi-stitch/hito2.sketch';
 import { hito3 } from 'src/app/sketches/hitomezachi-stitch/hito3.sketch';
@@ -95,6 +96,17 @@ export const SKETCH_ROUTES: SketchRoutes = [
         path: 'bezier-grid-3-static',
         component: RoutedSketchPageComponent,
         data: bezierGrid3Static,
+      },
+    ],
+  },
+  {
+    path: 'flow-field',
+    collectionTitle: 'Flow field',
+    children: [
+      {
+        path: 'flow-field-1',
+        component: RoutedSketchPageComponent,
+        data: flowFieldSketch1,
       },
     ],
   },
