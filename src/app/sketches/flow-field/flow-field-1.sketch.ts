@@ -32,7 +32,7 @@ export const flowFieldSketch1: Sketch = {
         height: flowFieldSketch1.height,
       });
       p5.background(DARK_MODE_BACKGROUND);
-      p5.stroke(DARK_MODE_FOREGROUND, 1);
+      p5.stroke(DARK_MODE_FOREGROUND, 4);
       p5.noFill();
       p5.blendMode(p5.SCREEN);
 
