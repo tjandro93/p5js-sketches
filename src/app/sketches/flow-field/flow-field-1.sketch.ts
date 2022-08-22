@@ -67,44 +67,57 @@ export const flowFieldSketch1: Sketch = {
 };
 
 class FlowField {
-  private forceXGridSize = 25;
-  private forceYGridSize = 25;
+  private forceXGridSize = 50;
+  private forceYGridSize = 50;
   private forcePerlinXFactor = 0.005;
   private forcePerlinYFactor = 0.005;
   private drawForces = false;
 
-  private particleCount = 50;
+  private initialParticleCount = 5;
+  private maxParticleCount = 100;
+  private particleIncrementAmount = 1;
+  private particleIncreaseTimeout = 250;
 
   private forces: FieldForce[] = [];
   private particles: Particle[] = [];
 
-  private get forceXFactor(): number {
+  private get forceColCount(): number {
     return this.p5.width / this.forceXGridSize;
   }
 
-  private get forceYFactor(): number {
+  private get forceRowCount(): number {
     return this.p5.height / this.forceYGridSize;
   }
 
   constructor(private p5: P5) {
     this.initializeForces();
-    this.initializeParticles();
+    this.initializeParticles(this.initialParticleCount);
+
+    const interval = setInterval(() => {
+      if (this.particles.length < this.maxParticleCount) {
+        this.initializeParticles(this.particleIncrementAmount)
+      }
+      else {
+        console.log("ending interval")
+        clearInterval(interval);
+      }
+    }, this.particleIncreaseTimeout)
   }
 
   public initializeForces(): void {
-    for (let i = 0; i <= this.forceXGridSize; i++) {
-      for (let j = 0; j <= this.forceYGridSize; j++) {
-        const forceXPos = i * this.forceXFactor;
-        const forceYPos = j * this.forceYFactor;
+    for (let i = -2; i <= this.forceColCount + 2; i++) {
+      for (let j = -2; j <= this.forceRowCount + 2; j++) {
+        const xPos = i * this.forceXGridSize;
+        const yPos = j * this.forceYGridSize;
 
         this.forces.push(
           new FieldForce(
             this.p5,
-            forceXPos,
-            forceYPos,
+            xPos,
+            yPos,
             this.p5.noise(
-              forceXPos * this.forcePerlinXFactor,
-              forceYPos * this.forcePerlinYFactor
+              xPos * this.forcePerlinXFactor,
+              yPos * this.forcePerlinYFactor
             ) *
               this.p5.TWO_PI -
               this.p5.HALF_PI
@@ -114,8 +127,9 @@ class FlowField {
     }
   }
 
-  public initializeParticles(): void {
-    for (let i = 0; i < this.particleCount; i++) {
+  public initializeParticles(particleCount: number): void {
+    console.log(`Adding ${particleCount} particles`)
+    for (let i = 0; i < particleCount; i++) {
       this.particles.push(new Particle(this.p5));
     }
   }
@@ -167,16 +181,24 @@ class Particle {
   public velocity: P5.Vector;
   public acceleration: P5.Vector;
   public previousPosition: P5.Vector;
-  private maxSpeed = 3;
+  private maxSpeed = 1;
   private minSpeed = 0.5;
   private loopParticles = false;
+
+  private get xBoundFudgeFactor() {
+    return this.p5.width / 8;
+  }
+
+  private get yBoundFudgeFactor() {
+    return this.p5.height / 8;
+  }
 
   constructor(private p5: P5) {
     this.initKinematics();
   }
 
   public initKinematics(): void {
-    this.initPosGuassianTopEdge();
+    this.initPosRandom();
     this.velocity = this.p5.createVector(0, 0);
     this.acceleration = this.p5.createVector(0, 0);
 
@@ -251,29 +273,29 @@ class Particle {
 
   public checkBoundsRandom(): void {
     if (
-      this.position.x < -50 ||
-      this.position.x > this.p5.width + 50 ||
-      this.position.y < -50 ||
-      this.position.y > this.p5.height + 50
+      this.position.x < -this.xBoundFudgeFactor ||
+      this.position.x > this.p5.width + this.xBoundFudgeFactor ||
+      this.position.y < -this.yBoundFudgeFactor ||
+      this.position.y > this.p5.height + this.yBoundFudgeFactor
     ) {
       this.initKinematics();
     }
   }
 
   public checkBoundsLoop(): void {
-    if (this.position.x < -50) {
+    if (this.position.x < -this.xBoundFudgeFactor) {
       this.position.x = this.p5.width;
       this.previousPosition = this.position.copy();
     }
-    if (this.position.x > this.p5.width + 50) {
+    if (this.position.x > this.p5.width + this.xBoundFudgeFactor) {
       this.position.x = 0;
       this.previousPosition = this.position.copy();
     }
-    if (this.position.y < -50) {
+    if (this.position.y < -this.yBoundFudgeFactor) {
       this.position.y = this.p5.height;
       this.previousPosition = this.position.copy();
     }
-    if (this.position.y > this.p5.height + 50) {
+    if (this.position.y > this.p5.height + this.yBoundFudgeFactor) {
       this.position.y = 0;
       this.previousPosition = this.position.copy();
     }
