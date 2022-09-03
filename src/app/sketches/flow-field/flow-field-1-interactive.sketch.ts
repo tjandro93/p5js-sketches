@@ -73,7 +73,7 @@ export const flowField1Interactive: Sketch = {
   title: 'Flow Field 1 (Interactive)',
   width: 1000,
   height: 1000,
-  isSvg: true,
+  isSvg: false,
   controls: {
     refreshButton: true,
     downloadButton: true,

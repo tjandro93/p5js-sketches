@@ -16,7 +16,7 @@ export const flowFieldSketch1: Sketch = {
   title: 'Flow Field 1',
   width: 1000,
   height: 1000,
-  isSvg: true,
+  isSvg: false,
   controls: {
     refreshButton: true,
     downloadButton: true,
