@@ -1,4 +1,5 @@
 import { ButtonControl } from './button-control';
+import { CheckboxControl } from './checkbox-control';
 import { NumberInputControl } from './number-input-control';
 import { SketchControlType } from './sketch-control-type';
 import { SliderControl } from './slider-control';
@@ -22,5 +23,11 @@ export abstract class SketchControl {
     control: SketchControl
   ): control is ButtonControl {
     return control.type === SketchControlType.Button;
+  }
+
+  public static isCheckboxControl(
+    control: SketchControl
+  ): control is CheckboxControl {
+    return control.type === SketchControlType.Checkbox
   }
 }

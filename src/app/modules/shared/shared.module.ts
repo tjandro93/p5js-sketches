@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSliderModule } from '@angular/material/slider';
 import { SketchControlsComponent } from './components/sketch-controls/sketch-controls.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { SketchControlsComponent } from './components/sketch-controls/sketch-con
     MatButtonModule,
     MatIconModule,
     MatSliderModule,
+    MatCheckboxModule,
   ],
   exports: [
     // Angular Material
@@ -43,6 +45,7 @@ import { SketchControlsComponent } from './components/sketch-controls/sketch-con
     MatButtonModule,
     MatIconModule,
     MatSliderModule,
+    MatCheckboxModule,
     // App
     RoutedSketchPageComponent,
   ],

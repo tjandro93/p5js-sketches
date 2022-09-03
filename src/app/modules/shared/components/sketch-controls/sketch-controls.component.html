@@ -41,6 +41,13 @@
       >
         {{ control.label$ | async }}
       </button>
+      <mat-checkbox
+        *ngSwitchCase="SketchControlType.Checkbox"
+        [checked]="control.value$ | async"
+        (change)="control.value$.next($event.checked)"
+      >
+        {{ control.label$ | async }}
+      </mat-checkbox>
     </ng-container>
   </ng-container>
 </ng-container>
