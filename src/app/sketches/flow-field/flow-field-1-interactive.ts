@@ -1,5 +1,6 @@
 import * as P5 from 'p5';
-import { ButtonControl, Sketch } from 'src/app/core';
+import { ButtonControl, Sketch, SliderControl } from 'src/app/core';
+import { CheckboxControl } from 'src/app/core/types/sketch-controls/checkbox-control';
 import {
   clampMagnitude,
   createCanvasOnParentContainer,
@@ -11,6 +12,65 @@ import {
 
 const runPauseButton = new ButtonControl('Pause');
 const drawOnceButton = new ButtonControl('Draw Once');
+const drawForcesCheckbox = new CheckboxControl('Draw Forces', false);
+const forceGridSizeSlider = new SliderControl(
+  'Force grid size*',
+  1,
+  100,
+  50,
+  1
+);
+const forcePerlinFactorSlider = new SliderControl(
+  'Force Perlin Factor*',
+  0.001,
+  0.01,
+  0.005,
+  0.001
+);
+const initialParticleCountSlider = new SliderControl(
+  'Initial Particle Count*',
+  1,
+  100,
+  5,
+  1
+)
+
+const maxParticleCountSlider = new SliderControl(
+  'Max Particle Count',
+  10,
+  200,
+  100,
+  1
+)
+
+const particleIncrementAmountSlider = new SliderControl(
+  'Particle Increment Amount',
+  1,
+  20,
+  1,
+  1
+)
+
+const particleMaxSpeedSlider = new SliderControl(
+  'Particle Max Speed',
+  0,
+  5,
+  1,
+  0.01
+)
+
+const particleMinSpeedSlider = new SliderControl(
+  'Particle Min Speed',
+  0,
+  5,
+  0.5,
+  0.01
+)
+
+const loopParticlesCheckbox = new CheckboxControl(
+  'Loop Particles',
+  false
+)
 
 export const flowFieldSketch1Interactive: Sketch = {
   title: 'Flow Field 1 (Interactive)',
@@ -19,7 +79,19 @@ export const flowFieldSketch1Interactive: Sketch = {
   controls: {
     refreshButton: true,
     downloadButton: true,
-    customControls: [runPauseButton, drawOnceButton],
+    customControls: [
+      runPauseButton,
+      drawOnceButton,
+      drawForcesCheckbox,
+      forceGridSizeSlider,
+      forcePerlinFactorSlider,
+      initialParticleCountSlider,
+      maxParticleCountSlider,
+      particleIncrementAmountSlider,
+      particleMaxSpeedSlider,
+      particleMinSpeedSlider,
+      loopParticlesCheckbox
+    ],
   },
   func: (p5: P5) => {
     let running = true;
@@ -61,21 +133,18 @@ export const flowFieldSketch1Interactive: Sketch = {
       flowField.draw();
 
       frameCount++;
-      console.log('Frame rate: ' + p5.frameRate());
+      // console.log('Frame rate: ' + p5.frameRate());
     }
   },
 };
 
 class FlowField {
-  private forceXGridSize = 50;
-  private forceYGridSize = 50;
-  private forcePerlinXFactor = 0.005;
-  private forcePerlinYFactor = 0.005;
-  private drawForces = false;
+  private readonly forceXGridSize: number;
+  private readonly forceYGridSize: number;
+  private readonly forcePerlinXFactor: number;
+  private readonly forcePerlinYFactor: number;
 
-  private initialParticleCount = 5;
-  private maxParticleCount = 100;
-  private particleIncrementAmount = 1;
+  private initialParticleCount: number;
   private particleIncreaseTimeout = 250;
 
   private forces: FieldForce[] = [];
@@ -90,12 +159,20 @@ class FlowField {
   }
 
   constructor(private p5: P5) {
+    this.forceXGridSize = forceGridSizeSlider.value;
+    this.forceYGridSize = forceGridSizeSlider.value;
+    this.forcePerlinXFactor = forcePerlinFactorSlider.value;
+    this.forcePerlinYFactor = forcePerlinFactorSlider.value;
+
+    this.initialParticleCount = initialParticleCountSlider.value;
+    
+
     this.initializeForces();
     this.initializeParticles(this.initialParticleCount);
 
     const interval = setInterval(() => {
-      if (this.particles.length < this.maxParticleCount) {
-        this.initializeParticles(this.particleIncrementAmount);
+      if (this.particles.length < maxParticleCountSlider.value) {
+        this.initializeParticles(particleIncrementAmountSlider.value);
       } else {
         console.log('ending interval');
         clearInterval(interval);
@@ -134,7 +211,7 @@ class FlowField {
   }
 
   public draw(): void {
-    if (this.drawForces) {
+    if (drawForcesCheckbox.value) {
       this.forces.forEach((forceCol) => forceCol.draw());
     }
     this.particles.forEach((particle) => particle.draw());
@@ -180,9 +257,6 @@ class Particle {
   public velocity: P5.Vector;
   public acceleration: P5.Vector;
   public previousPosition: P5.Vector;
-  private maxSpeed = 1;
-  private minSpeed = 0.5;
-  private loopParticles = false;
 
   private get xBoundFudgeFactor() {
     return this.p5.width / 8;
@@ -251,23 +325,23 @@ class Particle {
     this.previousPosition = this.position.copy();
 
     this.velocity.add(this.acceleration);
-    clampMagnitude(this.velocity, this.minSpeed, this.maxSpeed);
+    clampMagnitude(this.velocity, particleMinSpeedSlider.value, particleMaxSpeedSlider.value);
     this.position.add(this.velocity);
     this.acceleration.mult(0);
 
-    if (this.loopParticles) {
+    if (loopParticlesCheckbox.value) {
       this.checkBoundsLoop();
     } else {
       this.checkBoundsRandom();
     }
   }
 
-  public applyForce(force: P5.Vector, distance: number): void {
-    if (distance <= 5) {
-      distance = 1;
+  public applyForce(force: P5.Vector, forceDistance: number): void {
+    if (forceDistance <= 5) {
+      forceDistance = 1;
     }
 
-    this.acceleration.add(force.copy().div(distance * distance));
+    this.acceleration.add(force.copy().div(forceDistance * forceDistance));
   }
 
   public checkBoundsRandom(): void {
