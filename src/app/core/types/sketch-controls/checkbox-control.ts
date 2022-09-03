@@ -1,6 +1,6 @@
-import { BehaviorSubject } from "rxjs";
-import { SketchControl } from "./sketch-control";
-import { SketchControlType } from "./sketch-control-type";
+import { BehaviorSubject } from 'rxjs';
+import { SketchControl } from './sketch-control';
+import { SketchControlType } from './sketch-control-type';
 
 export class CheckboxControl extends SketchControl {
   public readonly type = SketchControlType.Checkbox;

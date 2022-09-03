@@ -28,6 +28,6 @@ export abstract class SketchControl {
   public static isCheckboxControl(
     control: SketchControl
   ): control is CheckboxControl {
-    return control.type === SketchControlType.Checkbox
+    return control.type === SketchControlType.Checkbox;
   }
 }
