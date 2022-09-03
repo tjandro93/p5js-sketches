@@ -62,4 +62,8 @@ export class RoutedSketchPageComponent extends BaseSketchDirective {
       opened ? this.actionDrawerElement?.nativeElement?.clientWidth ?? 0 : 0
     );
   }
+
+  get frameRate(): number | undefined {
+    return this.p?.frameRate();
+  }
 }

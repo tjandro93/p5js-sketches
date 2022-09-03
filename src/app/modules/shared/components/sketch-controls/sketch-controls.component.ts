@@ -10,6 +10,9 @@ export class SketchControlsComponent {
   @Input()
   public controls: SketchControlsConfig;
 
+  @Input()
+  public frameRate?: number;
+
   @Output()
   public redraw = new EventEmitter();
 

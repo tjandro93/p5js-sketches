@@ -9,6 +9,7 @@
   >
     <app-sketch-controls
       *ngIf="(sketch$ | async)?.controls as controls"
+      [frameRate]="frameRate"
       [controls]="controls"
       (redraw)="redraw()"
       (download)="download()"
