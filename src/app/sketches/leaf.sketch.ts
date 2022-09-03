@@ -15,6 +15,7 @@ export const leaf: Sketch = {
   title: 'Leaf',
   width: 600,
   height: 400,
+  isSvg: true,
   controls: {
     refreshButton: true,
     downloadButton: true,
@@ -29,7 +30,7 @@ export const leaf: Sketch = {
 
     p5.setup = () => {
       createCanvasOnParentContainer(p5, {
-        useSvg: true,
+        useSvg: leaf.isSvg,
         width: leaf.width,
         height: leaf.height,
       });

@@ -10,6 +10,7 @@ import {
 
 export const bezierFlow2Static: Sketch = {
   title: 'Bezier Flow 2 (static)',
+  isSvg: true,
   controls: {
     refreshButton: true,
     downloadButton: true,
@@ -21,7 +22,7 @@ export const bezierFlow2Static: Sketch = {
 
     p5.setup = () => {
       createCanvasOnParentContainer(p5, {
-        useSvg: true,
+        useSvg: bezierFlow2Static.isSvg,
       });
 
       p5.background(DARK_MODE_BACKGROUND);

@@ -33,7 +33,7 @@ const initialParticleCountSlider = new SliderControl(
   100,
   5,
   1
-)
+);
 
 const maxParticleCountSlider = new SliderControl(
   'Max Particle Count',
@@ -41,7 +41,7 @@ const maxParticleCountSlider = new SliderControl(
   200,
   100,
   1
-)
+);
 
 const particleIncrementAmountSlider = new SliderControl(
   'Particle Increment Amount',
@@ -49,7 +49,7 @@ const particleIncrementAmountSlider = new SliderControl(
   20,
   1,
   1
-)
+);
 
 const particleMaxSpeedSlider = new SliderControl(
   'Particle Max Speed',
@@ -57,7 +57,7 @@ const particleMaxSpeedSlider = new SliderControl(
   5,
   1,
   0.01
-)
+);
 
 const particleMinSpeedSlider = new SliderControl(
   'Particle Min Speed',
@@ -65,17 +65,15 @@ const particleMinSpeedSlider = new SliderControl(
   5,
   0.5,
   0.01
-)
+);
 
-const loopParticlesCheckbox = new CheckboxControl(
-  'Loop Particles',
-  false
-)
+const loopParticlesCheckbox = new CheckboxControl('Loop Particles', false);
 
-export const flowFieldSketch1Interactive: Sketch = {
+export const flowField1Interactive: Sketch = {
   title: 'Flow Field 1 (Interactive)',
   width: 1000,
   height: 1000,
+  isSvg: true,
   controls: {
     refreshButton: true,
     downloadButton: true,
@@ -90,7 +88,7 @@ export const flowFieldSketch1Interactive: Sketch = {
       particleIncrementAmountSlider,
       particleMaxSpeedSlider,
       particleMinSpeedSlider,
-      loopParticlesCheckbox
+      loopParticlesCheckbox,
     ],
   },
   func: (p5: P5) => {
@@ -100,8 +98,9 @@ export const flowFieldSketch1Interactive: Sketch = {
 
     p5.setup = () => {
       createCanvasOnParentContainer(p5, {
-        width: flowFieldSketch1Interactive.width,
-        height: flowFieldSketch1Interactive.height,
+        width: flowField1Interactive.width,
+        height: flowField1Interactive.height,
+        useSvg: flowField1Interactive.isSvg,
       });
       p5.background(DARK_MODE_BACKGROUND);
       p5.stroke(DARK_MODE_FOREGROUND, 48);
@@ -165,7 +164,6 @@ class FlowField {
     this.forcePerlinYFactor = forcePerlinFactorSlider.value;
 
     this.initialParticleCount = initialParticleCountSlider.value;
-    
 
     this.initializeForces();
     this.initializeParticles(this.initialParticleCount);
@@ -325,7 +323,11 @@ class Particle {
     this.previousPosition = this.position.copy();
 
     this.velocity.add(this.acceleration);
-    clampMagnitude(this.velocity, particleMinSpeedSlider.value, particleMaxSpeedSlider.value);
+    clampMagnitude(
+      this.velocity,
+      particleMinSpeedSlider.value,
+      particleMaxSpeedSlider.value
+    );
     this.position.add(this.velocity);
     this.acceleration.mult(0);
 

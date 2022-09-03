@@ -10,6 +10,7 @@ export const randomDiagonalLines: Sketch = {
   title: 'Random Diagonal Lines',
   width: 800,
   height: 800,
+  isSvg: true,
   controls: {
     refreshButton: true,
     downloadButton: true,
@@ -18,7 +19,7 @@ export const randomDiagonalLines: Sketch = {
   func: (p: p5) => {
     p.setup = () => {
       createCanvasOnParentContainer(p, {
-        useSvg: true,
+        useSvg: randomDiagonalLines.isSvg,
         width: randomDiagonalLines.width,
         height: randomDiagonalLines.height,
       });

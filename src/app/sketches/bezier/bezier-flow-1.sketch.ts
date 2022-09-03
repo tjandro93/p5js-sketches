@@ -12,6 +12,7 @@ export const bezierFlow1: Sketch = {
   title: 'Bezier Flow 1',
   width: 800,
   height: 600,
+  isSvg: true,
   controls: {
     refreshButton: true,
     downloadButton: true,
@@ -24,7 +25,7 @@ export const bezierFlow1: Sketch = {
       createCanvasOnParentContainer(p5, {
         width: bezierFlow1.width,
         height: bezierFlow1.height,
-        useSvg: true,
+        useSvg: bezierFlow1.isSvg,
       });
 
       p5.background(DARK_MODE_BACKGROUND);

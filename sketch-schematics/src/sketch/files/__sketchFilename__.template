@@ -8,6 +8,9 @@ import {
 
 export const <%= sketchObjectName %>: Sketch = {
   title: '<%= sketchObjectName %>',
+  width: undefined,
+  height: undefined,
+  isSvg: false,
   controls: {
     refreshButton: true,
     downloadButton: true,
@@ -17,6 +20,7 @@ export const <%= sketchObjectName %>: Sketch = {
       createCanvasOnParentContainer(p5, {
         width: <%= sketchObjectName %>.width,
         height: <%= sketchObjectName %>.height,
+        useSvg: <%= sketchObjectName %>.isSvg,
       });
       p5.background(DARK_MODE_BACKGROUND);
       p5.stroke(DARK_MODE_FOREGROUND);

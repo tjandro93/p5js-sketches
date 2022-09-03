@@ -8,6 +8,7 @@ import {
 
 export const basicTreeSketch: Sketch = {
   title: 'Basic Tree',
+  isSvg: true,
   controls: {
     refreshButton: true,
     downloadButton: true,
@@ -21,7 +22,7 @@ export const basicTreeSketch: Sketch = {
     const ANGLE_UPPER = 60;
 
     p.setup = () => {
-      createCanvasOnParentContainer(p, { useSvg: true });
+      createCanvasOnParentContainer(p, { useSvg: basicTreeSketch.isSvg });
       p.background(DARK_MODE_BACKGROUND);
       p.stroke(DARK_MODE_FOREGROUND);
 

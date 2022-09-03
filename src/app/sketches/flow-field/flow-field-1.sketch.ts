@@ -13,9 +13,10 @@ const runPauseButton = new ButtonControl('Pause');
 const drawOnceButton = new ButtonControl('Draw Once');
 
 export const flowFieldSketch1: Sketch = {
-  title: 'Flow Field 1 (static)',
+  title: 'Flow Field 1',
   width: 1000,
   height: 1000,
+  isSvg: true,
   controls: {
     refreshButton: true,
     downloadButton: true,
@@ -30,6 +31,7 @@ export const flowFieldSketch1: Sketch = {
       createCanvasOnParentContainer(p5, {
         width: flowFieldSketch1.width,
         height: flowFieldSketch1.height,
+        useSvg: flowFieldSketch1.isSvg,
       });
       p5.background(DARK_MODE_BACKGROUND);
       p5.stroke(DARK_MODE_FOREGROUND, 48);
