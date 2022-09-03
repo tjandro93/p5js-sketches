@@ -12,8 +12,8 @@ import {
 const runPauseButton = new ButtonControl('Pause');
 const drawOnceButton = new ButtonControl('Draw Once');
 
-export const flowFieldSketch1: Sketch = {
-  title: 'Flow Field 1 (static)',
+export const flowFieldSketch1Interactive: Sketch = {
+  title: 'Flow Field 1 (Interactive)',
   width: 1000,
   height: 1000,
   controls: {
@@ -28,8 +28,8 @@ export const flowFieldSketch1: Sketch = {
 
     p5.setup = () => {
       createCanvasOnParentContainer(p5, {
-        width: flowFieldSketch1.width,
-        height: flowFieldSketch1.height,
+        width: flowFieldSketch1Interactive.width,
+        height: flowFieldSketch1Interactive.height,
       });
       p5.background(DARK_MODE_BACKGROUND);
       p5.stroke(DARK_MODE_FOREGROUND, 48);

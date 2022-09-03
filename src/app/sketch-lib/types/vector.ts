@@ -11,5 +11,5 @@ export type Vector = SimpleVector | p5.Vector;
 
 /** Typeguard to check whether a Vector is a p5.Vector or not */
 export function isP5Vector(v: Vector): v is p5.Vector {
-  return typeof (v as any).mag === "function";
+  return typeof (v as any).mag === 'function';
 }
