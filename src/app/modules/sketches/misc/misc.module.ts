@@ -46,7 +46,7 @@ import { RouterModule } from '@angular/router';
           import('./joy-division/joy-division.module').then(
             (m) => m.JoyDivisionModule
           ),
-      }
+      },
     ]),
   ],
 })

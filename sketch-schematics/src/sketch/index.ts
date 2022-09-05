@@ -27,10 +27,7 @@ export function sketch(options: Schema): Rule {
 
     const sketchNamePieces = options.name.split(/\/|\\/);
     const sketchNameEnd = sketchNamePieces[sketchNamePieces.length - 1];
-    const fullSketchName = [
-      ...sketchNamePieces,
-      sketchNameEnd,
-    ].join('/');
+    const fullSketchName = [...sketchNamePieces, sketchNameEnd].join('/');
 
     const sketchFilename = `${strings.dasherize(
       fullSketchName
@@ -55,7 +52,7 @@ export function sketch(options: Schema): Rule {
         sketchFilename,
         sketchModuleFilename,
         sketchModuleClassname,
-        sketchObjectImport
+        sketchObjectImport,
       }),
       move(SKETCH_DIRECTORY_PATH),
     ]);

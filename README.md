@@ -1,13 +1,16 @@
 # p5.js Sketchbook
+
 This is my personal sketchbook for making generative art in p5.js.
 
 # Running dev server
-```npm run start```
+
+`npm run start`
 
 # Creating a new sketch
-```npm run generate-interactive-sketch -- --name=<path>/<to>/<place>/<sketch>```
-or 
-```npm run generate-sketch -- --name=<path>/<to>/<place>/<sketch>```
+
+`npm run generate-interactive-sketch -- --name=<path>/<to>/<place>/<sketch>`
+or
+`npm run generate-sketch -- --name=<path>/<to>/<place>/<sketch>`
 
 This will just scaffold a sketch file and an NgModule. The last part of the path will be used for the sketch name.
 

@@ -11,7 +11,12 @@ import {
   Tree,
   url,
 } from '@angular-devkit/schematics';
-import { MODULE_CLASS_SUFFIX, MODULE_FILE_SUFFIX, SKETCH_DIRECTORY_PATH, SKETCH_FILE_SUFFIX } from '../core/constants';
+import {
+  MODULE_CLASS_SUFFIX,
+  MODULE_FILE_SUFFIX,
+  SKETCH_DIRECTORY_PATH,
+  SKETCH_FILE_SUFFIX,
+} from '../core/constants';
 import { Schema } from './schema';
 
 export function interactiveSketch(options: Schema): Rule {
@@ -22,10 +27,7 @@ export function interactiveSketch(options: Schema): Rule {
 
     const sketchNamePieces = options.name.split(/\/|\\/);
     const sketchNameEnd = sketchNamePieces[sketchNamePieces.length - 1];
-    const fullSketchName = [
-      ...sketchNamePieces,
-      sketchNameEnd,
-    ].join('/');
+    const fullSketchName = [...sketchNamePieces, sketchNameEnd].join('/');
 
     const sketchFilename = `${strings.dasherize(
       fullSketchName
@@ -50,7 +52,7 @@ export function interactiveSketch(options: Schema): Rule {
         sketchFilename,
         sketchModuleFilename,
         sketchModuleClassname,
-        sketchObjectImport
+        sketchObjectImport,
       }),
       move(SKETCH_DIRECTORY_PATH),
     ]);

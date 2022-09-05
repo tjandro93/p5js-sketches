@@ -12,3 +12,14 @@ export interface Sketch {
   height?: number;
   func: (p5: P5) => void;
 }
+
+// Duck type an object to see if it's a Sketch. This is useful since sketches go as part of a the route data
+// but route data is not type safe.
+// This function only duck types the required properties for a sketch
+export function isSketch(obj: any): obj is Sketch {
+  return (
+    typeof obj === 'object' &&
+    typeof obj.title === 'string' &&
+    typeof obj.func === 'function'
+  );
+}

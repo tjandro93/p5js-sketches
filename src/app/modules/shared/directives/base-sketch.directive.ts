@@ -3,7 +3,7 @@ import * as p5 from 'p5';
 import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { removeCanvasFromParentContainer } from 'src/app/sketch-lib';
-import { Sketch } from '../../../core';
+import { isSketch, Sketch } from '../../../core';
 
 @Directive()
 export abstract class BaseSketchDirective implements OnInit, OnDestroy {
@@ -20,6 +20,11 @@ export abstract class BaseSketchDirective implements OnInit, OnDestroy {
     combineLatest([this.sketch$, this.redrawSubject])
       .pipe(takeUntil(this.destroyed$))
       .subscribe(([sketch]) => {
+        if (!isSketch(sketch)) {
+          throw new Error(
+            'Object passed as Sketch to BaseSketchDirective is not a sketch'
+          );
+        }
         // remove any old sketch
         this.p?.remove();
         removeCanvasFromParentContainer();

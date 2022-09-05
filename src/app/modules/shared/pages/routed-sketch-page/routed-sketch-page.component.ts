@@ -7,9 +7,9 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BaseSketchDirective } from '../../directives/base-sketch.directive';
-import { saveSvg, ActivatedSketchRoute, saveCanvasPng } from '../../../../core';
+import { saveSvg, saveCanvasPng, Sketch } from '../../../../core';
 import { map, take } from 'rxjs/operators';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-routed-sketch-page',
@@ -41,10 +41,17 @@ export class RoutedSketchPageComponent extends BaseSketchDirective {
   public actionDrawerElement?: ElementRef;
 
   constructor(
-    @Inject(ActivatedRoute) public route: ActivatedSketchRoute,
+    @Inject(ActivatedRoute) public route: ActivatedRoute,
     cdRef: ChangeDetectorRef
   ) {
-    super(route.data, cdRef);
+    super(
+      // Unfortunately Angular's route.data can't be type safe. I used to
+      // have a subclass of ActivatedRoute for Sketches that added safety but even it was
+      // just syntactic sugar.
+      // Really we should manually checking type here, but it's observable so we can't yet
+      route.data as Observable<Sketch>,
+      cdRef
+    );
   }
 
   public download(): void {

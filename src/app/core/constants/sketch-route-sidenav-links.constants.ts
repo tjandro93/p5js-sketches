@@ -1,4 +1,4 @@
-import { SketchNavLinksRoot } from "..";
+import { SketchNavLinksRoot } from '..';
 
 export const SKETCH_NAV_LINKS: SketchNavLinksRoot = {
   linkGroups: [

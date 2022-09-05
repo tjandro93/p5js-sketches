@@ -1,7 +1,7 @@
-import { SketchRoutes } from './core';
+import { Routes } from '@angular/router';
 import { SidenavPageComponent } from './modules/shared/pages/sidenav-page/sidenav-page.component';
 
-export const APP_ROUTES: SketchRoutes = [
+export const APP_ROUTES: Routes = [
   {
     path: '',
     component: SidenavPageComponent,
