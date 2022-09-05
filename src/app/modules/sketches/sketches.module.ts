@@ -23,6 +23,13 @@ import { RouterModule } from '@angular/router';
             './bezier/bezier.module'
           ).then((m) => m.BezierModule),
       },
+      {
+        path: 'flow-field',
+        loadChildren: () =>
+          import(
+            './flow-field/flow-field.module'
+          ).then((m) => m.FlowFieldModule),
+      },
     ])
   ]
 })

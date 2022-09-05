@@ -6,8 +6,6 @@ import { SketchRoutes } from '../core';
 import { RoutedSketchPageComponent } from '../modules/shared/pages/routed-sketch-page/routed-sketch-page.component';
 
 // Sketch imports
-import { flowField1Interactive } from 'src/app/sketches/flow-field/flow-field-1-interactive.sketch';
-import { flowFieldSketch1 } from 'src/app/sketches/flow-field/flow-field-1.sketch';
 import { hito1 } from 'src/app/sketches/hitomezachi-stitch/hito1.sketch';
 import { hito2 } from 'src/app/sketches/hitomezachi-stitch/hito2.sketch';
 import { hito3 } from 'src/app/sketches/hitomezachi-stitch/hito3.sketch';
@@ -16,22 +14,6 @@ import { joyDivision1 } from 'src/app/sketches/joy-division/joy-division-1.sketc
 
 // sketch routes (sorry it's not pretty :( )
 export const SKETCH_ROUTES: SketchRoutes = [
-  {
-    path: 'flow-field',
-    collectionTitle: 'Flow field',
-    children: [
-      {
-        path: 'flow-field-1-interactive',
-        component: RoutedSketchPageComponent,
-        data: flowField1Interactive,
-      },
-      {
-        path: 'flow-field-1',
-        component: RoutedSketchPageComponent,
-        data: flowFieldSketch1,
-      },
-    ],
-  },
   {
     path: 'hitomezachi-stitch',
     collectionTitle: 'Hitomezachi stitch',

@@ -74,6 +74,20 @@ export class SidenavPageComponent {
         ],
         linkGroups: [],
       },
+      {
+        collectionTitle: 'Flow Field',
+        sketchLinks: [
+          {
+            title: 'Flow Field 1',
+            path: '/sketches/flow-field/flow-field-1',
+          },
+          {
+            title: 'Flow Field 1 (Interactive)',
+            path: '/sketches/flow-field/flow-field-1-interactive',
+          },
+        ],
+        linkGroups: [],
+      },
     ],
     sketchLinks: [],
   };
