@@ -1,27 +1,16 @@
-# NgP5jsSketches
+# p5.js Sketchbook
+This is my personal sketchbook for making generative art in p5.js.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.3.
+# Running dev server
+```npm run start```
 
-## Development server
+# Creating a new sketch
+```npm run generate-interactive-sketch -- --name=<path>/<to>/<place>/<sketch>```
+or 
+```npm run generate-sketch -- --name=<path>/<to>/<place>/<sketch>```
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+This will just scaffold a sketch file and an NgModule. The last part of the path will be used for the sketch name.
 
-## Code scaffolding
+After running this you'll need to wire up routing manually via the appropriate parent module. You'll also need to edit `src\app\core\constants\sketch-route-sidenav-links.constants.ts` to make your sketch appear in the sidenav.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Note that each sketch is left in it's own lazy-loaded module because this really improves compile time letting you iterate your sketches faster.
