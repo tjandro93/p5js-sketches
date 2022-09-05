@@ -46,21 +46,7 @@ import { RouterModule } from '@angular/router';
           import('./joy-division/joy-division.module').then(
             (m) => m.JoyDivisionModule
           ),
-      },
-      {
-        path: 'test1',
-        loadChildren: () =>
-          import('./schematic-test-interactive/schematic-test-interactive.module').then(
-            (m) => m.SchematicTestInteractiveModule
-          ),
-      },
-      {
-        path: 'test2',
-        loadChildren: () =>
-          import('./schematic-test-static/schematic-test-static.module').then(
-            (m) => m.SchematicTestStaticModule
-          ),
-      },
+      }
     ]),
   ],
 })
