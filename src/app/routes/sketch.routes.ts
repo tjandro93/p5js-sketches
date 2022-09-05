@@ -6,19 +6,6 @@ import { SketchRoutes } from '../core';
 import { RoutedSketchPageComponent } from '../modules/shared/pages/routed-sketch-page/routed-sketch-page.component';
 
 // Sketch imports
-import { basicTreeSketch } from 'src/app/sketches/basic-tree.sketch';
-import { leaf } from 'src/app/sketches/leaf.sketch';
-import { randomDiagonalLines } from 'src/app/sketches/random-diagonal-lines.sketch';
-import { randomGuassianLines } from 'src/app/sketches/random-guassian-lines.sketch';
-import { randomLines } from 'src/app/sketches/random-lines.sketch';
-import { bezierFiddle } from 'src/app/sketches/bezier/bezier-fiddle.sketch';
-import { bezierFlow1 } from 'src/app/sketches/bezier/bezier-flow-1.sketch';
-import { bezierFlow2Interactive } from 'src/app/sketches/bezier/bezier-flow-2-interactive.sketch';
-import { bezierFlow2Static } from 'src/app/sketches/bezier/bezier-flow-2-static.sketch';
-import { bezierGrid1 } from 'src/app/sketches/bezier/bezier-grid-1.sketch';
-import { bezierGrid2 } from 'src/app/sketches/bezier/bezier-grid-2.sketch';
-import { bezierGrid3Interactive } from 'src/app/sketches/bezier/bezier-grid-3-interactive.sketch';
-import { bezierGrid3Static } from 'src/app/sketches/bezier/bezier-grid-3-static.sketch';
 import { flowField1Interactive } from 'src/app/sketches/flow-field/flow-field-1-interactive.sketch';
 import { flowFieldSketch1 } from 'src/app/sketches/flow-field/flow-field-1.sketch';
 import { hito1 } from 'src/app/sketches/hitomezachi-stitch/hito1.sketch';
@@ -29,77 +16,6 @@ import { joyDivision1 } from 'src/app/sketches/joy-division/joy-division-1.sketc
 
 // sketch routes (sorry it's not pretty :( )
 export const SKETCH_ROUTES: SketchRoutes = [
-  {
-    path: 'basic-tree',
-    component: RoutedSketchPageComponent,
-    data: basicTreeSketch,
-  },
-  {
-    path: 'leaf',
-    component: RoutedSketchPageComponent,
-    data: leaf,
-  },
-  {
-    path: 'random-diagonal-lines',
-    component: RoutedSketchPageComponent,
-    data: randomDiagonalLines,
-  },
-  {
-    path: 'random-guassian-lines',
-    component: RoutedSketchPageComponent,
-    data: randomGuassianLines,
-  },
-  {
-    path: 'random-lines',
-    component: RoutedSketchPageComponent,
-    data: randomLines,
-  },
-  {
-    path: 'bezier',
-    collectionTitle: 'Bezier',
-    children: [
-      {
-        path: 'bezier-fiddle',
-        component: RoutedSketchPageComponent,
-        data: bezierFiddle,
-      },
-      {
-        path: 'bezier-flow-1',
-        component: RoutedSketchPageComponent,
-        data: bezierFlow1,
-      },
-      {
-        path: 'bezier-flow-2-interactive',
-        component: RoutedSketchPageComponent,
-        data: bezierFlow2Interactive,
-      },
-      {
-        path: 'bezier-flow-2-static',
-        component: RoutedSketchPageComponent,
-        data: bezierFlow2Static,
-      },
-      {
-        path: 'bezier-grid-1',
-        component: RoutedSketchPageComponent,
-        data: bezierGrid1,
-      },
-      {
-        path: 'bezier-grid-2',
-        component: RoutedSketchPageComponent,
-        data: bezierGrid2,
-      },
-      {
-        path: 'bezier-grid-3-interactive',
-        component: RoutedSketchPageComponent,
-        data: bezierGrid3Interactive,
-      },
-      {
-        path: 'bezier-grid-3-static',
-        component: RoutedSketchPageComponent,
-        data: bezierGrid3Static,
-      },
-    ],
-  },
   {
     path: 'flow-field',
     collectionTitle: 'Flow field',

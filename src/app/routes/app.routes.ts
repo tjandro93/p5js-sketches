@@ -4,6 +4,14 @@ import { SKETCH_ROUTES } from './sketch.routes';
 
 export const APP_ROUTES: SketchRoutes = [
   {
+    path: 'sketches',
+    component: SidenavPageComponent,
+    loadChildren: () =>
+      import('../modules/sketches/sketches.module').then(
+        (m) => m.SketchesModule
+      ),
+  },
+  {
     path: '',
     component: SidenavPageComponent,
     children: SKETCH_ROUTES,

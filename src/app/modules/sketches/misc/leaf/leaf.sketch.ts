@@ -1,6 +1,6 @@
 import * as P5 from 'p5';
 
-import { Sketch } from '../core';
+import { Sketch } from '../../../../core';
 import {
   bezier,
   createCanvasOnParentContainer,
@@ -9,7 +9,7 @@ import {
   bezierPoint,
   DARK_MODE_BACKGROUND,
   DARK_MODE_FOREGROUND,
-} from '../sketch-lib';
+} from '../../../../sketch-lib';
 
 export const leaf: Sketch = {
   title: 'Leaf',

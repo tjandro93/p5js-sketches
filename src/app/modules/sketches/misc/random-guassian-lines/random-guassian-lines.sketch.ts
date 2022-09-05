@@ -1,10 +1,10 @@
-import { ButtonControl, Sketch, SliderControl } from '../core';
+import { ButtonControl, Sketch, SliderControl } from '../../../../core';
 import * as p5 from 'p5';
 import {
   createCanvasOnParentContainer,
   DARK_MODE_BACKGROUND,
   DARK_MODE_FOREGROUND,
-} from '../sketch-lib';
+} from '../../../../sketch-lib';
 
 const runPauseButton = new ButtonControl('Pause');
 const drawOnceButton = new ButtonControl('Draw Once');

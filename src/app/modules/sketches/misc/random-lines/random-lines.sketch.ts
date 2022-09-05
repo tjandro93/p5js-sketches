@@ -1,10 +1,10 @@
 import * as p5 from 'p5';
-import { ButtonControl, Sketch, SliderControl } from '../core';
+import { ButtonControl, Sketch, SliderControl } from '../../../../core';
 import {
   createCanvasOnParentContainer,
   DARK_MODE_BACKGROUND,
   DARK_MODE_FOREGROUND,
-} from '../sketch-lib';
+} from '../../../../sketch-lib';
 
 const segmentsSlider = new SliderControl('Segments', 1, 500, 100, 1);
 const linesSlider = new SliderControl('Lines', 1, 500, 50, 1);

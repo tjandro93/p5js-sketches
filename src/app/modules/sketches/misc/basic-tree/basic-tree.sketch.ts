@@ -1,10 +1,10 @@
-import { Sketch } from '../core';
+import { Sketch } from '../../../../core';
 import * as p5 from 'p5';
 import {
   createCanvasOnParentContainer,
   DARK_MODE_BACKGROUND,
   DARK_MODE_FOREGROUND,
-} from '../sketch-lib';
+} from '../../../../sketch-lib';
 
 export const basicTreeSketch: Sketch = {
   title: 'Basic Tree',

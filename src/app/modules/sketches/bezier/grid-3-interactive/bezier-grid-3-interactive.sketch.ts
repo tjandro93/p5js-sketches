@@ -31,7 +31,6 @@ export const bezierGrid3Interactive: Sketch = {
   },
   func: (p5: P5) => {
     let running = true;
-    let frameCount = 0;
 
     p5.setup = () => {
       createCanvasOnParentContainer(p5, {

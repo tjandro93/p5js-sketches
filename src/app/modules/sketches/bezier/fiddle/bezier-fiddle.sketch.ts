@@ -1,4 +1,4 @@
-import { ButtonControl, Sketch } from '../../core';
+import { ButtonControl, Sketch } from '../../../../core';
 import * as P5 from 'p5';
 import {
   createCanvasOnParentContainer,
@@ -6,7 +6,7 @@ import {
   BezierCurve,
   DARK_MODE_BACKGROUND,
   DARK_MODE_FOREGROUND,
-} from '../../sketch-lib';
+} from '../../../../sketch-lib';
 
 const newCurveButton = new ButtonControl('Add new curve');
 

@@ -1,8 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { SketchRoute } from '../../../../core';
-import { SKETCH_ROUTES } from 'src/app/routes/sketch.routes';
-import { SketchNavLinkGroup } from './models/sketch-nav-link-group.model';
-import { SketchNavLink } from './models/sketch-nav-link.model';
+import { Component } from '@angular/core';
 import { SketchNavLinksRoot } from './models/sketch-nav-links-root.model';
 
 @Component({
@@ -10,83 +6,75 @@ import { SketchNavLinksRoot } from './models/sketch-nav-links-root.model';
   templateUrl: './sidenav-page.component.html',
   styleUrls: ['./sidenav-page.component.scss'],
 })
-export class SidenavPageComponent implements OnInit {
-  //  TODO  look into using material tree for this instead of nav list
-  public links: SketchNavLinksRoot;
-
-  public ngOnInit(): void {
-    this.links = {
-      sketchLinks: [],
-      linkGroups: [],
-    };
-
-    SKETCH_ROUTES.forEach((route) => {
-      if (route.data != null) {
-        this.links.sketchLinks.push(this.routeToLink(route));
-      } else if (route.collectionTitle != null && route.children != null) {
-        this.links.linkGroups.push(this.routeWithChildrenToLinkGroup(route));
-      } else {
-        throw new Error(
-          'Unable to map route to either a SketchNavLinkGroup or SketchNavLink'
-        );
-      }
-    });
-  }
-
-  private routeToLink(
-    route: SketchRoute,
-    parentPath: string = ''
-  ): SketchNavLink {
-    if (route.data == null) {
-      throw new Error(
-        'Cannot create SketchNavLink from SketchRoute without data'
-      );
-    }
-
-    return {
-      title: route.data.title,
-      path: `${parentPath}/${route.path}`,
-    };
-  }
-
-  private routeWithChildrenToLinkGroup(
-    route: SketchRoute,
-    parentPath: string = ''
-  ): SketchNavLinkGroup {
-    if (route.children == null || route.collectionTitle == null) {
-      throw new Error(
-        'Cannot craete SketchNavLinkGroup from SketchRoute without children or collectionTitle'
-      );
-    }
-
-    const group: SketchNavLinkGroup = {
-      collectionTitle: route.collectionTitle,
-      sketchLinks: [],
-      linkGroups: [],
-    };
-
-    route.children.forEach((childRoute) => {
-      if (childRoute.data != null) {
-        group.sketchLinks.push(
-          this.routeToLink(childRoute, `${parentPath}/${route.path}`)
-        );
-      } else if (
-        childRoute.collectionTitle != null &&
-        childRoute.children != null
-      ) {
-        group.linkGroups.push(
-          this.routeWithChildrenToLinkGroup(
-            childRoute,
-            `${parentPath}/${route.path}`
-          )
-        );
-      } else {
-        throw new Error(
-          'Unable to map childRoute to either a SketchNavLinkGroup or SketchNavLink'
-        );
-      }
-    });
-
-    return group;
-  }
+export class SidenavPageComponent {
+  // TODO look into using material tree for this instead of nav list
+  public links: SketchNavLinksRoot = {
+    linkGroups: [
+      {
+        collectionTitle: 'Misc',
+        sketchLinks: [
+          {
+            title: 'Basic Tree',
+            path: '/sketches/misc/basic-tree',
+          },
+          {
+            title: 'Leaf',
+            path: '/sketches/misc/leaf',
+          },
+          {
+            title: 'Random Diagonal Lines',
+            path: '/sketches/misc/random-diagonal-lines',
+          },
+          {
+            title: 'Random Guassian Lines',
+            path: '/sketches/misc/random-guassian-lines',
+          },
+          {
+            title: 'Random Lines',
+            path: '/sketches/misc/random-lines',
+          },
+        ],
+        linkGroups: [],
+      },
+      {
+        collectionTitle: 'Bezier',
+        sketchLinks: [
+          {
+            title: 'Bezier Fiddle',
+            path: '/sketches/bezier/fiddle',
+          },
+          {
+            title: 'Bezier Flow 1',
+            path: '/sketches/bezier/flow-1',
+          },
+          {
+            title: 'Bezier Flow 2 (interactive)',
+            path: '/sketches/bezier/flow-2-interactive',
+          },
+          {
+            title: 'Bezier Flow 2 (static)',
+            path: '/sketches/bezier/flow-2-static',
+          },
+          {
+            title: 'Bezier Grid 1',
+            path: '/sketches/bezier/grid-1',
+          },
+          {
+            title: 'Bezier Grid 2',
+            path: '/sketches/bezier/grid-2',
+          },
+          {
+            title: 'Bezier Grid 3 (interactive)',
+            path: '/sketches/bezier/grid-3-interactive',
+          },
+          {
+            title: 'Bezier Grid 3 (static)',
+            path: '/sketches/bezier/grid-3-static',
+          },
+        ],
+        linkGroups: [],
+      },
+    ],
+    sketchLinks: [],
+  };
 }
