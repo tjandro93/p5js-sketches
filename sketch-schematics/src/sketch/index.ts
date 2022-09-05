@@ -11,7 +11,12 @@ import {
   Tree,
   url,
 } from '@angular-devkit/schematics';
-import { SKETCH_DIRECTORY_PATH, SKETCH_FILE_SUFFIX } from '../core/constants';
+import {
+  MODULE_CLASS_SUFFIX,
+  MODULE_FILE_SUFFIX,
+  SKETCH_DIRECTORY_PATH,
+  SKETCH_FILE_SUFFIX,
+} from '../core/constants';
 import { Schema } from './schema';
 
 export function sketch(options: Schema): Rule {
@@ -20,17 +25,38 @@ export function sketch(options: Schema): Rule {
       throw new SchematicsException('Option (name) is required');
     }
 
+    const sketchNamePieces = options.name.split(/\/|\\/);
+    const sketchNameEnd = sketchNamePieces[sketchNamePieces.length - 1];
+    const fullSketchName = [
+      ...sketchNamePieces,
+      sketchNameEnd,
+    ].join('/');
+
     const sketchFilename = `${strings.dasherize(
-      options.name
+      fullSketchName
     )}${SKETCH_FILE_SUFFIX}`;
-    const sketchObjectName = strings.camelize(options.name.replace('/', '_'));
+    const sketchObjectName = strings.camelize(sketchNameEnd);
+    const sketchModuleFilename = `${strings.dasherize(
+      fullSketchName
+    )}${MODULE_FILE_SUFFIX}`;
+    const sketchModuleClassname = `${strings.classify(
+      sketchNameEnd
+    )}${MODULE_CLASS_SUFFIX}`;
+
+    const sketchObjectImport = `import { ${sketchObjectName} } from '${SKETCH_DIRECTORY_PATH}/${fullSketchName}.sketch';`;
 
     context.logger.info(
-      `Creating new sketch (${sketchObjectName} @ ${sketchFilename})`
+      `Creating new sketch (${sketchObjectName} @ ${sketchFilename} and ${sketchModuleClassname} @ ${sketchModuleFilename})`
     );
 
     const templateSource = apply(url('./files'), [
-      applyTemplates({ sketchObjectName, sketchFilename }),
+      applyTemplates({
+        sketchObjectName,
+        sketchFilename,
+        sketchModuleFilename,
+        sketchModuleClassname,
+        sketchObjectImport
+      }),
       move(SKETCH_DIRECTORY_PATH),
     ]);
 

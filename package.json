@@ -12,10 +12,8 @@
     "prettier-and-lint": "npm run prettier && npm run lint",
     "build-schematics": "cd sketch-schematics && npm install && npm run build",
     "build-schematics-watch": "cd sketch-schematics && npm install && npm run build-watch",
-    "generate-sketch": "schematics ./sketch-schematics/src/collection.json:sketch --debug=false --name=$npm_config_p5_name && npm run generate-routes",
-    "generate-interactive-sketch": "schematics ./sketch-schematics/src/collection.json:interactive-sketch --debug=false --name=$npm_config_p5_name && npm run generate-routes",
-    "fork-sketch": "schematics ./sketch-schematics/src/collection.json:fork-sketch --debug=false --source=$npm_config_p5_source --target=$npm_config_p5_target && npm run generate-routes",
-    "generate-routes": "schematics ./sketch-schematics/src/collection.json:sketch-routes --debug=false && npm run prettier"
+    "generate-sketch": "schematics ./sketch-schematics/src/collection.json:sketch --debug=false",
+    "generate-interactive-sketch": "schematics ./sketch-schematics/src/collection.json:interactive-sketch --debug=false"
   },
   "private": true,
   "dependencies": {
