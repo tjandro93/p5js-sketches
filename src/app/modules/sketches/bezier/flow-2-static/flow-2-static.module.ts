@@ -5,18 +5,18 @@ import { RoutedSketchPageComponent } from 'src/app/modules/shared/pages/routed-s
 import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { bezierFlow2Static } from './bezier-flow-2-static.sketch';
 
-
-
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
     SharedModule,
-    RouterModule.forRoot([{
-      path:'',
-      component: RoutedSketchPageComponent,
-      data: bezierFlow2Static
-    }])
-  ]
+    RouterModule.forRoot([
+      {
+        path: '',
+        component: RoutedSketchPageComponent,
+        data: bezierFlow2Static,
+      },
+    ]),
+  ],
 })
-export class Flow2StaticModule { }
+export class Flow2StaticModule {}

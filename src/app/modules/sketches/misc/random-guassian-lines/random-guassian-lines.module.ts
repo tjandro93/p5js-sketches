@@ -5,18 +5,18 @@ import { RouterModule } from '@angular/router';
 import { RoutedSketchPageComponent } from '../../../shared/pages/routed-sketch-page/routed-sketch-page.component';
 import { SharedModule } from '../../../shared/shared.module';
 
-
-
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
     SharedModule,
-    RouterModule.forRoot([{
-      path:'',
-      component: RoutedSketchPageComponent,
-      data: randomGuassianLines
-    }])
-  ]
+    RouterModule.forRoot([
+      {
+        path: '',
+        component: RoutedSketchPageComponent,
+        data: randomGuassianLines,
+      },
+    ]),
+  ],
 })
-export class RandomGuassianLinesModule { }
+export class RandomGuassianLinesModule {}

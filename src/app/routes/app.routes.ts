@@ -9,5 +9,5 @@ export const APP_ROUTES: SketchRoutes = [
       import('../modules/sketches/sketches.module').then(
         (m) => m.SketchesModule
       ),
-  }
+  },
 ];

@@ -5,18 +5,18 @@ import { RoutedSketchPageComponent } from 'src/app/modules/shared/pages/routed-s
 import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { bezierGrid3Static } from './bezier-grid-3-static.sketch';
 
-
-
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
     SharedModule,
-    RouterModule.forRoot([{
-      path:'',
-      component: RoutedSketchPageComponent,
-      data: bezierGrid3Static
-    }])
-  ]
+    RouterModule.forRoot([
+      {
+        path: '',
+        component: RoutedSketchPageComponent,
+        data: bezierGrid3Static,
+      },
+    ]),
+  ],
 })
-export class Grid3StaticModule { }
+export class Grid3StaticModule {}

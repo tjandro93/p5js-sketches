@@ -5,18 +5,18 @@ import { RoutedSketchPageComponent } from '../../../shared/pages/routed-sketch-p
 import { SharedModule } from '../../../shared/shared.module';
 import { randomLines } from './random-lines.sketch';
 
-
-
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
     SharedModule,
-    RouterModule.forRoot([{
-      path:'',
-      component: RoutedSketchPageComponent,
-      data: randomLines
-    }])
-  ]
+    RouterModule.forRoot([
+      {
+        path: '',
+        component: RoutedSketchPageComponent,
+        data: randomLines,
+      },
+    ]),
+  ],
 })
-export class RandomLinesModule { }
+export class RandomLinesModule {}

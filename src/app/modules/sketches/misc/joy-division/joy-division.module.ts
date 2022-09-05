@@ -4,8 +4,6 @@ import { RouterModule } from '@angular/router';
 import { joyDivision1 } from './joy-division-1.sketch';
 import { RoutedSketchPageComponent } from 'src/app/modules/shared/pages/routed-sketch-page/routed-sketch-page.component';
 
-
-
 @NgModule({
   declarations: [],
   imports: [
@@ -17,6 +15,6 @@ import { RoutedSketchPageComponent } from 'src/app/modules/shared/pages/routed-s
         data: joyDivision1,
       },
     ]),
-  ]
+  ],
 })
-export class JoyDivisionModule { }
+export class JoyDivisionModule {}

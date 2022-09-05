@@ -5,18 +5,18 @@ import { RoutedSketchPageComponent } from 'src/app/modules/shared/pages/routed-s
 import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { bezierGrid2 } from './bezier-grid-2.sketch';
 
-
-
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
     SharedModule,
-    RouterModule.forRoot([{
-      path:'',
-      component: RoutedSketchPageComponent,
-      data: bezierGrid2
-    }])
-  ]
+    RouterModule.forRoot([
+      {
+        path: '',
+        component: RoutedSketchPageComponent,
+        data: bezierGrid2,
+      },
+    ]),
+  ],
 })
-export class Grid2Module { }
+export class Grid2Module {}

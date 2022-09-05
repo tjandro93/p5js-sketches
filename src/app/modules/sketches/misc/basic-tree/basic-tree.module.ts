@@ -5,18 +5,18 @@ import { RoutedSketchPageComponent } from '../../../shared/pages/routed-sketch-p
 import { basicTreeSketch } from 'src/app/modules/sketches/misc/basic-tree/basic-tree.sketch';
 import { SharedModule } from '../../../shared/shared.module';
 
-
-
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
     SharedModule,
-    RouterModule.forRoot([{
-      path:'',
-      component: RoutedSketchPageComponent,
-      data: basicTreeSketch
-    }])
-  ]
+    RouterModule.forRoot([
+      {
+        path: '',
+        component: RoutedSketchPageComponent,
+        data: basicTreeSketch,
+      },
+    ]),
+  ],
 })
-export class BasicTreeModule { }
+export class BasicTreeModule {}

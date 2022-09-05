@@ -4,8 +4,6 @@ import { RouterModule } from '@angular/router';
 import { RoutedSketchPageComponent } from 'src/app/modules/shared/pages/routed-sketch-page/routed-sketch-page.component';
 import { hito2 } from './hito2.sketch';
 
-
-
 @NgModule({
   declarations: [],
   imports: [
@@ -17,6 +15,6 @@ import { hito2 } from './hito2.sketch';
         data: hito2,
       },
     ]),
-  ]
+  ],
 })
-export class Hito2Module { }
+export class Hito2Module {}

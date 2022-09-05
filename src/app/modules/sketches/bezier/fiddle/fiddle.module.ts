@@ -5,18 +5,18 @@ import { RouterModule } from '@angular/router';
 import { RoutedSketchPageComponent } from 'src/app/modules/shared/pages/routed-sketch-page/routed-sketch-page.component';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
 
-
-
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
     SharedModule,
-    RouterModule.forRoot([{
-      path:'',
-      component: RoutedSketchPageComponent,
-      data: bezierFiddle
-    }])
-  ]
+    RouterModule.forRoot([
+      {
+        path: '',
+        component: RoutedSketchPageComponent,
+        data: bezierFiddle,
+      },
+    ]),
+  ],
 })
-export class FiddleModule { }
+export class FiddleModule {}

@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-
-
 @NgModule({
   declarations: [],
   imports: [
@@ -24,33 +22,32 @@ import { RouterModule } from '@angular/router';
       {
         path: 'random-diagonal-lines',
         loadChildren: () =>
-          import(
-            './random-diagonal-lines/random-diagonal-lines.module'
-          ).then((m) => m.RandomDiagonalLinesModule),
+          import('./random-diagonal-lines/random-diagonal-lines.module').then(
+            (m) => m.RandomDiagonalLinesModule
+          ),
       },
       {
         path: 'random-guassian-lines',
         loadChildren: () =>
-          import(
-            './random-guassian-lines/random-guassian-lines.module'
-          ).then((m) => m.RandomGuassianLinesModule),
+          import('./random-guassian-lines/random-guassian-lines.module').then(
+            (m) => m.RandomGuassianLinesModule
+          ),
       },
       {
         path: 'random-lines',
         loadChildren: () =>
-          import(
-            './random-lines/random-lines.module'
-          ).then((m) => m.RandomLinesModule),
+          import('./random-lines/random-lines.module').then(
+            (m) => m.RandomLinesModule
+          ),
       },
       {
         path: 'joy-division',
         loadChildren: () =>
-          import(
-            './joy-division/joy-division.module'
-          ).then((m) => m.JoyDivisionModule),
+          import('./joy-division/joy-division.module').then(
+            (m) => m.JoyDivisionModule
+          ),
       },
-      
-    ])
-  ]
+    ]),
+  ],
 })
-export class MiscModule { }
+export class MiscModule {}

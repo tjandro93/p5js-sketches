@@ -5,8 +5,6 @@ import { RouterModule } from '@angular/router';
 import { RoutedSketchPageComponent } from 'src/app/modules/shared/pages/routed-sketch-page/routed-sketch-page.component';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
 
-
-
 @NgModule({
   declarations: [],
   imports: [
@@ -19,6 +17,6 @@ import { SharedModule } from 'src/app/modules/shared/shared.module';
         data: flowField1Interactive,
       },
     ]),
-  ]
+  ],
 })
-export class FlowField1InteractiveModule { }
+export class FlowField1InteractiveModule {}

@@ -12,16 +12,12 @@ import { RouterModule } from '@angular/router';
       {
         path: 'fiddle',
         loadChildren: () =>
-          import('./fiddle/fiddle.module').then(
-            (m) => m.FiddleModule
-          ),
+          import('./fiddle/fiddle.module').then((m) => m.FiddleModule),
       },
       {
         path: 'flow-1',
         loadChildren: () =>
-          import('./flow-1/flow-1.module').then(
-            (m) => m.Flow1Module
-          ),
+          import('./flow-1/flow-1.module').then((m) => m.Flow1Module),
       },
       {
         path: 'flow-2-interactive',
@@ -40,16 +36,12 @@ import { RouterModule } from '@angular/router';
       {
         path: 'grid-1',
         loadChildren: () =>
-          import('./grid-1/grid-1.module').then(
-            (m) => m.Grid1Module
-          ),
+          import('./grid-1/grid-1.module').then((m) => m.Grid1Module),
       },
       {
         path: 'grid-2',
         loadChildren: () =>
-          import('./grid-2/grid-2.module').then(
-            (m) => m.Grid2Module
-          ),
+          import('./grid-2/grid-2.module').then((m) => m.Grid2Module),
       },
       {
         path: 'grid-3-interactive',
