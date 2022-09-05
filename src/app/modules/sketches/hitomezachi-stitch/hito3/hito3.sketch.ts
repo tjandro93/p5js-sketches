@@ -3,8 +3,8 @@ import {
   createCanvasOnParentContainer,
   DARK_MODE_BACKGROUND,
   DARK_MODE_FOREGROUND,
-} from '../../sketch-lib';
-import { Sketch } from '../../core';
+} from '../../../../sketch-lib';
+import { Sketch } from '../../../../core';
 
 export const hito3: Sketch = {
   title: 'Hitomezashi Stitch Attempt 3',

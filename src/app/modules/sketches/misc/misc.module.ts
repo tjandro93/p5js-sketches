@@ -42,6 +42,13 @@ import { RouterModule } from '@angular/router';
             './random-lines/random-lines.module'
           ).then((m) => m.RandomLinesModule),
       },
+      {
+        path: 'joy-division',
+        loadChildren: () =>
+          import(
+            './joy-division/joy-division.module'
+          ).then((m) => m.JoyDivisionModule),
+      },
       
     ])
   ]

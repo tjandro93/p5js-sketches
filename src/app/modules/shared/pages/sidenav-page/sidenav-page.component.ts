@@ -33,6 +33,10 @@ export class SidenavPageComponent {
             title: 'Random Lines',
             path: '/sketches/misc/random-lines',
           },
+          {
+            title: 'Joy Division',
+            path: '/sketches/misc/joy-division',
+          },
         ],
         linkGroups: [],
       },
@@ -84,6 +88,28 @@ export class SidenavPageComponent {
           {
             title: 'Flow Field 1 (Interactive)',
             path: '/sketches/flow-field/flow-field-1-interactive',
+          },
+        ],
+        linkGroups: [],
+      },
+      {
+        collectionTitle: 'Hitomezachi Stitch',
+        sketchLinks: [
+          {
+            title: 'Hito 1',
+            path: '/sketches/hitomezachi-stitch/hito-1',
+          },
+          {
+            title: 'Hito 2',
+            path: '/sketches/hitomezachi-stitch/hito-2',
+          },
+          {
+            title: 'Hito 3',
+            path: '/sketches/hitomezachi-stitch/hito-3',
+          },
+          {
+            title: 'Hito 4',
+            path: '/sketches/hitomezachi-stitch/hito-4',
           },
         ],
         linkGroups: [],

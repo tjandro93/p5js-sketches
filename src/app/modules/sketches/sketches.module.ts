@@ -24,6 +24,13 @@ import { RouterModule } from '@angular/router';
           ).then((m) => m.BezierModule),
       },
       {
+        path: 'hitomezachi-stitch',
+        loadChildren: () =>
+          import(
+            './hitomezachi-stitch/hitomezachi-stitch.module'
+          ).then((m) => m.HitomezachiStitchModule),
+      },
+      {
         path: 'flow-field',
         loadChildren: () =>
           import(

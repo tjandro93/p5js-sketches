@@ -3,13 +3,13 @@ import {
   createCanvasOnParentContainer,
   DARK_MODE_BACKGROUND,
   DARK_MODE_FOREGROUND,
-} from '../../sketch-lib';
-import { Sketch } from '../../core';
+} from '../../../../sketch-lib';
+import { Sketch } from '../../../../core';
 
-export const hito1: Sketch = {
-  title: 'Hitomezashi Stitch Attempt 1',
+export const hito2: Sketch = {
+  title: 'Hitomezashi Stitch Attempt 2',
   description:
-    'Ported from Processing. This was a failed implementation but I saved it because it was interesting.',
+    'Ported from Processing. This was the initial successful implementation of the algorithm',
   width: 400,
   height: 400,
 
@@ -18,21 +18,21 @@ export const hito1: Sketch = {
 
     p.setup = () => {
       createCanvasOnParentContainer(p, {
-        width: hito1.width,
-        height: hito1.height,
+        width: hito2.width,
+        height: hito2.height,
       });
-      p.frameRate(5);
       p.background(DARK_MODE_BACKGROUND);
       p.fill(DARK_MODE_FOREGROUND);
       p.stroke(DARK_MODE_FOREGROUND);
       p.strokeWeight(5);
 
+      p.frameRate(5);
       setupGridPoints(10, 10);
     };
 
     p.draw = () => {
       p.background(DARK_MODE_BACKGROUND);
-      // showGridPoints();
+
       patternHorizontal();
       patternVertical();
     };
@@ -62,12 +62,15 @@ export const hito1: Sketch = {
     }
 
     function patternHorizontal() {
-      for (let i = 0; i < gridPoints.length - 1; i++) {
-        for (let j = 0; j < gridPoints[i].length; j++) {
+      for (let j = 0; j < gridPoints[0].length; j++) {
+        const startOn = p.random() > 0.5;
+        for (let i = 0; i < gridPoints.length - 1; i++) {
           const startPoint = gridPoints[i][j];
           const endPoint = gridPoints[i + 1][j];
 
-          if (p.random(1) > 0.5) {
+          if (startOn && i % 2 === 0) {
+            p.line(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
+          } else if (!startOn && i % 2 === 1) {
             p.line(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
           }
         }
@@ -76,11 +79,14 @@ export const hito1: Sketch = {
 
     function patternVertical() {
       for (let i = 0; i < gridPoints.length; i++) {
+        const startOn = p.random() > 0.5;
         for (let j = 0; j < gridPoints[i].length - 1; j++) {
           const startPoint = gridPoints[i][j];
           const endPoint = gridPoints[i][j + 1];
 
-          if (p.random(1) > 0.5) {
+          if (startOn && j % 2 === 0) {
+            p.line(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
+          } else if (!startOn && j % 2 === 1) {
             p.line(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
           }
         }
