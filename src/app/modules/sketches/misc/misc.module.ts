@@ -47,6 +47,20 @@ import { RouterModule } from '@angular/router';
             (m) => m.JoyDivisionModule
           ),
       },
+      {
+        path: 'test1',
+        loadChildren: () =>
+          import('./schematic-test-interactive/schematic-test-interactive.module').then(
+            (m) => m.SchematicTestInteractiveModule
+          ),
+      },
+      {
+        path: 'test2',
+        loadChildren: () =>
+          import('./schematic-test-static/schematic-test-static.module').then(
+            (m) => m.SchematicTestStaticModule
+          ),
+      },
     ]),
   ],
 })
