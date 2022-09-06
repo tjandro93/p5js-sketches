@@ -34,6 +34,7 @@ export abstract class BaseSketchDirective implements OnInit, OnDestroy {
 
         // create new sketch
         this.p = new p5(sketch.func);
+        this.p.disableFriendlyErrors = true;
         // let the sketches decide if they want to set a random noise seed
         this.p.noiseSeed(868);
 
