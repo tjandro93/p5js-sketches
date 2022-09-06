@@ -49,6 +49,23 @@
       >
         {{ control.label$ | async }}
       </mat-checkbox>
+      <mat-form-field
+        *ngSwitchCase="SketchControlType.Select"
+        appearance="outline"
+      >
+        <mat-label>{{ control.label$ | async }}</mat-label>
+        <mat-select
+          [value]="control.value$ | async"
+          (selectionChange)="control.value$.next($event.value)"
+        >
+          <mat-option
+            *ngFor="let option of control.options$ | async"
+            [value]="option"
+          >
+            {{ option }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </ng-container>
   </ng-container>
 </ng-container>

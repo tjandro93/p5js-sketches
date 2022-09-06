@@ -3,4 +3,5 @@ export enum SketchControlType {
   Button,
   NumberInput,
   Checkbox,
+  Select,
 }
