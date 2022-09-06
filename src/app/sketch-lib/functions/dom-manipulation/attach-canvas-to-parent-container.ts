@@ -1,6 +1,5 @@
 import * as p5 from 'p5';
-import { CANVAS_PARENT_CONTAINER_ID } from '../../constants/canvas-parent-container-id';
-import { getParentContainer } from './get-parent-container';
+import { getParentContainer, CANVAS_PARENT_CONTAINER_ID } from '../..';
 
 /**
  * Attach the provided canvas as a child of the element with the specified id.

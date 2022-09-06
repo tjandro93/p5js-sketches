@@ -1,5 +1,5 @@
 import * as P5 from 'p5';
-import { Vector } from '../../types/vector';
+import { Vector } from '../..';
 
 /**
  * Function to make a p5 point from a vector

@@ -1,4 +1,4 @@
-import { CANVAS_PARENT_CONTAINER_ID } from '../../constants/canvas-parent-container-id';
+import { CANVAS_PARENT_CONTAINER_ID } from '../..';
 
 export function getParentContainer(containerId?: string): Element {
   if (containerId == null) {

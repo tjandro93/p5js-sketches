@@ -1,8 +1,5 @@
 import * as P5 from 'p5';
-import { bezier } from '../functions/vector/bezier';
-import { bezierPoint } from '../functions/vector/bezier-point';
-import { circle } from '../functions/vector/circle';
-import { SimpleVector } from './vector';
+import { SimpleVector, circle, bezierPoint, bezier } from '..';
 
 /**
  * Class to represent a full bezier curve

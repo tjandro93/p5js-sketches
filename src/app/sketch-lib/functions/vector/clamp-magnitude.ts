@@ -1,6 +1,5 @@
 import * as P5 from 'p5';
-import { limitMagnitudeCeiling } from './limit-magnitude-ceiling';
-import { limitMagnitudeFloor } from './limit-magnitude-floor';
+import { limitMagnitudeFloor, limitMagnitudeCeiling } from '../..';
 
 /**
  * Clamp the vector's magnitude to be between minMagnitude and maxMagnitude.
