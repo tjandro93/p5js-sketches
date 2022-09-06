@@ -5,6 +5,17 @@ export * from './constants/colors/dark-mode-background';
 export * from './constants/colors/dark-mode-foreground';
 
 // Functions
+// Array functions
+export * from './functions/array/pairwise';
+export * from './functions/array/partition';
+// Drawing functions
+export * from './functions/drawing/partitioned-polyline';
+export * from './functions/drawing/line';
+export * from './functions/drawing/bezier';
+export * from './functions/drawing/bezier-point';
+export * from './functions/drawing/point';
+export * from './functions/drawing/circle';
+export * from './functions/drawing/polyline';
 // Dom manipulation functions
 export * from './functions/dom-manipulation/attach-canvas-to-parent-container';
 export * from './functions/dom-manipulation/create-canvas-on-parent-container';
@@ -14,11 +25,6 @@ export * from './functions/dom-manipulation/remove-canvas-from-parent-container'
 export * from './functions/math/sum';
 export * from './functions/math/distance';
 // Vector functions
-export * from './functions/vector/line';
-export * from './functions/vector/bezier';
-export * from './functions/vector/bezier-point';
-export * from './functions/vector/point';
-export * from './functions/vector/circle';
 export * from './functions/vector/limit-magnitude-ceiling';
 export * from './functions/vector/limit-magnitude-floor';
 export * from './functions/vector/clamp-magnitude';
