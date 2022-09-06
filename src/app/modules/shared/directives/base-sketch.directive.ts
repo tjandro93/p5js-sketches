@@ -26,6 +26,7 @@ export abstract class BaseSketchDirective implements OnInit, OnDestroy {
           );
         }
         // remove any old sketch
+        this.p?.clear(0, 0, 0, 0);
         this.p?.remove();
         removeCanvasFromParentContainer();
 

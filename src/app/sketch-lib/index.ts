@@ -16,6 +16,7 @@ export * from './functions/drawing/bezier-point';
 export * from './functions/drawing/point';
 export * from './functions/drawing/circle';
 export * from './functions/drawing/polyline';
+export * from './functions/drawing/vertex';
 // Dom manipulation functions
 export * from './functions/dom-manipulation/attach-canvas-to-parent-container';
 export * from './functions/dom-manipulation/create-canvas-on-parent-container';

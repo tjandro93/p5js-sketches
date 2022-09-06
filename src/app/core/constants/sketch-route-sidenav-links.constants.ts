@@ -81,6 +81,10 @@ const flowFieldSketchLinks = {
       title: 'Flow Field 1 (Interactive)',
       path: '/sketches/flow-field/flow-field-1-interactive',
     },
+    {
+      title: 'Flow Field (Plotter)',
+      path: '/sketches/flow-field/plotter-1',
+    },
   ],
   linkGroups: [],
 };
