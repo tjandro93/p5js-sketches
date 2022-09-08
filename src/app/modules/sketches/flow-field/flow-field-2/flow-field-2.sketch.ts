@@ -1,0 +1,73 @@
+import * as P5 from 'p5';
+import { ButtonControl, Sketch } from 'src/app/core';
+import {
+  createCanvasOnParentContainer,
+  DARK_MODE_BACKGROUND,
+  DARK_MODE_FOREGROUND,
+} from 'src/app/sketch-lib';
+
+const runPauseButton = new ButtonControl('Pause');
+const drawOnceButton = new ButtonControl('Draw Once');
+
+export const flowField2: Sketch = {
+  title: 'flowField2',
+  width: undefined,
+  height: undefined,
+  isSvg: false,
+  controls: {
+    refreshButton: true,
+    downloadButton: true,
+    customControls: [runPauseButton, drawOnceButton],
+  },
+  func: (p5: P5) => {
+    let running = true;
+    let frameCount = 0;
+
+    p5.setup = () => {
+      createCanvasOnParentContainer(p5, {
+        width: flowField2.width,
+        height: flowField2.height,
+        useSvg: flowField2.isSvg,
+      });
+      p5.background(DARK_MODE_BACKGROUND);
+      p5.stroke(DARK_MODE_FOREGROUND);
+      p5.noFill();
+
+      drawOnceButton.onPress = () => {
+        drawOnce();
+      };
+
+      runPauseButton.onPress = () => {
+        running = !running;
+        runPauseButton.label$.next(running ? 'Pause' : 'Run');
+      };
+
+      // example implementation
+      p5.angleMode(p5.DEGREES);
+      p5.circle(
+        p5.width / 2 + (p5.cos(frameCount) * p5.width) / 4,
+        p5.height / 2 + (p5.sin(frameCount) * p5.height) / 4,
+        50
+      );
+    };
+
+    p5.draw = () => {
+      if (running) {
+        drawOnce();
+      }
+    };
+
+    function drawOnce(): void {
+      p5.background(DARK_MODE_BACKGROUND);
+
+      // example implementation
+      p5.circle(
+        p5.width / 2 + (p5.cos(frameCount) * p5.width) / 4,
+        p5.height / 2 + (p5.sin(frameCount) * p5.height) / 4,
+        50
+      );
+
+      frameCount++;
+    }
+  },
+};

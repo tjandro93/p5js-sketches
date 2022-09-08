@@ -85,6 +85,10 @@ const flowFieldSketchLinks = {
       title: 'Flow Field (Plotter)',
       path: '/sketches/flow-field/plotter-1',
     },
+    {
+      title: 'Flow Field 2 (interactive)',
+      path: '/sketches/flow-field/flow-field-2',
+    },
   ],
   linkGroups: [],
 };
@@ -112,12 +116,24 @@ const hitoSketchLinks = {
   linkGroups: [],
 };
 
+const sandboxLinks = {
+  collectionTitle: 'Sandbox',
+  sketchLinks: [
+    {
+      title: 'Point Grid Interactive',
+      path: '/sketches/sandbox/point-grid',
+    },
+  ],
+  linkGroups: [],
+};
+
 export const SKETCH_NAV_LINKS: SketchNavLinksRoot = {
   linkGroups: [
     miscSketchLinks,
     bezierSketchLinks,
     flowFieldSketchLinks,
     hitoSketchLinks,
+    sandboxLinks,
   ],
   sketchLinks: [],
 };
