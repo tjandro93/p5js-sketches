@@ -1,5 +1,5 @@
 import * as P5 from 'p5';
-import { Sketch, SliderControl } from 'src/app/core';
+import { PlotterFriendlyDimensions, Sketch, SliderControl } from 'src/app/core';
 import { CheckboxControl } from 'src/app/core/types/sketch-controls/checkbox-control';
 import { SelectControl } from 'src/app/core/types/sketch-controls/select-control';
 import {
@@ -80,8 +80,8 @@ let flowField: FlowField;
 
 export const plotter1: Sketch = {
   title: 'Flow Field (Plotter)',
-  width: undefined,
-  height: undefined,
+  width: PlotterFriendlyDimensions.letter.width,
+  height: PlotterFriendlyDimensions.letter.height,
   isSvg: true,
   controls: {
     refreshButton: true,

@@ -1,3 +1,7 @@
+// constants
+export * from './constants/plotter-friendly-dimensions.constants';
+export * from './constants/sketch-route-sidenav-links.constants';
+
 // function
 export * from './functions/save-svg';
 export * from './functions/save-canvas-png';

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { SketchNavLinksRoot } from 'src/app/core';
-import { SKETCH_NAV_LINKS } from 'src/app/core/constants/sketch-route-sidenav-links.constants';
+import { SKETCH_NAV_LINKS, SketchNavLinksRoot } from 'src/app/core';
 
 @Component({
   selector: 'app-sidenav-page',
