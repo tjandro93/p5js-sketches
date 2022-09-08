@@ -31,6 +31,11 @@ import { RouterModule } from '@angular/router';
             (m) => m.FlowFieldModule
           ),
       },
+      {
+        path: 'sandbox',
+        loadChildren: () =>
+          import('./sandbox/sandbox.module').then((m) => m.SandboxModule),
+      },
     ]),
   ],
 })
