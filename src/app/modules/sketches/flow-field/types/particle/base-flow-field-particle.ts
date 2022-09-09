@@ -26,7 +26,6 @@ export abstract class BaseFlowFieldParticle implements KinematicBody {
   }
 
   public abstract applyForces(forces: PointGrid<FlowFieldForce>): void;
-  public abstract draw(): void;
   public abstract handleOutOfBounds(
     outOfBoundsPositions: OutOfBoundsPosition[]
   ): void;

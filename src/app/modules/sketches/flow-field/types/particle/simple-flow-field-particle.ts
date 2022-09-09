@@ -26,11 +26,7 @@ export class SimpleFlowFieldParticle extends BaseFlowFieldParticle {
     const [closestForce] = forces.getNearestPointToVector(this.position);
     this.acceleration.add(closestForce.force);
   }
-  public draw(): void {
-    if (this.previousPosition != null) {
-      line(this.p5, this.previousPosition, this.position);
-    }
-  }
+
   public handleOutOfBounds(outOfBoundsPositions: OutOfBoundsPosition[]): void {
     // when we go out of bounds just reset the kinematics based on the strategy
     this.initiateKinematics();

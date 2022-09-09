@@ -1,5 +1,5 @@
 import * as P5 from 'p5';
-import { ButtonControl, Sketch, SliderControl } from 'src/app/core';
+import { PlotterFriendlyDimensions, Sketch, SliderControl } from 'src/app/core';
 import { CheckboxControl } from 'src/app/core/types/sketch-controls/checkbox-control';
 import {
   createCanvasOnParentContainer,
@@ -10,12 +10,17 @@ import {
 } from 'src/app/sketch-lib';
 import { FlowFieldForce } from '../types/flow-field-force';
 import { RandomInitialPositionKinematicsStrategy } from '../types/initial-kinematics-strategy/random-initial-position-kinematics-strategy';
-import { RealTimeParticleDrawStrategy } from '../types/particle-draw-strategy/real-time-particle-draw-strategy';
+import { BatchParticleDrawStrategy } from '../types/particle-draw-strategy/batch-particle-draw-strategy';
 import { SimpleFlowFieldParticleFactory } from '../types/particle/simple-flow-field-particle';
 import { PerlinFlowField } from '../types/perlin-flow-field';
 
-const runPauseButton = new ButtonControl('Pause');
-const drawOnceButton = new ButtonControl('Draw Once');
+const iterationCountSlider = new SliderControl(
+  'Iterations',
+  1,
+  10000,
+  2000,
+  10
+);
 const drawForcesCheckbox = new CheckboxControl('Draw Forces', false);
 const forceColCountSlider = new SliderControl(
   'Force Column Count',
@@ -63,17 +68,16 @@ const maxParticleSpeedSlider = new SliderControl(
 );
 const particleCountSlider = new SliderControl('Particle Count', 1, 100, 10, 1);
 
-export const flowField2: Sketch = {
-  title: 'Flow Field 2',
-  width: 1000,
-  height: 800,
-  isSvg: false,
+export const flowField2Plotter: Sketch = {
+  title: 'Flow Field 2 (Plotter)',
+  width: PlotterFriendlyDimensions.square.width,
+  height: PlotterFriendlyDimensions.square.height,
+  isSvg: true,
   controls: {
     refreshButton: true,
     downloadButton: true,
     customControls: [
-      runPauseButton,
-      drawOnceButton,
+      iterationCountSlider,
       drawForcesCheckbox,
       forceColCountSlider,
       forceRowCountSlider,
@@ -86,12 +90,9 @@ export const flowField2: Sketch = {
     ],
   },
   func: (p5: P5) => {
-    let running = true;
-    let frameCount = 0;
-
     const bounds: Bounds = {
-      maxX: 1000,
-      maxY: 800,
+      maxX: flowField2Plotter.width,
+      maxY: flowField2Plotter.height,
     };
 
     // TODO this should come from a select control once more are implemented
@@ -106,17 +107,18 @@ export const flowField2: Sketch = {
       minParticleSpeedSlider.value,
       maxParticleSpeedSlider.value
     );
-    const particleDrawStrategy = new RealTimeParticleDrawStrategy(p5);
-
-    let flowField: PerlinFlowField;
+    const particleDrawStrategy = new BatchParticleDrawStrategy(p5);
 
     p5.setup = () => {
+      console.log('setup() started');
+      const setupStart = p5.millis();
+
       createCanvasOnParentContainer(p5, {
-        width: flowField2.width,
-        height: flowField2.height,
-        useSvg: flowField2.isSvg,
+        width: flowField2Plotter.width,
+        height: flowField2Plotter.height,
+        useSvg: flowField2Plotter.isSvg,
       });
-      p5.background(DARK_MODE_BACKGROUND);
+      // p5.background(DARK_MODE_BACKGROUND);
       p5.stroke(DARK_MODE_FOREGROUND, 48);
       p5.noFill();
       p5.blendMode(p5.SCREEN);
@@ -124,16 +126,7 @@ export const flowField2: Sketch = {
       p5.noiseSeed(p5.random(0, 10000));
       p5.randomSeed(p5.random(0, 10000));
 
-      drawOnceButton.onPress = () => {
-        drawOnce();
-      };
-
-      runPauseButton.onPress = () => {
-        running = !running;
-        runPauseButton.label$.next(running ? 'Pause' : 'Run');
-      };
-
-      flowField = new PerlinFlowField(p5, {
+      const flowField = new PerlinFlowField(p5, {
         drawForces: drawForcesCheckbox.value,
         pointGridOptions: {
           bounds,
@@ -147,19 +140,15 @@ export const flowField2: Sketch = {
         particleCount: particleCountSlider.value,
         particleDrawStrategy,
       });
-    };
 
-    p5.draw = () => {
-      if (running) {
-        drawOnce();
+      for (let i = 0; i < iterationCountSlider.value; i++) {
+        flowField.step();
       }
-    };
-
-    function drawOnce(): void {
-      flowField.step();
       flowField.draw();
 
-      frameCount++;
-    }
+      const setupEnd = p5.millis();
+
+      console.log(`setup() took ${setupEnd - setupStart}ms to run`);
+    };
   },
 };

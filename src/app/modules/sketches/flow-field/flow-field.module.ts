@@ -33,6 +33,13 @@ import { RouterModule } from '@angular/router';
             (m) => m.FlowField2Module
           ),
       },
+      {
+        path: 'flow-field-2-plotter',
+        loadChildren: () =>
+          import('./flow-field-2-plotter/flow-field-2-plotter.module').then(
+            (m) => m.FlowField2PlotterModule
+          ),
+      },
     ]),
   ],
 })

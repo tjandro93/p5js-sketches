@@ -5,6 +5,7 @@ import {
   PointGridPointFactory,
 } from 'src/app/sketch-lib';
 import { FlowFieldForce } from './flow-field-force';
+import { FlowFieldParticleDrawStrategy } from './particle-draw-strategy/particle-draw-strategy';
 import { BaseFlowFieldParticle } from './particle/base-flow-field-particle';
 import { FlowFieldParticleFactory } from './particle/flow-field-particle-factory';
 
@@ -30,9 +31,7 @@ export abstract class BaseFlowField {
       this.pointGrid.points.forEach((point) => point.draw());
     }
 
-    this.particles.forEach((particle) => {
-      particle.draw();
-    });
+    this.options.particleDrawStrategy.draw(this.particles);
   }
 
   public step(): void {
@@ -51,6 +50,7 @@ export interface BaseFlowFieldOptions {
   drawForces: boolean;
   forceFactory: FlowFieldForceFactory;
   particleFactory: FlowFieldParticleFactory;
+  particleDrawStrategy: FlowFieldParticleDrawStrategy;
   particleCount: number;
 }
 
