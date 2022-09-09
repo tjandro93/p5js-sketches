@@ -36,8 +36,9 @@ export abstract class BaseSketchDirective implements OnInit, OnDestroy {
         // create new sketch
         this.p = new p5(sketch.func);
         this.p.disableFriendlyErrors = true;
-        // let the sketches decide if they want to set a random noise seed
+        // let the sketches decide if they want to set random seeds
         this.p.noiseSeed(868);
+        this.p.randomSeed(868);
 
         // make sure angular re-renders after adding the canvas
         this.cdRef.detectChanges();

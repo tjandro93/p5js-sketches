@@ -2,10 +2,16 @@ import * as P5 from 'p5';
 import { ButtonControl, Sketch, SliderControl } from 'src/app/core';
 import { SelectControl } from 'src/app/core/types/sketch-controls/select-control';
 import {
+  circle,
   createCanvasOnParentContainer,
   DARK_MODE_BACKGROUND,
   DARK_MODE_FOREGROUND,
+  DefaultPointGridPointFactory,
   PointGrid,
+  PointGridOptionsByRowColCount,
+  PointGridOptionsByRowColSize,
+  PointGridPoint,
+  Vector,
 } from 'src/app/sketch-lib';
 
 enum OptionTypes {
@@ -60,6 +66,9 @@ const rowSizeSlider = new SliderControl(
   50,
   1
 );
+
+let nearestGridPointToClicked: PointGridPoint | null = null;
+let grid: PointGrid | null = null;
 
 export const pointGrid: Sketch = {
   title: 'pointGrid',
@@ -116,39 +125,66 @@ export const pointGrid: Sketch = {
       }
     };
 
+    p5.mousePressed = () => {
+      const clickLocation = { x: p5.mouseX, y: p5.mouseY };
+      if (grid != null) {
+        const [point, distance] = grid.getNearestPointToVector(clickLocation);
+        nearestGridPointToClicked = point;
+        console.log(
+          `Clicked location was distance ${distance} from grid point`
+        );
+      } else {
+        nearestGridPointToClicked = null;
+      }
+    };
+
     function drawOnce(): void {
       p5.background(DARK_MODE_BACKGROUND);
 
       try {
         if (optionsTypeSelect.value === OptionTypes.ByCount) {
-          const grid = new PointGrid({
-            minX: minXSlider.value,
-            maxX: maxXSlider.value,
-            minY: minYSlider.value,
-            maxY: maxYSlider.value,
+          grid = new PointGrid(p5, {
+            bounds: {
+              minX: minXSlider.value,
+              maxX: maxXSlider.value,
+              minY: minYSlider.value,
+              maxY: maxYSlider.value,
+            },
             columnCount: columnCountSlider.value,
             rowCount: rowCountSlider.value,
             evenSpacing:
               evenSpacingSelect.value === 'undefined'
                 ? undefined
                 : (evenSpacingSelect.value as 'min' | 'max'),
-          });
-
-          grid.draw(p5);
+            pointGridPointFactory: new DefaultPointGridPointFactory(p5),
+          } as PointGridOptionsByRowColCount);
         } else if (optionsTypeSelect.value === OptionTypes.BySize) {
-          const grid = new PointGrid({
-            minX: minXSlider.value,
-            maxX: maxXSlider.value,
-            minY: minYSlider.value,
-            maxY: maxYSlider.value,
+          grid = new PointGrid(p5, {
+            bounds: {
+              minX: minXSlider.value,
+              maxX: maxXSlider.value,
+              minY: minYSlider.value,
+              maxY: maxYSlider.value,
+            },
             columnSize: columnSizeSlider.value,
             rowSize: rowSizeSlider.value,
-          });
-
-          grid.draw(p5);
+            pointGridPointFactory: new DefaultPointGridPointFactory(p5),
+          } as PointGridOptionsByRowColSize);
         }
       } catch (e) {
         console.error('Error thrown while draw PointGrid', e);
+      }
+
+      if (grid != null) {
+        grid.draw();
+      }
+
+      if (nearestGridPointToClicked != null) {
+        p5.push();
+        p5.stroke(200, 0, 0, 255);
+        p5.strokeWeight(3);
+        circle(p5, nearestGridPointToClicked.position, 30);
+        p5.pop();
       }
 
       frameCount++;

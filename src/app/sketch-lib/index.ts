@@ -33,4 +33,5 @@ export * from './functions/vector/clamp-magnitude';
 // Types
 export * from './types/vector';
 export * from './types/bezier-curve';
+export * from './types/bounds';
 export * from './types/point-grid';

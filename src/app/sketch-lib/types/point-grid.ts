@@ -1,15 +1,13 @@
 import * as P5 from 'p5';
-import { circle, Vector } from '../';
+import { Bounds, circle, distance, validateBounds, Vector } from '../';
 
-export class PointGrid {
-  public readonly points: readonly Vector[];
+export class PointGrid<T extends PointGridPoint = PointGridPoint> {
+  public readonly points: T[];
 
   public readonly columnSize: number;
   public readonly rowSize: number;
 
-  constructor(
-    options: PointGridOptionsByRowColCount | PointGridOptionsByRowColSize
-  ) {
+  constructor(public p5: P5, public options: PointGridOptions<T>) {
     if (isPointGridOptionsByRowColCount(options)) {
       this.validatePointGridOptionsByRowColCount(options);
       const initialValues = this.constructPointGridByRowColCount(options);
@@ -27,21 +25,38 @@ export class PointGrid {
     }
   }
 
-  public draw(p5: P5): void {
+  public getNearestPointToVector(location: Vector): [T, number] {
+    // TODO there is probably a more efficient algorithm for this
+    let nearestPointSoFar: [T, number] | null = null;
+
     this.points.forEach((point) => {
-      circle(p5, point, 10);
+      const currentPointDistance = distance(point.position, location);
+      if (
+        nearestPointSoFar == null ||
+        currentPointDistance < nearestPointSoFar[1]
+      ) {
+        nearestPointSoFar = [point, currentPointDistance];
+      }
+    });
+
+    return nearestPointSoFar;
+  }
+
+  public draw(): void {
+    this.points.forEach((point) => {
+      circle(this.p5, point.position, 10);
     });
   }
 
   private constructPointGridByRowColCount(
-    options: PointGridOptionsByRowColCount
-  ): { points: Vector[]; columnSize: number; rowSize: number } {
-    const points: Vector[] = [];
-    const minX = options.minX ?? 0;
-    const minY = options.minY ?? 0;
+    options: PointGridOptionsByRowColCount<T>
+  ): { points: T[]; columnSize: number; rowSize: number } {
+    const points: T[] = [];
+    const minX = options.bounds.minX ?? 0;
+    const minY = options.bounds.minY ?? 0;
 
-    let columnSize = (options.maxX - minX) / (options.columnCount - 1);
-    let rowSize = (options.maxY - minY) / (options.rowCount - 1);
+    let columnSize = (options.bounds.maxX - minX) / (options.columnCount - 1);
+    let rowSize = (options.bounds.maxY - minY) / (options.rowCount - 1);
 
     if (options.evenSpacing === 'min') {
       const min = Math.min(columnSize, rowSize);
@@ -53,22 +68,22 @@ export class PointGrid {
       rowSize = max;
     }
 
-    console.log('Options', {
-      minX,
-      maxX: options.maxX,
-      minY,
-      maxY: options.maxY,
-      columnSize,
-      rowSize,
-      evenSpacing: options.evenSpacing,
-    });
+    // console.log('Options', {
+    //   minX,
+    //   maxX: options.maxX,
+    //   minY,
+    //   maxY: options.maxY,
+    //   columnSize,
+    //   rowSize,
+    //   evenSpacing: options.evenSpacing,
+    // });
 
     for (let i = 0; i < options.columnCount; i++) {
       for (let j = 0; j < options.rowCount; j++) {
         const x = minX + i * columnSize;
         const y = minY + j * rowSize;
-        console.log(`Creating point (${i}, ${j}) at (${x}, ${y})`);
-        points.push({ x, y });
+        // console.log(`Creating point (${i}, ${j}) at (${x}, ${y})`);
+        points.push(this.options.pointGridPointFactory.createPoint(x, y));
       }
     }
 
@@ -76,26 +91,26 @@ export class PointGrid {
   }
 
   private constructPointGridByRowColSize(
-    options: PointGridOptionsByRowColSize
-  ): { points: Vector[]; columnSize: number; rowSize: number } {
-    const points: Vector[] = [];
-    const minX = options.minX ?? 0;
-    const minY = options.minY ?? 0;
+    options: PointGridOptionsByRowColSize<T>
+  ): { points: T[]; columnSize: number; rowSize: number } {
+    const points: T[] = [];
+    const minX = options.bounds.minX ?? 0;
+    const minY = options.bounds.minY ?? 0;
     const columnSize = options.columnSize;
     const rowSize = options.rowSize;
 
-    console.log('Options', {
-      minX,
-      maxX: options.maxX,
-      minY,
-      maxY: options.maxY,
-      columnSize,
-      rowSize,
-    });
-    for (let x = minX; x <= options.maxX; x += columnSize) {
-      for (let y = minY; y <= options.maxY; y += rowSize) {
-        console.log(`Creating point at (${x}, ${y})`);
-        points.push({ x, y });
+    // console.log('Options', {
+    //   minX,
+    //   maxX: options.maxX,
+    //   minY,
+    //   maxY: options.maxY,
+    //   columnSize,
+    //   rowSize,
+    // });
+    for (let x = minX; x <= options.bounds.maxX; x += columnSize) {
+      for (let y = minY; y <= options.bounds.maxY; y += rowSize) {
+        // console.log(`Creating point at (${x}, ${y})`);
+        points.push(this.options.pointGridPointFactory.createPoint(x, y));
       }
     }
 
@@ -103,15 +118,10 @@ export class PointGrid {
   }
 
   private validatePointGridOptionsByRowColCount(
-    options: PointGridOptionsByRowColCount
+    options: PointGridOptionsByRowColCount<T>
   ): void {
-    const errors: string[] = [];
-    if ((options.minX ?? 0) >= options.maxX) {
-      errors.push('minX must be strictly less than maxX');
-    }
-    if ((options.minY ?? 0) >= options.maxY) {
-      errors.push('minY must be strictly less than maxY');
-    }
+    const errors: string[] = validateBounds(options.bounds);
+
     if (options.columnCount <= 1) {
       errors.push('columnCount must be greater than 1');
     }
@@ -131,15 +141,10 @@ export class PointGrid {
   }
 
   private validatePointGridOptionsByRowColSize(
-    options: PointGridOptionsByRowColSize
+    options: PointGridOptionsByRowColSize<T>
   ): void {
-    const errors: string[] = [];
-    if ((options.minX ?? 0) >= options.maxX) {
-      errors.push('minX must be strictly less than maxX');
-    }
-    if ((options.minY ?? 0) >= options.maxY) {
-      errors.push('minY must be strictly less than maxY');
-    }
+    const errors: string[] = validateBounds(options.bounds);
+
     if (options.columnSize <= 0) {
       errors.push('columnSize must be greater than 0');
     }
@@ -153,39 +158,60 @@ export class PointGrid {
   }
 }
 
-export interface PointGridOptionsByRowColCount {
-  minX?: number;
-  maxX: number;
-  minY?: number;
-  maxY: number;
+export interface PointGridPointFactory<
+  T extends PointGridPoint = PointGridPoint
+> {
+  createPoint: (x: number, y: number) => T;
+}
+
+export class DefaultPointGridPointFactory
+  implements PointGridPointFactory<PointGridPoint>
+{
+  constructor(private p5: P5) {}
+
+  public createPoint(x: number, y: number): PointGridPoint {
+    return { position: this.p5.createVector(x, y) };
+  }
+}
+
+export interface PointGridPoint {
+  position: P5.Vector;
+}
+
+export interface PointGridOptions<T extends PointGridPoint = PointGridPoint> {
+  bounds: Bounds;
+  pointGridPointFactory: PointGridPointFactory<T>;
+}
+
+export interface PointGridOptionsByRowColCount<
+  T extends PointGridPoint = PointGridPoint
+> extends PointGridOptions<T> {
   columnCount: number;
   rowCount: number;
   evenSpacing?: 'min' | 'max';
 }
 
-export interface PointGridOptionsByRowColSize {
-  minX?: number;
-  maxX: number;
-  minY?: number;
-  maxY: number;
+export interface PointGridOptionsByRowColSize<
+  T extends PointGridPoint = PointGridPoint
+> extends PointGridOptions<T> {
   columnSize: number;
   rowSize: number;
 }
 
-function isPointGridOptionsByRowColCount(
-  options: PointGridOptionsByRowColCount | PointGridOptionsByRowColSize
-): options is PointGridOptionsByRowColCount {
-  const asTarget = options as PointGridOptionsByRowColCount;
+function isPointGridOptionsByRowColCount<
+  T extends PointGridPoint = PointGridPoint
+>(options: PointGridOptions<T>): options is PointGridOptionsByRowColCount<T> {
+  const asTarget = options as PointGridOptionsByRowColCount<T>;
   return (
     typeof asTarget.columnCount === 'number' &&
     typeof asTarget.rowCount === 'number'
   );
 }
 
-function isPointGridOptionsByRowColSize(
-  options: PointGridOptionsByRowColCount | PointGridOptionsByRowColSize
-): options is PointGridOptionsByRowColSize {
-  const asTarget = options as any;
+function isPointGridOptionsByRowColSize<
+  T extends PointGridPoint = PointGridPoint
+>(options: PointGridOptions<T>): options is PointGridOptionsByRowColSize<T> {
+  const asTarget = options as PointGridOptionsByRowColSize<T>;
   return (
     typeof asTarget.columnSize === 'number' &&
     typeof asTarget.rowSize === 'number'
