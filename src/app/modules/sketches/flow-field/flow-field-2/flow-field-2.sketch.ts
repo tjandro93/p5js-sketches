@@ -22,13 +22,20 @@ import {
   HandleOutOfBoundsStrategyType,
   handleOutOfBoundsStrategyTypeValues,
 } from '../types/particle/handle-out-of-bounds-strategy/handle-out-of-bounds-strategy';
+import { KillParticleOutOfBoundsStrategy } from '../types/particle/handle-out-of-bounds-strategy/kill-particle-out-of-bounds-strategy';
 import { ReinitiateHandleOutOfBoundsStrategy } from '../types/particle/handle-out-of-bounds-strategy/reinitiate-handle-of-bounds-strategy';
 import {
   InitialKinematicsStrategy,
   InitialKinematicsStrategyType,
   initialKinematicsStrategyTypeValues,
 } from '../types/particle/initial-kinematics-strategy/initial-kinematics-strategy';
+import { RandomAnyEdgeInitialPositionStrategy } from '../types/particle/initial-kinematics-strategy/random-any-edge-initial-position-strategy';
+import { RandomBottomEdgeInitialPositionStrategy } from '../types/particle/initial-kinematics-strategy/random-bottom-edge-initial-position-strategy';
+import { RandomInCircleInitialPositionStrategy } from '../types/particle/initial-kinematics-strategy/random-in-circle-initial-position-strategy';
 import { RandomInitialPositionKinematicsStrategy } from '../types/particle/initial-kinematics-strategy/random-initial-position-kinematics-strategy';
+import { RandomLeftEdgeInitialPositionStrategy } from '../types/particle/initial-kinematics-strategy/random-left-edge-initial-position-strategy';
+import { RandomRightEdgeInitialPositionStrategy } from '../types/particle/initial-kinematics-strategy/random-right-edge-initial-position-strategy';
+import { RandomTopEdgeInitialPositionStrategy } from '../types/particle/initial-kinematics-strategy/random-top-edge-initial-position-strategy';
 import { BatchParticleDrawStrategy } from '../types/particle/particle-draw-strategy/batch-particle-draw-strategy';
 import {
   FlowFieldParticleDrawStrategy,
@@ -38,28 +45,25 @@ import {
 import { RealTimeParticleDrawStrategy } from '../types/particle/particle-draw-strategy/real-time-particle-draw-strategy';
 import { PerlinFlowField } from '../types/perlin-flow-field';
 
+const width = 1000;
+const height = 800;
+
 const runPauseButton = new ButtonControl('Pause');
 const drawOnceButton = new ButtonControl('Draw Once');
 const drawForcesCheckbox = new CheckboxControl('Draw Forces', false);
-const forceColCountSlider = new SliderControl(
-  'Force Column Count',
+const clearBeforeDrawCheckbox = new CheckboxControl('Clear before draw', false);
+const particleAlphaSlider = new SliderControl('Particle Alpha', 0, 255, 64, 1);
+const forceGridCountSlider = new SliderControl(
+  'Force Grid Count',
   2,
   100,
   10,
   1
 );
-const forceRowCountSlider = new SliderControl('Force Row Count', 2, 100, 10, 1);
-const forcePerlinXFactorSlider = new SliderControl(
-  'Perlin Force X Factor',
-  0.001,
-  1,
-  0.01,
-  0.001
-);
-const forcePerlinYFactorSlider = new SliderControl(
-  'Perlin Force Y Factor',
-  0.001,
-  1,
+const forcePerlinFactorSlider = new SliderControl(
+  'Perlin Force Factor',
+  0.0001,
+  0.1,
   0.01,
   0.001
 );
@@ -106,11 +110,32 @@ const handleOutOfBoundsStrategySelect = new SelectControl(
   handleOutOfBoundsStrategyTypeValues,
   HandleOutOfBoundsStrategyType.Reinitiate
 );
+const randomInCircleRadiusSlider = new SliderControl(
+  'Random in circle radius',
+  1,
+  1000,
+  200,
+  1
+);
+const randomInCircleXPosSlider = new SliderControl(
+  'Random in circle X position',
+  1,
+  width,
+  width / 2,
+  1
+);
+const randomInCircleYPosSlider = new SliderControl(
+  'Random in circle Y position',
+  1,
+  height,
+  height / 2,
+  1
+);
 
 export const flowField2: Sketch = {
   title: 'Flow Field 2',
-  width: 1000,
-  height: 800,
+  width,
+  height,
   isSvg: false,
   controls: {
     refreshButton: true,
@@ -118,28 +143,34 @@ export const flowField2: Sketch = {
     customControls: [
       runPauseButton,
       drawOnceButton,
+      clearBeforeDrawCheckbox,
+      particleAlphaSlider,
       drawForcesCheckbox,
-      forceColCountSlider,
-      forceRowCountSlider,
-      forcePerlinXFactorSlider,
-      forcePerlinYFactorSlider,
+      forceGridCountSlider,
+      forcePerlinFactorSlider,
       forceAngleBiasSlider,
       particleCountSlider,
       minParticleSpeedSlider,
       maxParticleSpeedSlider,
       particleDrawStrategySelect,
-      initialKinematicsStrategySelect,
       applyForcesStrategySelect,
       handleOutOfBoundsStrategySelect,
+      initialKinematicsStrategySelect,
+      randomInCircleRadiusSlider,
+      randomInCircleXPosSlider,
+      randomInCircleYPosSlider,
     ],
   },
   func: (p5: P5) => {
     let running = true;
     let frameCount = 0;
+    const clearBeforeDraw = clearBeforeDrawCheckbox.value;
 
     const bounds: Bounds = {
-      maxX: 1000,
-      maxY: 800,
+      minX: 0,
+      maxX: width,
+      minY: 0,
+      maxY: height,
     };
 
     const particleDrawStrategies: Record<
@@ -159,6 +190,25 @@ export const flowField2: Sketch = {
     > = {
       [InitialKinematicsStrategyType.FullyRandom]:
         new RandomInitialPositionKinematicsStrategy(p5, bounds),
+      [InitialKinematicsStrategyType.RandomLeftEdge]:
+        new RandomLeftEdgeInitialPositionStrategy(p5, bounds),
+      [InitialKinematicsStrategyType.RandomRightEdge]:
+        new RandomRightEdgeInitialPositionStrategy(p5, bounds),
+      [InitialKinematicsStrategyType.RandomTopEdge]:
+        new RandomTopEdgeInitialPositionStrategy(p5, bounds),
+      [InitialKinematicsStrategyType.RandomBottomEdge]:
+        new RandomBottomEdgeInitialPositionStrategy(p5, bounds),
+      [InitialKinematicsStrategyType.RandomAnyEdge]:
+        new RandomAnyEdgeInitialPositionStrategy(p5, bounds),
+      [InitialKinematicsStrategyType.RandomInCircle]:
+        new RandomInCircleInitialPositionStrategy(
+          p5,
+          randomInCircleRadiusSlider.value,
+          p5.createVector(
+            randomInCircleXPosSlider.value,
+            randomInCircleYPosSlider.value
+          )
+        ),
     };
 
     const applyForcesStrategies: Record<
@@ -175,6 +225,8 @@ export const flowField2: Sketch = {
     > = {
       [HandleOutOfBoundsStrategyType.Reinitiate]:
         new ReinitiateHandleOutOfBoundsStrategy(),
+      [HandleOutOfBoundsStrategyType.Kill]:
+        new KillParticleOutOfBoundsStrategy(),
     };
 
     const particleFactoryOptions: FlowFieldParticleOptions = {
@@ -204,7 +256,7 @@ export const flowField2: Sketch = {
         useSvg: flowField2.isSvg,
       });
       p5.background(DARK_MODE_BACKGROUND);
-      p5.stroke(DARK_MODE_FOREGROUND, 48);
+      p5.stroke(DARK_MODE_FOREGROUND, particleAlphaSlider.value);
       p5.noFill();
       p5.blendMode(p5.SCREEN);
 
@@ -224,11 +276,11 @@ export const flowField2: Sketch = {
         drawForces: drawForcesCheckbox.value,
         pointGridOptions: {
           bounds,
-          columnCount: forceColCountSlider.value,
-          rowCount: forceRowCountSlider.value,
+          columnCount: forceGridCountSlider.value,
+          rowCount: forceGridCountSlider.value,
         } as PointGridOptionsByRowColCount<FlowFieldForce>,
-        forcePerlinXFactor: forcePerlinXFactorSlider.value,
-        forcePerlinYFactor: forcePerlinYFactorSlider.value,
+        forcePerlinXFactor: forcePerlinFactorSlider.value,
+        forcePerlinYFactor: forcePerlinFactorSlider.value,
         angleBias: forceAngleBiasSlider.value * Math.PI,
         particleFactory,
         particleCount: particleCountSlider.value,
@@ -237,6 +289,11 @@ export const flowField2: Sketch = {
 
     p5.draw = () => {
       if (running) {
+        if (clearBeforeDraw) {
+          p5.blendMode(p5.REPLACE);
+          p5.background(DARK_MODE_BACKGROUND);
+          p5.blendMode(p5.SCREEN);
+        }
         drawOnce();
       }
     };

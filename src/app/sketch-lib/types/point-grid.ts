@@ -52,11 +52,11 @@ export class PointGrid<T extends PointGridPoint = PointGridPoint> {
     options: PointGridOptionsByRowColCount<T>
   ): { points: T[]; columnSize: number; rowSize: number } {
     const points: T[] = [];
-    const minX = options.bounds.minX ?? 0;
-    const minY = options.bounds.minY ?? 0;
 
-    let columnSize = (options.bounds.maxX - minX) / (options.columnCount - 1);
-    let rowSize = (options.bounds.maxY - minY) / (options.rowCount - 1);
+    let columnSize =
+      (options.bounds.maxX - options.bounds.minX) / (options.columnCount - 1);
+    let rowSize =
+      (options.bounds.maxY - options.bounds.minY) / (options.rowCount - 1);
 
     if (options.evenSpacing === 'min') {
       const min = Math.min(columnSize, rowSize);
@@ -68,21 +68,10 @@ export class PointGrid<T extends PointGridPoint = PointGridPoint> {
       rowSize = max;
     }
 
-    // console.log('Options', {
-    //   minX,
-    //   maxX: options.maxX,
-    //   minY,
-    //   maxY: options.maxY,
-    //   columnSize,
-    //   rowSize,
-    //   evenSpacing: options.evenSpacing,
-    // });
-
     for (let i = 0; i < options.columnCount; i++) {
       for (let j = 0; j < options.rowCount; j++) {
-        const x = minX + i * columnSize;
-        const y = minY + j * rowSize;
-        // console.log(`Creating point (${i}, ${j}) at (${x}, ${y})`);
+        const x = options.bounds.minX + i * columnSize;
+        const y = options.bounds.minY + j * rowSize;
         points.push(this.options.pointGridPointFactory.createPoint(x, y));
       }
     }
@@ -94,22 +83,19 @@ export class PointGrid<T extends PointGridPoint = PointGridPoint> {
     options: PointGridOptionsByRowColSize<T>
   ): { points: T[]; columnSize: number; rowSize: number } {
     const points: T[] = [];
-    const minX = options.bounds.minX ?? 0;
-    const minY = options.bounds.minY ?? 0;
     const columnSize = options.columnSize;
     const rowSize = options.rowSize;
 
-    // console.log('Options', {
-    //   minX,
-    //   maxX: options.maxX,
-    //   minY,
-    //   maxY: options.maxY,
-    //   columnSize,
-    //   rowSize,
-    // });
-    for (let x = minX; x <= options.bounds.maxX; x += columnSize) {
-      for (let y = minY; y <= options.bounds.maxY; y += rowSize) {
-        // console.log(`Creating point at (${x}, ${y})`);
+    for (
+      let x = options.bounds.minX;
+      x <= options.bounds.maxX;
+      x += columnSize
+    ) {
+      for (
+        let y = options.bounds.minY;
+        y <= options.bounds.maxY;
+        y += rowSize
+      ) {
         points.push(this.options.pointGridPointFactory.createPoint(x, y));
       }
     }

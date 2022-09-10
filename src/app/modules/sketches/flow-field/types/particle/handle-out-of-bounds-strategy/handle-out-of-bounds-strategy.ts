@@ -12,8 +12,10 @@ export interface HandleOutOfBoundsStrategy {
 
 export const enum HandleOutOfBoundsStrategyType {
   Reinitiate = 'Reinitiate',
+  Kill = 'Kill',
 }
 
 export const handleOutOfBoundsStrategyTypeValues = [
   HandleOutOfBoundsStrategyType.Reinitiate,
+  HandleOutOfBoundsStrategyType.Kill,
 ];

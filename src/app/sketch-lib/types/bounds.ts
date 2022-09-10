@@ -1,17 +1,17 @@
 export interface Bounds {
-  minX?: number;
+  minX: number;
   maxX: number;
-  minY?: number;
+  minY: number;
   maxY: number;
 }
 
 export function validateBounds(bounds: Bounds): string[] {
   const errors: string[] = [];
 
-  if ((bounds.minX ?? 0) >= bounds.maxX) {
+  if (bounds.minX >= bounds.maxX) {
     errors.push('minX must be strictly less than maxX');
   }
-  if ((bounds.minY ?? 0) >= bounds.maxY) {
+  if (bounds.minY >= bounds.maxY) {
     errors.push('minY must be strictly less than maxY');
   }
 

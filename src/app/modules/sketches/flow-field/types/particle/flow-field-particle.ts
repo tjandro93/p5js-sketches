@@ -38,7 +38,6 @@ export class FlowFieldParticle implements KinematicBody {
 
   public step(): void {
     if (!this.isDead) {
-      console.log('not dead');
       const minSpeed = Math.max(this.options.minSpeed ?? 0, 0);
       const maxSpeed = Math.min(
         this.options.maxSpeed ?? Number.MAX_VALUE,
@@ -54,8 +53,6 @@ export class FlowFieldParticle implements KinematicBody {
       this.acceleration.mult(0);
 
       this.checkBounds();
-    } else {
-      console.log('dead');
     }
   }
 
@@ -65,13 +62,13 @@ export class FlowFieldParticle implements KinematicBody {
     }
 
     const outOfBoundsPositions: OutOfBoundsPosition[] = [];
-    if (this.position.x < (this.options.bounds.minX ?? 0)) {
+    if (this.position.x < this.options.bounds.minX) {
       outOfBoundsPositions.push(OutOfBoundsPosition.Left);
     }
     if (this.position.x > this.options.bounds.maxX) {
       outOfBoundsPositions.push(OutOfBoundsPosition.Right);
     }
-    if (this.position.y < (this.options.bounds.minY ?? 0)) {
+    if (this.position.y < this.options.bounds.minY) {
       outOfBoundsPositions.push(OutOfBoundsPosition.Top);
     }
     if (this.position.y > this.options.bounds.maxY) {
@@ -79,7 +76,6 @@ export class FlowFieldParticle implements KinematicBody {
     }
 
     if (outOfBoundsPositions.length > 0) {
-      console.log('out of bounds');
       this.options.handleOutOfBoundsStrategy.handleOutOfBounds(
         this,
         outOfBoundsPositions
