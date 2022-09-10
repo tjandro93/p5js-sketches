@@ -5,13 +5,12 @@ import {
   PointGridPointFactory,
 } from 'src/app/sketch-lib';
 import { FlowFieldForce } from './flow-field-force';
-import { FlowFieldParticleDrawStrategy } from './particle-draw-strategy/particle-draw-strategy';
-import { BaseFlowFieldParticle } from './particle/base-flow-field-particle';
+import { FlowFieldParticle } from './particle/flow-field-particle';
 import { FlowFieldParticleFactory } from './particle/flow-field-particle-factory';
 
 export abstract class BaseFlowField {
   public pointGrid: PointGrid<FlowFieldForce>;
-  public particles: BaseFlowFieldParticle[] = [];
+  public particles: FlowFieldParticle[] = [];
 
   constructor(public p5: P5, public options: BaseFlowFieldOptions) {
     this.pointGrid = new PointGrid(this.p5, {
@@ -20,9 +19,7 @@ export abstract class BaseFlowField {
     });
 
     for (let i = 0; i < options.particleCount; i++) {
-      this.particles.push(
-        options.particleFactory.createParticle(i, options.particleCount)
-      );
+      this.particles.push(options.particleFactory.createParticle());
     }
   }
 
@@ -31,7 +28,7 @@ export abstract class BaseFlowField {
       this.pointGrid.points.forEach((point) => point.draw());
     }
 
-    this.options.particleDrawStrategy.draw(this.particles);
+    this.particles.forEach((particle) => particle.draw());
   }
 
   public step(): void {
@@ -50,7 +47,6 @@ export interface BaseFlowFieldOptions {
   drawForces: boolean;
   forceFactory: FlowFieldForceFactory;
   particleFactory: FlowFieldParticleFactory;
-  particleDrawStrategy: FlowFieldParticleDrawStrategy;
   particleCount: number;
 }
 

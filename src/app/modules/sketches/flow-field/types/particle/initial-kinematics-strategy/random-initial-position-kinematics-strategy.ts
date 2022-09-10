@@ -1,12 +1,17 @@
 import * as P5 from 'p5';
 import { Bounds } from 'src/app/sketch-lib';
-import { KinematicBody } from '../particle/kinematic-body';
-import { InitialKinematicsStrategy } from './initial-kinematics-strategy';
+import { KinematicBody } from '../kinematic-body';
+import {
+  InitialKinematicsStrategy,
+  InitialKinematicsStrategyType,
+} from './initial-kinematics-strategy';
 
 export class RandomInitialPositionKinematicsStrategy
   implements InitialKinematicsStrategy
 {
   constructor(private p5: P5, private bounds: Bounds) {}
+
+  public type = InitialKinematicsStrategyType.FullyRandom;
 
   public createInitialKinematics(): KinematicBody {
     const minX = this.bounds.minX ?? 0;

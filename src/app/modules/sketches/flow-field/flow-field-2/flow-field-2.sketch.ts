@@ -1,6 +1,7 @@
 import * as P5 from 'p5';
 import { ButtonControl, Sketch, SliderControl } from 'src/app/core';
 import { CheckboxControl } from 'src/app/core/types/sketch-controls/checkbox-control';
+import { SelectControl } from 'src/app/core/types/sketch-controls/select-control';
 import {
   createCanvasOnParentContainer,
   DARK_MODE_BACKGROUND,
@@ -9,9 +10,32 @@ import {
   PointGridOptionsByRowColCount,
 } from 'src/app/sketch-lib';
 import { FlowFieldForce } from '../types/flow-field-force';
-import { RandomInitialPositionKinematicsStrategy } from '../types/initial-kinematics-strategy/random-initial-position-kinematics-strategy';
-import { RealTimeParticleDrawStrategy } from '../types/particle-draw-strategy/real-time-particle-draw-strategy';
-import { SimpleFlowFieldParticleFactory } from '../types/particle/simple-flow-field-particle';
+import { ApplyClosestForceStrategy } from '../types/particle/apply-forces-strategy/apply-closest-force-strategy';
+import {
+  ApplyForcesStrategyType,
+  applyForcesStrategyTypeValues,
+} from '../types/particle/apply-forces-strategy/apply-forces-strategy';
+import { FlowFieldParticleOptions } from '../types/particle/flow-field-particle';
+import { FlowFieldParticleFactory } from '../types/particle/flow-field-particle-factory';
+import {
+  HandleOutOfBoundsStrategy,
+  HandleOutOfBoundsStrategyType,
+  handleOutOfBoundsStrategyTypeValues,
+} from '../types/particle/handle-out-of-bounds-strategy/handle-out-of-bounds-strategy';
+import { ReinitiateHandleOutOfBoundsStrategy } from '../types/particle/handle-out-of-bounds-strategy/reinitiate-handle-of-bounds-strategy';
+import {
+  InitialKinematicsStrategy,
+  InitialKinematicsStrategyType,
+  initialKinematicsStrategyTypeValues,
+} from '../types/particle/initial-kinematics-strategy/initial-kinematics-strategy';
+import { RandomInitialPositionKinematicsStrategy } from '../types/particle/initial-kinematics-strategy/random-initial-position-kinematics-strategy';
+import { BatchParticleDrawStrategy } from '../types/particle/particle-draw-strategy/batch-particle-draw-strategy';
+import {
+  FlowFieldParticleDrawStrategy,
+  FlowFieldParticleDrawStrategyType,
+  flowFieldParticleDrawStrategyTypeValues,
+} from '../types/particle/particle-draw-strategy/particle-draw-strategy';
+import { RealTimeParticleDrawStrategy } from '../types/particle/particle-draw-strategy/real-time-particle-draw-strategy';
 import { PerlinFlowField } from '../types/perlin-flow-field';
 
 const runPauseButton = new ButtonControl('Pause');
@@ -62,6 +86,26 @@ const maxParticleSpeedSlider = new SliderControl(
   0.1
 );
 const particleCountSlider = new SliderControl('Particle Count', 1, 100, 10, 1);
+const particleDrawStrategySelect = new SelectControl(
+  'Particle Draw Strategy',
+  flowFieldParticleDrawStrategyTypeValues,
+  FlowFieldParticleDrawStrategyType.RealTime
+);
+const initialKinematicsStrategySelect = new SelectControl(
+  'Initial Kinematics Strategy',
+  initialKinematicsStrategyTypeValues,
+  InitialKinematicsStrategyType.FullyRandom
+);
+const applyForcesStrategySelect = new SelectControl(
+  'Apply Forces Strategy',
+  applyForcesStrategyTypeValues,
+  ApplyForcesStrategyType.ApplyClosestForce
+);
+const handleOutOfBoundsStrategySelect = new SelectControl(
+  'Handle Out of Bounds Strategy',
+  handleOutOfBoundsStrategyTypeValues,
+  HandleOutOfBoundsStrategyType.Reinitiate
+);
 
 export const flowField2: Sketch = {
   title: 'Flow Field 2',
@@ -83,6 +127,10 @@ export const flowField2: Sketch = {
       particleCountSlider,
       minParticleSpeedSlider,
       maxParticleSpeedSlider,
+      particleDrawStrategySelect,
+      initialKinematicsStrategySelect,
+      applyForcesStrategySelect,
+      handleOutOfBoundsStrategySelect,
     ],
   },
   func: (p5: P5) => {
@@ -94,19 +142,58 @@ export const flowField2: Sketch = {
       maxY: 800,
     };
 
-    // TODO this should come from a select control once more are implemented
-    const initialKinematicsStrategy =
-      new RandomInitialPositionKinematicsStrategy(p5, bounds);
+    const particleDrawStrategies: Record<
+      FlowFieldParticleDrawStrategyType,
+      FlowFieldParticleDrawStrategy
+    > = {
+      [FlowFieldParticleDrawStrategyType.Batch]: new BatchParticleDrawStrategy(
+        p5
+      ),
+      [FlowFieldParticleDrawStrategyType.RealTime]:
+        new RealTimeParticleDrawStrategy(p5),
+    };
 
-    // TODO this should come from a select control once more are implemented
-    const particleFactory = new SimpleFlowFieldParticleFactory(
-      p5,
-      initialKinematicsStrategy,
+    const initialKinematicsStrategies: Record<
+      InitialKinematicsStrategyType,
+      InitialKinematicsStrategy
+    > = {
+      [InitialKinematicsStrategyType.FullyRandom]:
+        new RandomInitialPositionKinematicsStrategy(p5, bounds),
+    };
+
+    const applyForcesStrategies: Record<
+      ApplyForcesStrategyType,
+      ApplyClosestForceStrategy
+    > = {
+      [ApplyForcesStrategyType.ApplyClosestForce]:
+        new ApplyClosestForceStrategy(),
+    };
+
+    const handleOutOfBoundsStrategies: Record<
+      HandleOutOfBoundsStrategyType,
+      HandleOutOfBoundsStrategy
+    > = {
+      [HandleOutOfBoundsStrategyType.Reinitiate]:
+        new ReinitiateHandleOutOfBoundsStrategy(),
+    };
+
+    const particleFactoryOptions: FlowFieldParticleOptions = {
+      particleDrawStrategy:
+        particleDrawStrategies[particleDrawStrategySelect.value],
+      initialKinematicsStrategy:
+        initialKinematicsStrategies[initialKinematicsStrategySelect.value],
+      applyForcesStrategy:
+        applyForcesStrategies[applyForcesStrategySelect.value],
+      handleOutOfBoundsStrategy:
+        handleOutOfBoundsStrategies[handleOutOfBoundsStrategySelect.value],
       bounds,
-      minParticleSpeedSlider.value,
-      maxParticleSpeedSlider.value
+      minSpeed: minParticleSpeedSlider.value,
+      maxSpeed: maxParticleSpeedSlider.value,
+    };
+
+    const particleFactory = new FlowFieldParticleFactory(
+      particleFactoryOptions
     );
-    const particleDrawStrategy = new RealTimeParticleDrawStrategy(p5);
 
     let flowField: PerlinFlowField;
 
@@ -145,7 +232,6 @@ export const flowField2: Sketch = {
         angleBias: forceAngleBiasSlider.value * Math.PI,
         particleFactory,
         particleCount: particleCountSlider.value,
-        particleDrawStrategy,
       });
     };
 
