@@ -112,6 +112,9 @@
               "devServerTarget": "ng-p5js-sketches:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy"
         }
       }
     }
