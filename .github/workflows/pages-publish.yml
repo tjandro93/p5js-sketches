@@ -14,7 +14,7 @@ jobs:
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
-          node-version: '16'
+          node-version: "16"
 
       - name: Cache node modules
         id: cache-nodemodules
@@ -29,10 +29,12 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
+
       - name: Install Dependencies
         if: steps.cache-nodemodules.outputs.cache-hit != 'true'
         run: |
           npm ci
+
       - name: Deploy
         run: |
           npm run deploy
