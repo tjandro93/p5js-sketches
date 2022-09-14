@@ -114,7 +114,14 @@
           }
         },
         "deploy": {
-          "builder": "angular-cli-ghpages:deploy"
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "baseHref": "/p5js-sketches/",
+            "repo": "https://github.com/tjandro93/p5js-sketches.git",
+            "name": "angular-cli-ghpages",
+            "email": "angular-cli-ghpages@foo.com",
+            "noSilent": true
+          }
         }
       }
     }

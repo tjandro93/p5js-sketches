@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "ng deploy --base-href=/p5js-sketches/ --repo=https://github.com/tjandro93/p5js-sketches.git  --no-silent",
+    "deploy": "ng deploy",
     "prettier": "prettier --write .",
     "prettier-and-lint": "npm run prettier && npm run lint",
     "build-schematics": "cd sketch-schematics && npm install && npm run build",
